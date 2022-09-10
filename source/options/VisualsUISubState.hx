@@ -47,6 +47,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool',
 			false);
 		addOption(option);
+
+		var option:Option = new Option('Wiggle note',
+			'If checked, The note have a wiggle effect',
+			'noteeffect',
+			'bool',
+			true);
+		addOption(option);
 		
 		var option:Option = new Option('Time Bar:',
 			"What should the Time Bar display?",

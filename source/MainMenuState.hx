@@ -196,7 +196,7 @@ class MainMenuState extends MusicBeatState
 			if(forceX != Math.NEGATIVE_INFINITY) {
 				item.x = forceX;
 			} else {
-				item.x = FlxMath.lerp(item.x, (20 * (curSelected + item.ID + 1.5 - plzzzzzz)), lerpVal);
+				if(!selectedSomethin) item.x = FlxMath.lerp(item.x, (20 * (curSelected + item.ID + 1.5 - plzzzzzz)), lerpVal);
 			}
 		});
 
@@ -259,7 +259,7 @@ class MainMenuState extends MusicBeatState
 						else
 						{
 							//spr.x += 200;
-							FlxTween.tween(spr, {x :  (FlxG.width / 2) - (spr.width / 2)}, 1.25, {
+							FlxTween.tween(spr, {x : (FlxG.width / 2.25) - (spr.width / 2)}, 1.25, {
 								ease: FlxEase.quadOut,
 							});	
 							FlxTween.tween(camGame, {zoom: 3}, 1, {ease: FlxEase.quadInOut, startDelay: 0.5});

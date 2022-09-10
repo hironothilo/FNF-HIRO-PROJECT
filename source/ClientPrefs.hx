@@ -16,6 +16,7 @@ class ClientPrefs {
 	public static var flashing:Bool = true;
 	public static var globalAntialiasing:Bool = true;
 	public static var noteSplashes:Bool = true;
+	public static var noteeffect:Bool = true;
 	public static var lowQuality:Bool = false;
 	public static var framerate:Int = 60;
 	public static var cursing:Bool = true;
@@ -101,6 +102,7 @@ class ClientPrefs {
 		FlxG.save.data.opponentStrums = opponentStrums;
 		FlxG.save.data.showFPS = showFPS;
 		FlxG.save.data.updatecam = updatecam;
+		FlxG.save.data.noteeffect = noteeffect;
 		FlxG.save.data.flashing = flashing;
 		FlxG.save.data.epicWindow = epicWindow;
 		FlxG.save.data.globalAntialiasing = globalAntialiasing;
@@ -153,6 +155,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.epicWindow != null) {
 			epicWindow = FlxG.save.data.epicWindow;
+		}
+		if(FlxG.save.data.noteeffect != null) {
+			noteeffect = FlxG.save.data.noteeffect;
 		}
 		if(FlxG.save.data.judgementcounter != null) {
 			judgementcounter = FlxG.save.data.judgementcounter;

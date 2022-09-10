@@ -431,7 +431,7 @@ class PlayState extends MusicBeatState
 		FlxG.cameras.add(camOther);
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 
-		camSus.setFilters(filterSUSnotes);
+		if(ClientPrefs.noteeffect) camSus.setFilters(filterSUSnotes);
 		camSus.filtersEnabled = true;
 
 		FlxCamera.defaultCameras = [camGame];
@@ -4526,9 +4526,9 @@ class PlayState extends MusicBeatState
 		if(ratingTween != null) {
 			ratingTween.cancel();
 		}
-		rating.scale.x = 0.52;
-		rating.scale.y = 0.52;
-		ratingTween = FlxTween.tween(rating.scale, {x: 0.745, y: 0.745}, 0.2, {
+		rating.scale.x = 0.745;
+		rating.scale.y = 0.745;
+		ratingTween = FlxTween.tween(rating.scale, {x: 0.65, y: 0.65}, 0.2, {
 			onComplete: function(twn:FlxTween) {
 				ratingTween = null;
 			}
