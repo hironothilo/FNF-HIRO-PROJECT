@@ -96,7 +96,7 @@ class Note extends FlxSprite
 
 	var hasNoteType:Bool = false;
 	var antialias:Bool = true; //credit by https://github.com/ShadowMario/FNF-PsychEngine/discussions/6060
-
+	
 	public var hitsoundDisabled:Bool = false;
 
 	private function set_multSpeed(value:Float):Float {
@@ -180,6 +180,14 @@ class Note extends FlxSprite
 		this.inEditor = inEditor;
 		antialias = ClientPrefs.globalAntialiasing;
 		var skin:String = texture;
+
+		if (isSustainNote && prevNote != null)
+		{
+			parent = prevNote;
+			while (parent.parent != null) parent = parent.parent;
+			parent.tail.push(this);
+		}
+		else if (!isSustainNote) parent = null;
 
 		/*switch(char.toLowerCase())
 		{
@@ -423,7 +431,14 @@ class Note extends FlxSprite
 			colorSwap.saturation = ClientPrefs.arrowHSV[noteData % 4][1] / 100;
 			colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;
 		}*/
+		//if(tooLate || (parent != null && parent.tooLate)) alpha = 0.15;
 
+		if (tooLate)
+		{
+			if (alpha > 0.3){
+				alpha = 0.15;
+			}
+		}
 		if (mustPress)
 		{
 			// ok river
@@ -433,8 +448,9 @@ class Note extends FlxSprite
 			else
 				canBeHit = false;
 
-			if (strumTime < Conductor.songPosition - Conductor.safeZoneOffset && !wasGoodHit)
+			if (strumTime < Conductor.songPosition - Conductor.safeZoneOffset && !wasGoodHit){
 				tooLate = true;
+			}
 		}
 		else
 		{
@@ -447,10 +463,5 @@ class Note extends FlxSprite
 			}
 		}
 
-		if (tooLate && !inEditor)
-		{
-			if (alpha > 0.3)
-				alpha = 0.3;
-		}
 	}
 }

@@ -96,27 +96,23 @@ class PlayState extends MusicBeatState
 
 	public static var ratingStuff:Array<Dynamic> = [
 		['NO SINGING?', 0.0001], //SUCK
-		['YOU SUCK!!!', 0.1], //From 0.01% to 9%
-		['NOOB', 0.2], //From 10% to 19%
-		['F', 0.3], //From 20% to 29%
-		['E', 0.4], //From 30% to 39%
-		['D', 0.5], //From 40% to 49%
-		['C', 0.6], //From 50% to 59%
-		['C+', 0.69], //From 60% to 68%
-		['N I C E', 0.70], //69% to 69.99%
-		['B', 0.76], //From 70% to 75%
-		['B+', 0.8], //From 76% to 80%
-		['A', 0.86], //From 80% to 85%
-		['A+', 0.9], //From 86% to 89%
-        ['S-', 0.93], //From 90% to 92%
-        ['S', 0.95], //From 93% to 94%
-        ['S+', 0.98], //From 95% to 96%
-        ['SS', 0.99], //From 97% to 98%
-        ['SS+', 0.995], //From 99%-99.49%
-        ['SS++', 0.999], //From 99.5%-99.89%
-        ['SSS', 0.9995], //From 99.9%-99.94%
-		['SSS+', 1],//From 99.95%-99.99%
-		['PERFECT!!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
+		['F', 0.1], //From 0.01% to 9%
+		['E', 0.60], //From 50% to 59%
+		['D', 0.70], //From 60% to 68%
+		['C', 0.80], //69% to 69.99%
+		['B', 0.85], //From 70% to 75%
+		['A-', 0.90], //From 76% to 80%
+		['A', 0.93], //From 80% to 85%
+		['A+', 0.9650], //From 86% to 89%
+        ['S-', 0.99], //From 90% to 92%
+        ['S', 0.9950], //From 93% to 94%
+        ['S+', 0.9970], //From 95% to 96%
+        ['SS-', 0.9980], //From 97% to 98%
+        ['SS', 0.9990], //From 99%-99.49%
+        ['SS+', 0.99950], //From 99.5%-99.89%
+        ['X-', 0.99980], //From 99.9%-99.94%
+		['X', 0.999935],//From 99.95%-99.9935%
+		['PERFECT', 1] //The value on this one isn't used actually, since Perfect is always "1"
 	];
 	public var modchartTweens:Map<String, FlxTween> = new Map<String, FlxTween>();
 	public var modchartSprites:Map<String, ModchartSprite> = new Map<String, ModchartSprite>();
@@ -3449,10 +3445,41 @@ class PlayState extends MusicBeatState
 				}
 
 				// Kill extremely late notes and cause misses
+				var parent = daNote.parent;
 				if (Conductor.songPosition > noteKillOffset + daNote.strumTime)
 				{
-					if (daNote.mustPress && !cpuControlled &&!daNote.ignoreNote && !endingSong && (daNote.tooLate || !daNote.wasGoodHit)) {
-						noteMiss(daNote);
+					if (daNote.mustPress && !cpuControlled && !daNote.ignoreNote && !endingSong && (daNote.tooLate || !daNote.wasGoodHit)) {
+						if(daNote.isSustainNote) {
+							if(daNote.exists = true){
+								songMisses += 1;
+								totalPlayed++;
+								var char:Character = boyfriend;
+								if(daNote.gfNote) {
+									char = gf;
+								}
+
+								if(char != null && !daNote.noMissAnimation && char.hasMissAnimations)
+								{
+									var animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + 'miss' + daNote.animSuffix;
+									char.playAnim(animToPlay, true);
+								}
+							}
+							for (daNote in parent.tail){
+								daNote.tooLate = true;
+								daNote.active = false;
+								//daNote.alpha = 0.15;
+								daNote.exists = false;//good bye note
+								combo = 0;
+								RecalculateRating(true);
+								if(instakillOnMiss)
+								{
+									vocals.volume = 0;
+									doDeathCheck(true);
+								}
+							}
+						}
+						if(!daNote.isSustainNote && daNote.exists) noteMiss(daNote);
+						//noteMiss(daNote);
 					}
 
 					daNote.active = false;
@@ -4352,10 +4379,11 @@ class PlayState extends MusicBeatState
 		coolText.x = FlxG.width * 0.35;
 
 		var rating:FlxSprite = new FlxSprite();
-		var score:Int = 350;
+		var score:Int = 0;
 
 		//tryna do MS based judgment due to popular demand
 		var daRating:Rating = Conductor.judgeNote(note, noteDiff);
+		score = daRating.score;
 		var ratingNum:Int = 0;
 
 		//trace(daRating.ratingMod);
@@ -4799,7 +4827,7 @@ class PlayState extends MusicBeatState
 			}
 		});
 		combo = 0;
-		health -= daNote.missHealth * healthLoss;
+		if(!daNote.isSustainNote) health -= daNote.missHealth * healthLoss;
 		
 		if(instakillOnMiss)
 		{
@@ -4809,11 +4837,11 @@ class PlayState extends MusicBeatState
 
 		//For testing purposes
 		//trace(daNote.missHealth);
-		songMisses++;
-		vocals.volume = 0;
+		if(!daNote.isSustainNote && !daNote.exists) songMisses++;
+		if(!daNote.isSustainNote) vocals.volume = 0;
 		if(!practiceMode) songScore -= 10;
 
-		totalPlayed++;
+		if(!daNote.isSustainNote) totalPlayed++;
 		RecalculateRating(true);
 
 		var char:Character = boyfriend;
@@ -4824,7 +4852,7 @@ class PlayState extends MusicBeatState
 		if(char != null && !daNote.noMissAnimation && char.hasMissAnimations)
 		{
 			var animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + 'miss' + daNote.animSuffix;
-			char.playAnim(animToPlay, true);
+			if(!daNote.isSustainNote) char.playAnim(animToPlay, true);
 		}
 
 		callOnLuas('noteMiss', [notes.members.indexOf(daNote), daNote.noteData, daNote.noteType, daNote.isSustainNote]);
@@ -4952,8 +4980,6 @@ class PlayState extends MusicBeatState
 				FlxG.sound.play(Paths.sound('hitsound'), ClientPrefs.hitsoundVolume);
 			}
 
-			if(combo >= highestCombo) highestCombo = combo + 1;
-
 			if(note.hitCausesMiss) {
 				noteMiss(note);
 				if(!note.noteSplashDisabled && !note.isSustainNote) {
@@ -4989,6 +5015,7 @@ class PlayState extends MusicBeatState
 				if(combo > 9999) combo = 9999;
 				popUpScore(note);
 				health += note.hitHealth * healthGain;
+				if(combo >= highestCombo) highestCombo = combo + 1;
 				//trace(FUNKYNUM_LOL);
 			}
 			//health += note.hitHealth * healthGain;
