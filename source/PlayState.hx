@@ -1332,8 +1332,8 @@ class PlayState extends MusicBeatState
 		anotherlightshitlol.visible = !ClientPrefs.hideHud;
 		add(anotherlightshitlol);
 
-		judgementCounter = new FlxText(-25, 0, 0, "", 18); //https://github.com/ShadowMario/FNF-PsychEngine/discussions/3707 so COOL LOL
-		judgementCounter.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		judgementCounter = new FlxText(-25, 0, 0, "", 20); //https://github.com/ShadowMario/FNF-PsychEngine/discussions/3707 so COOL LOL
+		judgementCounter.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		judgementCounter.borderSize = 2;
 		judgementCounter.borderQuality = 2;
 		judgementCounter.scrollFactor.set();
