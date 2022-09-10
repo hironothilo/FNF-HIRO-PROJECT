@@ -4528,7 +4528,7 @@ class PlayState extends MusicBeatState
 		}
 		rating.scale.x = 0.745;
 		rating.scale.y = 0.745;
-		ratingTween = FlxTween.tween(rating.scale, {x: 0.65, y: 0.65}, 0.2, {
+		ratingTween = FlxTween.tween(rating.scale, {x: 0.675, y: 0.675}, 0.2, {
 			onComplete: function(twn:FlxTween) {
 				ratingTween = null;
 			}
