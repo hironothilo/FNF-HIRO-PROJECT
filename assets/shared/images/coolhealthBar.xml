@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="coolhealthBar.png">
+	<!-- Created with Adobe Animate version 20.0.3.25487 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="cool healthber 1 instance 10000" x="0" y="141" width="485" height="12" frameX="-77" frameY="-5" frameWidth="661" frameHeight="21"/>
+	<SubTexture name="cool healthber 1 instance 10001" x="0" y="114" width="537" height="16" frameX="-26" frameY="-5" frameWidth="661" frameHeight="21"/>
+	<SubTexture name="cool healthber 1 instance 10002" x="0" y="98" width="541" height="16" frameX="-23" frameY="-5" frameWidth="661" frameHeight="21"/>
+	<SubTexture name="cool healthber 1 instance 10003" x="0" y="50" width="556" height="16" frameX="-8" frameY="-1" frameWidth="661" frameHeight="21"/>
+	<SubTexture name="cool healthber 1 instance 10004" x="0" y="82" width="542" height="16" frameX="-22" frameY="-5" frameWidth="661" frameHeight="21"/>
+	<SubTexture name="cool healthber 1 instance 10005" x="0" y="66" width="556" height="16" frameX="-8" frameY="-1" frameWidth="661" frameHeight="21"/>
+	<SubTexture name="cool healthber 1 instance 10006" x="0" y="130" width="542" height="11" frameX="-22" frameY="-5" frameWidth="661" frameHeight="21"/>
+	<SubTexture name="cool healthber 1 instance 10007" x="0" y="0" width="637" height="17" frameX="-24" frameY="0" frameWidth="661" frameHeight="21"/>
+	<SubTexture name="cool healthber 1 instance 10008" x="0" y="17" width="635" height="17" frameX="-26" frameY="0" frameWidth="661" frameHeight="21"/>
+	<SubTexture name="cool healthber 1 instance 10009" x="0" y="165" width="515" height="11" frameX="0" frameY="-5" frameWidth="661" frameHeight="21"/>
+	<SubTexture name="cool healthber 1 instance 10010" x="637" y="0" width="69" height="12" frameX="-32" frameY="-5" frameWidth="661" frameHeight="21"/>
+	<SubTexture name="cool healthber 1 instance 10011" x="561" y="34" width="67" height="11" frameX="-37" frameY="-5" frameWidth="661" frameHeight="21"/>
+	<SubTexture name="cool healthber 1 instance 10012" x="0" y="153" width="477" height="12" frameX="-81" frameY="-5" frameWidth="661" frameHeight="21"/>
+	<SubTexture name="cool healthber 1 instance 10013" x="0" y="34" width="561" height="16" frameX="0" frameY="-5" frameWidth="661" frameHeight="21"/>
+</TextureAtlas>

@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="funkywtfman.png">
+	<!-- Created with Adobe Animate version 20.0.3.25487 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="holyshit instance 10000" x="164" y="0" width="163" height="548" frameX="0" frameY="0" frameWidth="167" frameHeight="549"/>
+	<SubTexture name="holyshit instance 10001" x="164" y="0" width="163" height="548" frameX="0" frameY="0" frameWidth="167" frameHeight="549"/>
+	<SubTexture name="holyshit instance 10002" x="0" y="0" width="164" height="545" frameX="-3" frameY="-3" frameWidth="167" frameHeight="549"/>
+	<SubTexture name="holyshit instance 10003" x="0" y="0" width="164" height="545" frameX="-3" frameY="-3" frameWidth="167" frameHeight="549"/>
+	<SubTexture name="holyshit instance 10004" x="327" y="0" width="162" height="541" frameX="-3" frameY="-8" frameWidth="167" frameHeight="549"/>
+	<SubTexture name="holyshit instance 10005" x="327" y="0" width="162" height="541" frameX="-3" frameY="-8" frameWidth="167" frameHeight="549"/>
+</TextureAtlas>
