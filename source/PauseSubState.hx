@@ -210,7 +210,7 @@ class PauseSubState extends MusicBeatSubstate
 				}
 		}
 
-		if (accepted && (cantUnpause <= 0 || !ClientPrefs.controllerMode) && !startedCountdown)
+		if ((accepted || FlxG.mouse.pressed) && (cantUnpause <= 0 || !ClientPrefs.controllerMode) && !startedCountdown)
 		{
 
 			if (menuItems == difficultyChoices)
