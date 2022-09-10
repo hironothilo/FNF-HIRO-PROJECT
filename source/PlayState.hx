@@ -4826,6 +4826,7 @@ class PlayState extends MusicBeatState
 				note.kill();
 				notes.remove(note, true);
 				note.destroy();
+				daNote.exists = false;
 			}
 		});
 		combo = 0;
@@ -4839,8 +4840,9 @@ class PlayState extends MusicBeatState
 
 		//For testing purposes
 		//trace(daNote.missHealth);
-		if(!daNote.isSustainNote && !daNote.exists) songMisses++;
-		if(!daNote.isSustainNote) vocals.volume = 0;
+		//if(!daNote.isSustainNote && !daNote.exists) songMisses++;
+		if(!daNote.isSustainNote) songMisses++;
+		vocals.volume = 0;
 		if(!practiceMode) songScore -= 10;
 
 		if(!daNote.isSustainNote) totalPlayed++;
@@ -5019,6 +5021,7 @@ class PlayState extends MusicBeatState
 				health += note.hitHealth * healthGain;
 				if(combo > highestCombo) highestCombo = combo;
 				//trace(FUNKYNUM_LOL);
+				vocals.volume = 1;
 			}
 			//health += note.hitHealth * healthGain;
 
@@ -5086,7 +5089,7 @@ class PlayState extends MusicBeatState
 				});
 			}
 			note.wasGoodHit = true;
-			vocals.volume = 1;
+			//vocals.volume = 1;
 
 			var isSus:Bool = note.isSustainNote; //GET OUT OF MY HEAD, GET OUT OF MY HEAD, GET OUT OF MY HEAD
 			var leData:Int = Math.round(Math.abs(note.noteData));
