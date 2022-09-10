@@ -1976,6 +1976,8 @@ class PlayState extends MusicBeatState
 					gfDance.animation.play('dance', true);
 					addBehindGF(gfDance);
 				}
+				gfDance.x -= 320;
+				gfDance.y -= 180;
 
 				gfCutscene.frames = Paths.getSparrowAtlas('cutscenes/stressGF');
 				gfCutscene.animation.addByPrefix('dieBitch', 'GF STARTS TO TURN PART 1', 24, false);
@@ -1998,6 +2000,8 @@ class PlayState extends MusicBeatState
 				boyfriendCutscene.animation.play('idle', true);
 				boyfriendCutscene.animation.curAnim.finish();
 				addBehindBF(boyfriendCutscene);
+				boyfriendCutscene.x -= 320;
+				boyfriendCutscene.y -= 160;
 
 				var cutsceneSnd:FlxSound = new FlxSound().loadEmbedded(Paths.sound('stressCutscene'));
 				FlxG.sound.list.add(cutsceneSnd);
@@ -2033,7 +2037,7 @@ class PlayState extends MusicBeatState
 				cutsceneHandler.timer(15.2, function()
 				{
 					focusshit = '';
-					FlxTween.tween(camFollow, {x: 650, y: 300}, 1, {ease: FlxEase.sineOut});
+					FlxTween.tween(camFollow, {x: 970, y: 480}, 1, {ease: FlxEase.sineOut});
 					FlxTween.tween(FlxG.camera, {zoom: 0.9 * 1.2 * 1.2}, 2.25, {ease: FlxEase.quadInOut});
 
 					gfDance.visible = false;
@@ -2044,7 +2048,7 @@ class PlayState extends MusicBeatState
 						if(name == 'dieBitch') //Next part
 						{
 							gfCutscene.animation.play('getRektLmao', true);
-							gfCutscene.offset.set(224, 445);
+							gfCutscene.offset.set(224, 445);//(224, 445);
 							focusshit = 'gf';
 						}
 						else
@@ -3452,6 +3456,7 @@ class PlayState extends MusicBeatState
 						if(daNote.isSustainNote) {
 							if(daNote.exists = true){
 								songMisses += 1;
+								daNote.alpha = 0.15;
 								totalPlayed++;
 								vocals.volume = 0;
 								health -= daNote.missHealth * healthLoss;
@@ -4114,7 +4119,7 @@ class PlayState extends MusicBeatState
 						});
 					}
 			case 'none':
-				camtween = FlxTween.tween(camFollow, {x: add1cam+320, y: add2cam+180}, 0.01, 
+				camtween = FlxTween.tween(camFollow, {x: add1cam, y: add2cam}, 0.01, 
 				{ease: FlxEase.sineOut});
 		}
 		if(ClientPrefs.updatecam && focusedChar != null){
@@ -4826,10 +4831,10 @@ class PlayState extends MusicBeatState
 				note.kill();
 				notes.remove(note, true);
 				note.destroy();
-				daNote.exists = false;
 			}
 		});
 		combo = 0;
+		daNote.exists = false;
 		if(!daNote.isSustainNote) health -= daNote.missHealth * healthLoss;
 		
 		if(instakillOnMiss)
@@ -5303,8 +5308,8 @@ class PlayState extends MusicBeatState
 		{
 			tankAngle += elapsed * tankSpeed;
 			tankGround.angle = tankAngle - 90 + 15;
-			tankGround.x = tankX + 1500 * Math.cos(Math.PI / 180 * (1 * tankAngle + 180)) + 320;
-			tankGround.y = 1300 + 1100 * Math.sin(Math.PI / 180 * (1 * tankAngle + 180)) + 160;
+			tankGround.x = tankX + 1500 * Math.cos(Math.PI / 180 * (1 * tankAngle + 180)) + 360;
+			tankGround.y = 1300 + 1100 * Math.sin(Math.PI / 180 * (1 * tankAngle + 180)) + 200;
 		}
 	}
 
