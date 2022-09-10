@@ -3453,6 +3453,8 @@ class PlayState extends MusicBeatState
 							if(daNote.exists = true){
 								songMisses += 1;
 								totalPlayed++;
+								vocals.volume = 0;
+								health -= daNote.missHealth * healthLoss;
 								var char:Character = boyfriend;
 								if(daNote.gfNote) {
 									char = gf;
@@ -3465,7 +3467,7 @@ class PlayState extends MusicBeatState
 								}
 							}
 							for (daNote in parent.tail){
-								daNote.tooLate = true;
+								daNote.whybroxd = true;
 								daNote.active = false;
 								//daNote.alpha = 0.15;
 								daNote.exists = false;//good bye note
@@ -5015,7 +5017,7 @@ class PlayState extends MusicBeatState
 				if(combo > 9999) combo = 9999;
 				popUpScore(note);
 				health += note.hitHealth * healthGain;
-				if(combo >= highestCombo) highestCombo = combo + 1;
+				if(combo > highestCombo) highestCombo = combo;
 				//trace(FUNKYNUM_LOL);
 			}
 			//health += note.hitHealth * healthGain;

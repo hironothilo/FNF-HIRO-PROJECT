@@ -26,6 +26,7 @@ class Note extends FlxSprite
 	public var noteData:Int = 0;
 	public var canBeHit:Bool = false;
 	public var tooLate:Bool = false;
+	public var whybroxd:Bool = false;
 	public var wasGoodHit:Bool = false;
 	public var ignoreNote:Bool = false;
 	public var hitByOpponent:Bool = false;
@@ -431,9 +432,9 @@ class Note extends FlxSprite
 			colorSwap.saturation = ClientPrefs.arrowHSV[noteData % 4][1] / 100;
 			colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;
 		}*/
-		//if(tooLate || (parent != null && parent.tooLate)) alpha = 0.15;
+		if(whybroxd || (parent != null && parent.whybroxd)) alpha = 0.15;
 
-		if (tooLate)
+		if (tooLate && !inEditor)
 		{
 			if (alpha > 0.3){
 				alpha = 0.15;
