@@ -289,6 +289,7 @@ class PlayState extends MusicBeatState
 	public var judgementCounter:FlxText;
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
+	var ratingTween:FlxTween;
 
 	public static var campaignScore:Int = 0;
 	public static var campaignMisses:Int = 0;
@@ -1332,8 +1333,8 @@ class PlayState extends MusicBeatState
 		anotherlightshitlol.visible = !ClientPrefs.hideHud;
 		add(anotherlightshitlol);
 
-		judgementCounter = new FlxText(-25, 0, 0, "", 18); //https://github.com/ShadowMario/FNF-PsychEngine/discussions/3707 so COOL LOL
-		judgementCounter.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		judgementCounter = new FlxText(-25, 0, 0, "", 20); //https://github.com/ShadowMario/FNF-PsychEngine/discussions/3707 so COOL LOL
+		judgementCounter.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		judgementCounter.borderSize = 2;
 		judgementCounter.borderQuality = 2;
 		judgementCounter.scrollFactor.set();
@@ -4522,6 +4523,17 @@ class PlayState extends MusicBeatState
 		comboSpr.velocity.x += FlxG.random.int(1, 10);
 
 		insert(members.indexOf(strumLineNotes), rating);
+		if(ratingTween != null) {
+			ratingTween.cancel();
+		}
+		rating.scale.x = 0.52;
+		rating.scale.y = 0.52;
+		ratingTween = FlxTween.tween(rating.scale, {x: 0.745, y: 0.745}, 0.2, {
+			onComplete: function(twn:FlxTween) {
+				ratingTween = null;
+			}
+		});
+		//trace(rating.scale);
 
 		if (!PlayState.isPixelStage)
 		{

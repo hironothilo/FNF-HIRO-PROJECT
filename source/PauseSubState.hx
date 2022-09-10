@@ -156,8 +156,9 @@ class PauseSubState extends MusicBeatSubstate
 
 		var upP = controls.UI_UP_P;
 		var downP = controls.UI_DOWN_P;
-		var accepted = controls.ACCEPT;
+		var accepted = controls.ACCEPT || FlxG.mouse.pressed;
 
+		var shiftMult:Int = 1;
 		if (upP && !startedCountdown)
 		{
 			changeSelection(-1);
@@ -166,6 +167,13 @@ class PauseSubState extends MusicBeatSubstate
 		{
 			changeSelection(1);
 		}
+		#if !mobile
+		if(FlxG.mouse.wheel != 0 && !startedCountdown)
+		{
+			FlxG.sound.play(Paths.sound('scrollMenu'), 0.2);
+			changeSelection(-FlxG.mouse.wheel);
+		}
+		#end
 
 		var daSelected:String = menuItems[curSelected];
 		switch (daSelected)
