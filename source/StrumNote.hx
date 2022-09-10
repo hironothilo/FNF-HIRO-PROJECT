@@ -27,7 +27,7 @@ class StrumNote extends FlxSprite
 		return value;
 	}
 
-	public function new(x:Float, y:Float, leData:Int, player:Int) {
+	public function new(x:Float, y:Float, leData:Int, player:Int, char:String = 'bf') {
 		colorSwap = new ColorSwap();
 		shader = colorSwap.shader;
 		noteData = leData;
@@ -38,7 +38,24 @@ class StrumNote extends FlxSprite
 		//dammwtf = changecolor;
 
 		var skin:String = 'NOTE_assets';
-		if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
+		switch(char)
+		{
+			/*case 'bf':
+				skin = 'noteskin/NOTE_assets';
+				doAntialiasing = true; //same as before
+				colorSwap.hue = ClientPrefs.arrowHSV[noteData % 4][0] / 360;
+				colorSwap.saturation = ClientPrefs.arrowHSV[noteData % 4][1] / 100;
+				colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;*/
+			default:
+				if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1){
+					skin = PlayState.SONG.arrowSkin;
+				}
+					/*colorSwap.hue = 0;
+					colorSwap.saturation = 0;
+					colorSwap.brightness = 0;*/
+				
+		}
+		//if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
 		texture = skin; //Load texture and anims
 
 		scrollFactor.set();

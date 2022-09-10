@@ -2566,7 +2566,13 @@ class PlayState extends MusicBeatState
 				else
 					oldNote = null;
 
-				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
+				var char:String;
+				if(gottaHitNote)
+					char = SONG.player1;
+				else
+					char = SONG.player2; //credit https://github.com/ShadowMario/FNF-PsychEngine/discussions/6060
+
+				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote, false, false, char);
 				//if(!swagNote.mustPress) swagNote.changecolor = false;
 				swagNote.mustPress = gottaHitNote;
 				/*if(gottaHitNote) swagNote.changecolor = true;
@@ -2589,7 +2595,13 @@ class PlayState extends MusicBeatState
 					{
 						oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
-						var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + (Conductor.stepCrochet / FlxMath.roundDecimal(songSpeed, 2)), daNoteData, oldNote, true);
+						var char:String;
+						if(gottaHitNote)
+							char = SONG.player1;
+						else
+							char = SONG.player2;
+
+						var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + (Conductor.stepCrochet / FlxMath.roundDecimal(songSpeed, 2)), daNoteData, oldNote, true, false, char);
 						sustainNote.mustPress = gottaHitNote;
 						/*if(sustainNote.mustPress) sustainNote.changecolor = true;
 						if(!sustainNote.mustPress) sustainNote.changecolor = false;*/
@@ -2770,6 +2782,13 @@ class PlayState extends MusicBeatState
 		for (i in 0...4)
 		{
 			// FlxG.log.add(i);
+			var char:String;
+			if(player == 1){
+				char = SONG.player1;
+			}
+			else{
+				char = SONG.player2;
+			}
 			var targetAlpha:Float = 1;
 			if (player < 1)
 			{
@@ -2777,7 +2796,7 @@ class PlayState extends MusicBeatState
 				else if(ClientPrefs.middleScroll) targetAlpha = 0.35;
 			}
 
-			var babyArrow:StrumNote = new StrumNote(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, strumLine.y, i, player);
+			var babyArrow:StrumNote = new StrumNote(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, strumLine.y, i, player, char);
 			babyArrow.downScroll = ClientPrefs.downScroll;
 			if (!isStoryMode && !skipArrowStartTween)
 			{
