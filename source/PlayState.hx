@@ -3455,10 +3455,10 @@ class PlayState extends MusicBeatState
 				{
 					if (daNote.mustPress && !cpuControlled && !daNote.ignoreNote && !endingSong && (daNote.tooLate || !daNote.wasGoodHit)) {
 						if(daNote.isSustainNote) {
-							if(daNote.exists = true){
+							if(daNote.exists){
 								songMisses += 1;
-								daNote.alpha = 0.15;
 								totalPlayed++;
+								songScore -= 10;
 								vocals.volume = 0;
 								health -= daNote.missHealth * healthLoss;
 								var char:Character = boyfriend;
@@ -3475,6 +3475,7 @@ class PlayState extends MusicBeatState
 							for (daNote in parent.tail){
 								daNote.whybroxd = true;
 								daNote.active = false;
+								parent.whybroxd = true;
 								//daNote.alpha = 0.15;
 								daNote.exists = false;//good bye note
 								combo = 0;
@@ -3486,7 +3487,7 @@ class PlayState extends MusicBeatState
 								}
 							}
 						}
-						if(!daNote.isSustainNote && daNote.exists) noteMiss(daNote);
+						if(!daNote.isSustainNote && daNote.exists) noteMiss(daNote); //lol
 						//noteMiss(daNote);
 					}
 
@@ -4506,6 +4507,7 @@ class PlayState extends MusicBeatState
 		rating.acceleration.y = 550;
 		rating.velocity.y -= FlxG.random.int(140, 175);
 		rating.velocity.x -= FlxG.random.int(0, 10);
+		if(SONG.song == 'Milf' || SONG.song == 'satin-panties' || SONG.song == 'high') rating.velocity.x -= FlxG.random.int(125, 150);
 		rating.visible = (!ClientPrefs.hideHud && showRating);
 		rating.x += ClientPrefs.comboOffset[0];
 		rating.y -= ClientPrefs.comboOffset[1];
@@ -4520,7 +4522,8 @@ class PlayState extends MusicBeatState
 		comboSpr.x += ClientPrefs.comboOffset[0];
 		comboSpr.y -= ClientPrefs.comboOffset[1];
 		comboSpr.y += 60;
-		comboSpr.velocity.x += FlxG.random.int(1, 10);
+		comboSpr.velocity.x -= FlxG.random.int(1, 10);
+		if(SONG.song == 'Milf' || SONG.song == 'satin-panties' || SONG.song == 'high') comboSpr.velocity.x -= FlxG.random.int(125, 150);
 
 		insert(members.indexOf(strumLineNotes), rating);
 		if(ratingTween != null) {
@@ -4599,6 +4602,7 @@ class PlayState extends MusicBeatState
 			numScore.velocity.y -= FlxG.random.int(140, 160);
 			numScore.velocity.x = FlxG.random.float(-5, 5);
 			numScore.visible = !ClientPrefs.hideHud;
+			if(SONG.song == 'Milf' || SONG.song == 'satin-panties' || SONG.song == 'high') numScore.velocity.x -= FlxG.random.int(125, 150);
 
 			//if (combo >= 10 || combo == 0)
 			if(showComboNum)
@@ -4858,9 +4862,9 @@ class PlayState extends MusicBeatState
 		//For testing purposes
 		//trace(daNote.missHealth);
 		//if(!daNote.isSustainNote && !daNote.exists) songMisses++;
-		if(!daNote.isSustainNote) songMisses++;
+		if(!daNote.isSustainNote && daNote.exists) songMisses += 1;
 		vocals.volume = 0;
-		if(!practiceMode) songScore -= 10;
+		if(!practiceMode && !daNote.isSustainNote && daNote.exists) songScore -= 10;
 
 		if(!daNote.isSustainNote) totalPlayed++;
 		RecalculateRating(true);
