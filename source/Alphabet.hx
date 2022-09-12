@@ -354,7 +354,7 @@ class Alphabet extends FlxSpriteGroup
 			if(forceX != Math.NEGATIVE_INFINITY) {
 				x = forceX;
 			} else {
-				x = FlxMath.lerp(x, (targetY * 20) + 90 + xAdd, lerpVal);
+				x = FlxMath.lerp(x, (Math.abs(targetY) * 40 * -1) + 90 + xAdd, lerpVal);
 			}
 		}
 

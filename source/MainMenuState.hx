@@ -259,7 +259,7 @@ class MainMenuState extends MusicBeatState
 						else
 						{
 							//spr.x += 200;
-							FlxTween.tween(spr, {x : (FlxG.width / 2.25) - (spr.width / 2)}, 1.25, {
+							FlxTween.tween(spr, {x : (FlxG.width / 2.125) - (spr.width / 2)}, 1.25, {
 								ease: FlxEase.quadOut,
 							});	
 							FlxTween.tween(camGame, {zoom: 3}, 1, {ease: FlxEase.quadInOut, startDelay: 0.5});

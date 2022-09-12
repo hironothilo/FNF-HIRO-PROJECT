@@ -433,7 +433,7 @@ class Note extends FlxSprite
 			colorSwap.saturation = ClientPrefs.arrowHSV[noteData % 4][1] / 100;
 			colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;
 		}*/
-		if(whybroxd || (parent != null && parent.whybroxd)) alpha = 0.15;
+		if(whybroxd || (parent != null && parent.whybroxd)) alpha = 0.25;
 
 		if (tooLate && !inEditor)
 		{

@@ -8,6 +8,7 @@ import Controls;
 
 class ClientPrefs {
 	public static var downScroll:Bool = false;
+	public static var millicounter:Bool = true;
 	public static var middleScroll:Bool = false;
 	public static var opponentStrums:Bool = true;
 	public static var showFPS:Bool = true;
@@ -103,6 +104,7 @@ class ClientPrefs {
 		FlxG.save.data.showFPS = showFPS;
 		FlxG.save.data.updatecam = updatecam;
 		FlxG.save.data.noteeffect = noteeffect;
+		FlxG.save.data.millicounter = millicounter;
 		FlxG.save.data.flashing = flashing;
 		FlxG.save.data.epicWindow = epicWindow;
 		FlxG.save.data.globalAntialiasing = globalAntialiasing;
@@ -155,6 +157,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.epicWindow != null) {
 			epicWindow = FlxG.save.data.epicWindow;
+		}
+		if(FlxG.save.data.millicounter != null) {
+			millicounter = FlxG.save.data.millicounter;
 		}
 		if(FlxG.save.data.noteeffect != null) {
 			noteeffect = FlxG.save.data.noteeffect;

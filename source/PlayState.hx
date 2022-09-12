@@ -4401,74 +4401,77 @@ class PlayState extends MusicBeatState
 			pixelShitPart2 = '-pixel';
 		}
 		var loopshit:Int = 0;
-		for (i in noteDiffarray)
+		if(ClientPrefs.millicounter)
 		{
-			if(i=="."){
-				i = "point";
-			}
-			if(i=='-'){
-				i = 'negative';
-				loopshit--;
-			}
-	
-			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'num' + Std.string(i) + pixelShitPart2));
-			numScore.cameras = [camHUD];
-			numScore.screenCenter();
-			numScore.x = coolText.x + (28 * loopshit) + 180;
-			numScore.x += ClientPrefs.comboOffset[0];
-			numScore.y -= ClientPrefs.comboOffset[1];
-			numScore.velocity.y -= FlxG.random.int(140, 175);
-			numScore.visible = !ClientPrefs.hideHud;
-			//trace(numScore.width);
-			numScore.x -= 30 * (noteDiffarraytwo.length - 1);
-			
-			if(i == "point"){
-				numScore.x += 10;
-				numScore.y -= 15;
-			}
-
-			switch (daRating.name)
-			{
-				case 'epic':
-					numScore.color = 0xC182FF;
-				case 'sick':
-					numScore.color = 0x00ffff;
-				case 'good':
-					numScore.color = 0x14cc00;
-				case 'bad':
-					numScore.color = 0xa30a11;
-				case 'shit':
-					numScore.color = 0x5c2924;
-				default:
-					numScore.color = 0xFFFFFF;
-			}
-			if (!PlayState.isPixelStage)
-			{
-				numScore.antialiasing = ClientPrefs.globalAntialiasing;
-				numScore.setGraphicSize(Std.int(numScore.width * 0.4));
-				if(i == "point") numScore.setGraphicSize(Std.int(numScore.width * 0.55));
-			}
-			else
-			{
-				numScore.setGraphicSize(Std.int(numScore.width * 5));
-				if(i == "point" || i == "negative"){
-					numScore.y += 60;
-					if(i == "negative") numScore.y -= 30;
-					numScore.setGraphicSize(Std.int(numScore.width * 0.7));
-				}
-			}
-			numScore.updateHitbox();
-			add(numScore);
-	
-			FlxTween.tween(numScore, {alpha: 0}, 0.2, {
-				onComplete: function(tween:FlxTween)
+			for (i in noteDiffarray)
 				{
-					numScore.destroy();
-				},
-				startDelay: Conductor.crochet * 0.0005
-			});
-	
-			loopshit++;
+					if(i=="."){
+						i = "point";
+					}
+					if(i=='-'){
+						i = 'negative';
+						loopshit--;
+					}
+			
+					var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'num' + Std.string(i) + pixelShitPart2));
+					numScore.cameras = [camHUD];
+					numScore.screenCenter();
+					numScore.x = coolText.x + (28 * loopshit) + 180;
+					numScore.x += ClientPrefs.comboOffset[0];
+					numScore.y -= ClientPrefs.comboOffset[1];
+					numScore.velocity.y -= FlxG.random.int(140, 175);
+					numScore.visible = !ClientPrefs.hideHud;
+					//trace(numScore.width);
+					numScore.x -= 30 * (noteDiffarraytwo.length - 1);
+					
+					if(i == "point"){
+						numScore.x += 10;
+						numScore.y -= 15;
+					}
+		
+					switch (daRating.name)
+					{
+						case 'epic':
+							numScore.color = 0xC182FF;
+						case 'sick':
+							numScore.color = 0x00ffff;
+						case 'good':
+							numScore.color = 0x14cc00;
+						case 'bad':
+							numScore.color = 0xa30a11;
+						case 'shit':
+							numScore.color = 0x5c2924;
+						default:
+							numScore.color = 0xFFFFFF;
+					}
+					if (!PlayState.isPixelStage)
+					{
+						numScore.antialiasing = ClientPrefs.globalAntialiasing;
+						numScore.setGraphicSize(Std.int(numScore.width * 0.4));
+						if(i == "point") numScore.setGraphicSize(Std.int(numScore.width * 0.55));
+					}
+					else
+					{
+						numScore.setGraphicSize(Std.int(numScore.width * 5));
+						if(i == "point" || i == "negative"){
+							numScore.y += 60;
+							if(i == "negative") numScore.y -= 30;
+							numScore.setGraphicSize(Std.int(numScore.width * 0.7));
+						}
+					}
+					numScore.updateHitbox();
+					add(numScore);
+			
+					FlxTween.tween(numScore, {alpha: 0}, 0.2, {
+						onComplete: function(tween:FlxTween)
+						{
+							numScore.destroy();
+						},
+						startDelay: Conductor.crochet * 0.0005
+					});
+			
+					loopshit++;
+				}
 		}
 
 		rating.loadGraphic(Paths.image(pixelShitPart1 + daRating.image + pixelShitPart2 + goldenfunk));
@@ -5390,7 +5393,7 @@ class PlayState extends MusicBeatState
 		{
 			gf.dance();
 		}
-		if(boyfriend.animation.curAnim != null && boyfriend.holdTimer >= Conductor.stepCrochet * 0.006 && !boyfriend.stunned){
+		if(boyfriend.animation.curAnim != null && boyfriend.holdTimer >= Conductor.stepCrochet * 0.002){
 			boyfriend.dance();
 		}
 		if (curBeat % boyfriend.danceEveryNumBeats == 0 && boyfriend.animation.curAnim != null && !boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.stunned)

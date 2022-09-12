@@ -41,6 +41,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Millisecond Popup',
+			"If checked, shows your hits millisecond timing in a popup.\ncredit to andromeda engine.",
+			'millicounter',
+			'bool',
+		true);
+		addOption(option);
+
 		var option:Option = new Option('Controller Mode',
 			'Check this if you want to play with\na controller instead of using your Keyboard.',
 			'controllerMode',
