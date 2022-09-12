@@ -3455,40 +3455,12 @@ class PlayState extends MusicBeatState
 				{
 					if (daNote.mustPress && !cpuControlled && !daNote.ignoreNote && !endingSong && (daNote.tooLate || !daNote.wasGoodHit)) {
 						if(daNote.isSustainNote) {
-							if(daNote.exists){
-								songMisses += 1;
-								totalPlayed++;
-								songScore -= 10;
-								vocals.volume = 0;
-								health -= daNote.missHealth * healthLoss;
-								var char:Character = boyfriend;
-								if(daNote.gfNote) {
-									char = gf;
-								}
-
-								if(char != null && !daNote.noMissAnimation && char.hasMissAnimations)
-								{
-									var animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + 'miss' + daNote.animSuffix;
-									char.playAnim(animToPlay, true);
-								}
-							}
 							for (daNote in parent.tail){
-								daNote.whybroxd = true;
 								daNote.active = false;
-								parent.whybroxd = true;
-								//daNote.alpha = 0.15;
 								daNote.exists = false;//good bye note
-								combo = 0;
-								RecalculateRating(true);
-								if(instakillOnMiss)
-								{
-									vocals.volume = 0;
-									doDeathCheck(true);
-								}
 							}
 						}
-						if(!daNote.isSustainNote && daNote.exists) noteMiss(daNote); //lol
-						//noteMiss(daNote);
+						noteMiss(daNote);
 					}
 
 					daNote.active = false;
@@ -4850,8 +4822,6 @@ class PlayState extends MusicBeatState
 			}
 		});
 		combo = 0;
-		daNote.exists = false;
-		if(!daNote.isSustainNote) health -= daNote.missHealth * healthLoss;
 		
 		if(instakillOnMiss)
 		{
@@ -4859,25 +4829,27 @@ class PlayState extends MusicBeatState
 			doDeathCheck(true);
 		}
 
-		//For testing purposes
-		//trace(daNote.missHealth);
-		//if(!daNote.isSustainNote && !daNote.exists) songMisses++;
-		if(!daNote.isSustainNote && daNote.exists) songMisses += 1;
-		vocals.volume = 0;
-		if(!practiceMode && !daNote.isSustainNote && daNote.exists) songScore -= 10;
+		if(!daNote.isSustainNote && daNote.nextNote.isSustainNote) daNote.nextNote.countmiss = false;
+		else daNote.nextNote.countmiss = true;
 
-		if(!daNote.isSustainNote) totalPlayed++;
-		RecalculateRating(true);
+		if(daNote.countmiss) {
+			songMisses += 1;
+			songScore -= 10;
+			totalPlayed++;
+			RecalculateRating(true);
+			health -= daNote.missHealth * healthLoss;
+			vocals.volume = 0;
 
-		var char:Character = boyfriend;
-		if(daNote.gfNote) {
-			char = gf;
-		}
+			var char:Character = boyfriend;
+			if(daNote.gfNote) {
+				char = gf;
+			}
 
-		if(char != null && !daNote.noMissAnimation && char.hasMissAnimations)
-		{
-			var animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + 'miss' + daNote.animSuffix;
-			if(!daNote.isSustainNote) char.playAnim(animToPlay, true);
+			if(char != null && !daNote.noMissAnimation && char.hasMissAnimations)
+			{
+				var animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + 'miss' + daNote.animSuffix;
+				char.playAnim(animToPlay, true);
+			}
 		}
 
 		callOnLuas('noteMiss', [notes.members.indexOf(daNote), daNote.noteData, daNote.noteType, daNote.isSustainNote]);
