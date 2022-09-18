@@ -87,6 +87,8 @@ class PlayState extends MusicBeatState
 	var add1cam:Float = 0;
 	var add2cam:Float = 0; //that fucking stupid
 
+	public var resultaccuracy:Float = 0;
+
 	var camtween:FlxTween;
 
 	var healthStrips:FlxSprite;
@@ -2981,7 +2983,7 @@ class PlayState extends MusicBeatState
 			iconP1.swapOldIcon();
 		}*/
 		updatecam();
-
+		resultaccuracy = Highscore.floorDecimal(ratingPercent * 100, 2);
 		wiggleShit.waveAmplitude = FlxMath.lerp(wiggleShit.waveAmplitude, 0, 0.035 / (ClientPrefs.framerate / 75));
  		wiggleShit.waveFrequency = FlxMath.lerp(wiggleShit.waveFrequency, 0, 0.035 / (ClientPrefs.framerate / 75));
 
@@ -3024,12 +3026,6 @@ class PlayState extends MusicBeatState
 
 				funkybarfukup();
 			}
-			//idea
-			//เมื่อ bar เต็มแล้ว จะเปลี่ยนสี และเสียงว่า funker [เหลือเสียง]
-			//bar จะลดลงเรื่อยๆ [ผ่าน]
-			//rating และ combo จะเป็นสีทอง [ผ่าน]
-			//ได้คะแนน 2 เท่าจากเดิม [ผ่าน]
-			//20-7 เหลือเสียงและeffect เพิ่มเติม
 		}
 		callOnLuas('onUpdate', [elapsed]);
 
@@ -3209,8 +3205,7 @@ class PlayState extends MusicBeatState
 		var mult:Float = FlxMath.lerp(1, iconP2.scale.x, CoolUtil.boundTo(1 - (elapsed * 7), 0, 1));
 		iconP2.scale.set(mult, mult);
 		//iconP2.updateHitbox();
-
-		var iconOffset:Int = 26;
+		var iconOffset:Int = 20;//26
 
 		//iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
 		//iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
@@ -3294,6 +3289,9 @@ class PlayState extends MusicBeatState
 			cambeforeHUD.zoom = FlxMath.lerp(1, camHUD.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125 * camZoomingDecay), 0, 1));
 			camSus.zoom = FlxMath.lerp(1, camHUD.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125 * camZoomingDecay), 0, 1));
 			camGame.angle = FlxMath.lerp(0, camGame.angle, CoolUtil.boundTo(1 - (elapsed * 3.125 * camZoomingDecay), 0, 1));
+			camHUD.angle = FlxMath.lerp(0, camHUD.angle, CoolUtil.boundTo(1 - (elapsed * 3.125 * camZoomingDecay), 0, 1));
+			camSus.angle = FlxMath.lerp(0, camHUD.angle, CoolUtil.boundTo(1 - (elapsed * 3.125 * camZoomingDecay), 0, 1));
+			cambeforeHUD.angle = FlxMath.lerp(0, camHUD.angle, CoolUtil.boundTo(1 - (elapsed * 3.125 * camZoomingDecay), 0, 1));
 		}
 
 		FlxG.watch.addQuick("secShit", curSection);
@@ -3787,8 +3785,13 @@ class PlayState extends MusicBeatState
 				if(ClientPrefs.camZooms) {
 					var camangle:Float = Std.parseFloat(value1);
 					if(Math.isNaN(camangle)) camangle = 0;
+					var camHUDangle:Float = Std.parseFloat(value2);
+					if(Math.isNaN(camHUDangle)) camHUDangle = 0;
 
 					camGame.angle = camangle;
+					camHUD.angle = camHUDangle;
+					camSus.angle = camHUDangle;
+					cambeforeHUD.angle = camHUDangle; //;-;
 				}
 
 			case 'Trigger BG Ghouls':
@@ -4300,6 +4303,7 @@ class PlayState extends MusicBeatState
 				MusicBeatState.switchState(new FreeplayState());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				changedDifficulty = false;
+				//MusicBeatState.switchState(new ResultState()); //working shit
 			}
 			transitioning = true;
 		}
@@ -4506,11 +4510,20 @@ class PlayState extends MusicBeatState
 		}
 		rating.scale.x = 0.745;
 		rating.scale.y = 0.745;
-		ratingTween = FlxTween.tween(rating.scale, {x: 0.675, y: 0.675}, 0.2, {
-			onComplete: function(twn:FlxTween) {
-				ratingTween = null;
-			}
-		});
+		if(!PlayState.isPixelStage){
+			ratingTween = FlxTween.tween(rating.scale, {x: 0.675, y: 0.675}, 0.2, {
+				onComplete: function(twn:FlxTween) {
+					ratingTween = null;
+				}
+			});
+		}
+		/*else if(PlayState.isPixelStage){
+			ratingTween = FlxTween.tween(rating.scale, {x: 0.74444449, y: 0.74444449}, 0.2, {
+				onComplete: function(twn:FlxTween) {
+					ratingTween = null;
+				}
+			});
+		}*/
 		//trace(rating.scale);
 
 		if (!PlayState.isPixelStage)
@@ -4980,6 +4993,8 @@ class PlayState extends MusicBeatState
 				FlxG.sound.play(Paths.sound('hitsound'), ClientPrefs.hitsoundVolume);
 			}
 
+			if(combo >= highestCombo) highestCombo = combo + 1;
+			
 			if(note.hitCausesMiss) {
 				noteMiss(note);
 				if(!note.noteSplashDisabled && !note.isSustainNote) {
@@ -5015,7 +5030,6 @@ class PlayState extends MusicBeatState
 				if(combo > 9999) combo = 9999;
 				popUpScore(note);
 				health += note.hitHealth * healthGain;
-				if(combo > highestCombo) highestCombo = combo;
 				//trace(FUNKYNUM_LOL);
 				vocals.volume = 1;
 			}
@@ -5393,7 +5407,7 @@ class PlayState extends MusicBeatState
 		{
 			gf.dance();
 		}
-		if(boyfriend.animation.curAnim != null && boyfriend.holdTimer >= Conductor.stepCrochet * 0.002){
+		if(boyfriend.animation.curAnim != null && boyfriend.holdTimer >= Conductor.stepCrochet * 0.004){
 			boyfriend.dance();
 		}
 		if (curBeat % boyfriend.danceEveryNumBeats == 0 && boyfriend.animation.curAnim != null && !boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.stunned)
