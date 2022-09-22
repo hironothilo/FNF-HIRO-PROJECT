@@ -97,7 +97,6 @@ class PlayState extends MusicBeatState
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
 	public static var ratingStuff:Array<Dynamic> = [
-		['NO SINGING?', 0.0001], //SUCK
 		['F', 0.1], //From 0.01% to 9%
 		['E', 0.60], //From 50% to 59%
 		['D', 0.70], //From 60% to 68%
@@ -112,7 +111,7 @@ class PlayState extends MusicBeatState
         ['SS-', 0.9980], //From 97% to 98%
         ['SS', 0.9990], //From 99%-99.49%
         ['SS+', 0.99950], //From 99.5%-99.89%
-        ['X-', 0.99980], //From 99.9%-99.94%
+        ['X-', 0.99980], //From 99.98%-99.94%
 		['X', 0.999935],//From 99.95%-99.9935%
 		['PERFECT', 1] //The value on this one isn't used actually, since Perfect is always "1"
 	];
@@ -2740,7 +2739,7 @@ class PlayState extends MusicBeatState
 				insert(members.indexOf(blammedLightsBlack) + 1, phillyWindowEvent);
 
 
-				phillyGlowGradient = new PhillyGlow.PhillyGlowGradient(-400, 225); //This shit was refusing to properly load FlxGradient so fuck it
+				phillyGlowGradient = new PhillyGlow.PhillyGlowGradient(-400, 405); //225//This shit was refusing to properly load FlxGradient so fuck it
 				phillyGlowGradient.visible = false;
 				insert(members.indexOf(blammedLightsBlack) + 1, phillyGlowGradient);
 				if(!ClientPrefs.flashing) phillyGlowGradient.intendedAlpha = 0.7;
@@ -4351,7 +4350,7 @@ class PlayState extends MusicBeatState
 	{
 		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset);
 		//score += Math.ceil(500 * ((135 - msforscorelol) / 135));
-		var noteDiffarraytwo:Array<String> = Std.string(Math.ceil(noteDiff)).split("");
+		var noteDiffarraytwo:Array<String> = Std.string(Math.floor(noteDiff)).split("");
 		vocals.volume = 1;
 
 		var lol:Float = note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset;
