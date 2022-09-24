@@ -36,7 +36,7 @@ class Note extends FlxSprite
 	public var nextNote:Note;
 
 	public var spawned:Bool = false;
-	public var changecolor:Bool = false;
+	public var changecolor:Bool = true;
 
 	public var tail:Array<Note> = []; // for sustains
 	public var parent:Note;
@@ -128,11 +128,11 @@ class Note extends FlxSprite
 	private function set_noteType(value:String):String {
 		noteSplashTexture = PlayState.SONG.splashSkin;
 
-		//if(changecolor){
+		if(changecolor){
 			colorSwap.hue = ClientPrefs.arrowHSV[noteData % 4][0] / 360;
 			colorSwap.saturation = ClientPrefs.arrowHSV[noteData % 4][1] / 100;
 			colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;
-		//}
+		}
 
 		if(noteData > -1 && noteType != value) {
 			hasNoteType = true;
@@ -194,11 +194,13 @@ class Note extends FlxSprite
 		/*switch(char.toLowerCase())
 		{
 			case 'bf':
-				skin = 'noteskin/NOTE_assets';
+				skin = 'NOTE_assets';
 				antialias = true; //if ur note texture is pixel set this to false, otherwise delete this line
+				changecolor = true;
 			default:
-				skin = 'noteskin/NOTE_assets';
+				skin = 'NOTE_assets';
 				antialias = true; //if ur note texture is pixel set this to false, otherwise delete this lin
+				changecolor = false;
 		}*/
 
 		x += (ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X) + 50;
@@ -428,11 +430,6 @@ class Note extends FlxSprite
 	{
 		super.update(elapsed);
 
-		/*if(changecolor){
-			colorSwap.hue = ClientPrefs.arrowHSV[noteData % 4][0] / 360;
-			colorSwap.saturation = ClientPrefs.arrowHSV[noteData % 4][1] / 100;
-			colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;
-		}*/
 		if(whybroxd || (parent != null && parent.whybroxd)) alpha = 0.25;
 
 		if (tooLate && !inEditor)

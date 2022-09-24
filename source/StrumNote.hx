@@ -14,7 +14,7 @@ class StrumNote extends FlxSprite
 	public var direction:Float = 90;//plan on doing scroll directions soon -bb
 	public var downScroll:Bool = false;//plan on doing scroll directions soon -bb
 	public var sustainReduce:Bool = true;
-	public var changecolor:Bool = false;
+	public var changecolor:Bool = true;
 	
 	private var player:Int;
 	
@@ -35,27 +35,18 @@ class StrumNote extends FlxSprite
 		this.noteData = leData;
 		super(x, y);
 
-		//dammwtf = changecolor;
-
 		var skin:String = 'NOTE_assets';
 		switch(char)
 		{
 			/*case 'bf':
-				skin = 'noteskin/NOTE_assets';
-				doAntialiasing = true; //same as before
-				colorSwap.hue = ClientPrefs.arrowHSV[noteData % 4][0] / 360;
-				colorSwap.saturation = ClientPrefs.arrowHSV[noteData % 4][1] / 100;
-				colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;*/
+				skin = 'NOTE_assets';
+				changecolor = true;*/
 			default:
 				if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1){
 					skin = PlayState.SONG.arrowSkin;
 				}
-					/*colorSwap.hue = 0;
-					colorSwap.saturation = 0;
-					colorSwap.brightness = 0;*/
-				
+				//changecolor = false;
 		}
-		//if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
 		texture = skin; //Load texture and anims
 
 		scrollFactor.set();
@@ -174,11 +165,11 @@ class StrumNote extends FlxSprite
 			colorSwap.saturation = 0;
 			colorSwap.brightness = 0;
 		} else {
-			//if(changecolor){
+			if(changecolor){
 				colorSwap.hue = ClientPrefs.arrowHSV[noteData % 4][0] / 360;
 				colorSwap.saturation = ClientPrefs.arrowHSV[noteData % 4][1] / 100;
 				colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;
-			//}
+			}
 			if(animation.curAnim.name == 'confirm' && !PlayState.isPixelStage) {
 				centerOrigin();
 			}

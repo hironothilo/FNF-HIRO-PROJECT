@@ -2575,10 +2575,7 @@ class PlayState extends MusicBeatState
 					char = SONG.player2; //credit https://github.com/ShadowMario/FNF-PsychEngine/discussions/6060
 
 				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote, false, false, char);
-				//if(!swagNote.mustPress) swagNote.changecolor = false;
 				swagNote.mustPress = gottaHitNote;
-				/*if(gottaHitNote) swagNote.changecolor = true;
-				if(!gottaHitNote) swagNote.changecolor = false;*/
 				swagNote.sustainLength = songNotes[2];
 				swagNote.gfNote = (section.gfSection && (songNotes[1]<4));
 				swagNote.noteType = songNotes[3];
@@ -2605,8 +2602,6 @@ class PlayState extends MusicBeatState
 
 						var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + (Conductor.stepCrochet / FlxMath.roundDecimal(songSpeed, 2)), daNoteData, oldNote, true, false, char);
 						sustainNote.mustPress = gottaHitNote;
-						/*if(sustainNote.mustPress) sustainNote.changecolor = true;
-						if(!sustainNote.mustPress) sustainNote.changecolor = false;*/
 						sustainNote.gfNote = (section.gfSection && (songNotes[1]<4));
 						sustainNote.noteType = swagNote.noteType;
 						sustainNote.scrollFactor.set();
@@ -2813,7 +2808,6 @@ class PlayState extends MusicBeatState
 
 			if (player == 1)
 			{
-				babyArrow.changecolor = true;
 				playerStrums.add(babyArrow);
 			}
 			else
@@ -2825,7 +2819,6 @@ class PlayState extends MusicBeatState
 						babyArrow.x += FlxG.width / 2 + 25;
 					}
 				}
-				babyArrow.changecolor = false;
 				opponentStrums.add(babyArrow);
 			}
 
@@ -3314,8 +3307,6 @@ class PlayState extends MusicBeatState
 			while (unspawnNotes.length > 0 && unspawnNotes[0].strumTime - Conductor.songPosition < time)
 			{
 				var dunceNote:Note = unspawnNotes[0];
-				/*if(dunceNote.mustPress) dunceNote.changecolor = true;
-				if(!dunceNote.mustPress) dunceNote.changecolor = false;*/
 				notes.insert(0, dunceNote);
 				dunceNote.spawned=true;
 				callOnLuas('onSpawnNote', [notes.members.indexOf(dunceNote), dunceNote.noteData, dunceNote.noteType, dunceNote.isSustainNote]);
@@ -3344,6 +3335,7 @@ class PlayState extends MusicBeatState
 					strumGroup = opponentStrums;
 				}
 				if (daNote.isSustainNote) daNote.cameras = [camSus];
+
 				var strumX:Float = strumGroup.members[daNote.noteData].x;
 				var strumY:Float = strumGroup.members[daNote.noteData].y;
 				var strumAngle:Float = strumGroup.members[daNote.noteData].angle;
@@ -3401,7 +3393,6 @@ class PlayState extends MusicBeatState
 				if (!daNote.mustPress && daNote.wasGoodHit && !daNote.hitByOpponent && !daNote.ignoreNote)
 				{
 					opponentNoteHit(daNote);
-					//daNote.changecolor = false;
 				}
 
 				if(daNote.mustPress && cpuControlled) {
@@ -3412,7 +3403,6 @@ class PlayState extends MusicBeatState
 					} else if(daNote.strumTime <= Conductor.songPosition || (daNote.isSustainNote && daNote.canBeHit && daNote.mustPress)) {
 						goodNoteHit(daNote);
 					}
-					//daNote.changecolor = true;
 				}
 
 				var center:Float = strumY + Note.swagWidth / 2;
