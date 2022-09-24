@@ -3344,9 +3344,6 @@ class PlayState extends MusicBeatState
 					strumGroup = opponentStrums;
 				}
 				if (daNote.isSustainNote) daNote.cameras = [camSus];
-				/*if(strumGroup == opponentStrums) daNote.changecolor = false;
-				if(strumGroup == playerStrums) daNote.changecolor = true;*/
-
 				var strumX:Float = strumGroup.members[daNote.noteData].x;
 				var strumY:Float = strumGroup.members[daNote.noteData].y;
 				var strumAngle:Float = strumGroup.members[daNote.noteData].angle;
