@@ -30,7 +30,8 @@ class NoteSplash extends FlxSprite
 		alpha = 0.6;
 
 		if(texture == null) {
-			texture = 'noteSplashes';
+			if(ClientPrefs.noteskinlol == 'Default') texture = 'noteSplashes';
+			if(ClientPrefs.noteskinlol == 'Quant') texture = 'noteSplashes_QUANT';
 			if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
 		}
 

@@ -101,6 +101,8 @@ class Note extends FlxSprite
 	
 	public var hitsoundDisabled:Bool = false;
 
+	public var noteQuant:Int = -1;
+
 	private function set_multSpeed(value:Float):Float {
 		resizeByRatio(value / multSpeed);
 		multSpeed = value;
@@ -129,9 +131,16 @@ class Note extends FlxSprite
 		noteSplashTexture = PlayState.SONG.splashSkin;
 
 		if(changecolor){
-			colorSwap.hue = ClientPrefs.arrowHSV[noteData % 4][0] / 360;
-			colorSwap.saturation = ClientPrefs.arrowHSV[noteData % 4][1] / 100;
-			colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;
+			if(ClientPrefs.noteskinlol == 'Default'){
+				colorSwap.hue = ClientPrefs.arrowHSV[noteData % 4][0] / 360;
+				colorSwap.saturation = ClientPrefs.arrowHSV[noteData % 4][1] / 100;
+				colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;
+			}
+			if(ClientPrefs.noteskinlol == 'Quant'){
+				colorSwap.hue = ClientPrefs.arrowQUANTHSV[noteQuant % 10][0] / 360;
+				colorSwap.saturation = ClientPrefs.arrowQUANTHSV[noteQuant % 10][1] / 100;
+				colorSwap.brightness = ClientPrefs.arrowQUANTHSV[noteQuant % 10][2] / 100;
+			}
 		}
 
 		if(noteData > -1 && noteType != value) {
@@ -308,6 +317,51 @@ class Note extends FlxSprite
 			earlyHitMult = 1;
 		}
 		x += offsetX;
+
+		if (noteQuant == -1)
+		{
+			/*
+				GIVE CREDIT TO FOREVER ENGINE ITS SO GOOD https://github.com/Yoshubs/Forever-Engine-Legacy 
+				I have to credit like 3 different people for these LOL they were a hassle
+				but its gede pixl and scarlett, thank you SO MUCH for baring with me
+			 */
+			final quantArray:Array<Int> = [4, 8, 12, 16, 20, 24, 32, 48, 64, 192]; // different quants
+	
+			var curBPM:Float = Conductor.bpm;
+			var newTime = strumTime;
+			for (i in 0...Conductor.bpmChangeMap.length)
+			{
+				if (strumTime > Conductor.bpmChangeMap[i].songTime)
+				{
+					curBPM = Conductor.bpmChangeMap[i].bpm;
+					newTime = strumTime - Conductor.bpmChangeMap[i].songTime;
+				}
+			}
+	
+			final beatTimeSeconds:Float = (60 / curBPM); // beat in seconds
+			final beatTime:Float = beatTimeSeconds * 1000; // beat in milliseconds
+			// assumed 4 beats per measure?
+			final measureTime:Float = beatTime * 4;
+	
+			final smallestDeviation:Float = measureTime / quantArray[quantArray.length - 1];
+	
+			for (quant in 0...quantArray.length)
+			{
+				// please generate this ahead of time and put into array :)
+				// I dont think I will im scared of those
+				final quantTime = (measureTime / quantArray[quant]);
+				if ((newTime + smallestDeviation) % quantTime < smallestDeviation * 2)
+				{
+						// here it is, the quant, finally!
+					noteQuant = quant;
+					break;
+				}
+			}
+		}
+	
+		// note quants
+		// inherit last quant if hold note
+		if (isSustainNote && prevNote != null) noteQuant = prevNote.noteQuant;
 	}
 
 	var lastNoteOffsetXForPixelAutoAdjusting:Float = 0;
@@ -322,7 +376,8 @@ class Note extends FlxSprite
 		if(texture.length < 1) {
 			skin = PlayState.SONG.arrowSkin;
 			if(skin == null || skin.length < 1) {
-				skin = 'NOTE_assets';
+				if(ClientPrefs.noteskinlol == 'Default') skin = 'NOTE_assets';
+				if(ClientPrefs.noteskinlol == 'Quant') skin = 'NOTE_assets_QUANT';
 			}
 		}
 

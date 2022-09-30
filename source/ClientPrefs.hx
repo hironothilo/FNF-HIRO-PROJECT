@@ -13,6 +13,7 @@ class ClientPrefs {
 	public static var opponentStrums:Bool = true;
 	public static var showFPS:Bool = true;
 	public static var judgementcounter:Bool = true;
+	public static var noteskinlol:String = 'Default';
 	public static var updatecam:Bool = true;
 	public static var flashing:Bool = true;
 	public static var globalAntialiasing:Bool = true;
@@ -26,6 +27,7 @@ class ClientPrefs {
 	public static var hideHud:Bool = false;
 	public static var noteOffset:Int = 0;
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
+	public static var arrowQUANTHSV:Array<Array<Int>> = [[0, 0, 0], [-130, 0, 0], [-80, 0, 0], [128, 0, 0], [-120, -20, -35], [-55, 0, 0], [50, 0, 0], [-80, 0, 0], [-160, 0, 0], [-120, -20, -35]];
 	public static var imagesPersist:Bool = false;
 	public static var ghostTapping:Bool = true;
 	public static var timeBarType:String = 'Time Left';
@@ -103,6 +105,7 @@ class ClientPrefs {
 		FlxG.save.data.opponentStrums = opponentStrums;
 		FlxG.save.data.showFPS = showFPS;
 		FlxG.save.data.updatecam = updatecam;
+		FlxG.save.data.noteskinlol = noteskinlol;
 		FlxG.save.data.noteeffect = noteeffect;
 		FlxG.save.data.millicounter = millicounter;
 		FlxG.save.data.flashing = flashing;
@@ -119,6 +122,7 @@ class ClientPrefs {
 		FlxG.save.data.hideHud = hideHud;
 		FlxG.save.data.arrowHSV = arrowHSV;
 		FlxG.save.data.imagesPersist = imagesPersist;
+		FlxG.save.data.arrowQUANTHSV = arrowQUANTHSV;
 		FlxG.save.data.ghostTapping = ghostTapping;
 		FlxG.save.data.timeBarType = timeBarType;
 		FlxG.save.data.scoreZoom = scoreZoom;
@@ -155,8 +159,14 @@ class ClientPrefs {
 		if(FlxG.save.data.middleScroll != null) {
 			middleScroll = FlxG.save.data.middleScroll;
 		}
+		if(FlxG.save.data.noteskinlol != null) {
+			noteskinlol = FlxG.save.data.noteskinlol;
+		}
 		if(FlxG.save.data.epicWindow != null) {
 			epicWindow = FlxG.save.data.epicWindow;
+		}
+		if(FlxG.save.data.arrowQUANTHSV != null) {
+			arrowQUANTHSV = FlxG.save.data.arrowQUANTHSV;
 		}
 		if(FlxG.save.data.millicounter != null) {
 			millicounter = FlxG.save.data.millicounter;

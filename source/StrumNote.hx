@@ -36,6 +36,8 @@ class StrumNote extends FlxSprite
 		super(x, y);
 
 		var skin:String = 'NOTE_assets';
+		if(ClientPrefs.noteskinlol == 'Default') skin = 'NOTE_assets';
+		if(ClientPrefs.noteskinlol == 'Quant') skin = 'NOTE_assets_QUANT';
 		switch(char)
 		{
 			/*case 'bf':
@@ -156,7 +158,7 @@ class StrumNote extends FlxSprite
 		super.update(elapsed);
 	}
 
-	public function playAnim(anim:String, ?force:Bool = false) {
+	public function playAnim(anim:String, ?force:Bool = false, noteQuantshit:Int = 0) {
 		animation.play(anim, force);
 		centerOffsets();
 		centerOrigin();
@@ -166,12 +168,18 @@ class StrumNote extends FlxSprite
 			colorSwap.brightness = 0;
 		} else {
 			if(changecolor){
-				colorSwap.hue = ClientPrefs.arrowHSV[noteData % 4][0] / 360;
-				colorSwap.saturation = ClientPrefs.arrowHSV[noteData % 4][1] / 100;
-				colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;
-			}
-			if(animation.curAnim.name == 'confirm' && !PlayState.isPixelStage) {
-				centerOrigin();
+				if(ClientPrefs.noteskinlol == 'Default'){
+					colorSwap.hue = ClientPrefs.arrowHSV[noteData % 4][0] / 360;
+					colorSwap.saturation = ClientPrefs.arrowHSV[noteData % 4][1] / 100;
+					colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;
+				}
+				if(ClientPrefs.noteskinlol == 'Quant' && animation.curAnim.name != 'pressed'){
+					colorSwap.hue = ClientPrefs.arrowQUANTHSV[noteQuantshit % 10][0] / 360;
+					colorSwap.saturation = ClientPrefs.arrowQUANTHSV[noteQuantshit % 10][1] / 100;
+					colorSwap.brightness = ClientPrefs.arrowQUANTHSV[noteQuantshit % 10][2] / 100;
+				}
+			if(animation.curAnim.name == 'confirm' && !PlayState.isPixelStage) centerOrigin();
+
 			}
 		}
 	}
