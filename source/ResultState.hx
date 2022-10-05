@@ -12,6 +12,9 @@ import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
+import flixel.tweens.FlxEase;
+import flixel.util.FlxGradient;
+import flixel.addons.display.FlxBackdrop;
 
 //"Static access to instance field (varible) is not allowed" mean you stupid go read kade version lol
 
@@ -35,6 +38,16 @@ class ResultState extends MusicBeatState
 
     var backtoomenu:Bool = false;
 
+    var bgmoveing:Int = 1;
+
+    var numtween:FlxTween;
+    var transGradient:FlxSprite;
+    var anothertransGradient:FlxSprite;
+    var transBlack:FlxSprite;
+    var anothertransBlack:FlxSprite;
+    var bg1:FlxSprite;
+    var bg2:FlxSprite;
+
     public static var ratingStuff:Array<Dynamic> = [
 		['F', 0.1], //From 0.01% to 9%
 		['E', 0.60], //From 50% to 59%
@@ -56,7 +69,40 @@ class ResultState extends MusicBeatState
 	];
 
     override function create()
-    {    
+    {
+        /*bg = new FlxBackdrop(Paths.image('menuDesat'), 0.2, 0, true, true);
+        bg.velocity.set(-100, -100);
+        add(bg);*/
+        bg1 = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+        bg1.x = 0;
+        bg1.updateHitbox();
+        add(bg1);
+
+        bg2 = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+        bg2.x = bg1.width;
+        bg2.updateHitbox();
+        add(bg2);
+
+        transGradient = FlxGradient.createGradientFlxSprite(FlxG.width, Math.floor(FlxG.height / 2), [FlxColor.BLACK, 0x0]);
+        transGradient.y += 100;
+		transGradient.scrollFactor.set();
+		add(transGradient);
+
+        anothertransGradient = FlxGradient.createGradientFlxSprite(FlxG.width, Math.floor(FlxG.height / 2), [0x0, FlxColor.BLACK]);
+        anothertransGradient.y += FlxG.height / 2 - 100;
+		anothertransGradient.scrollFactor.set();
+		add(anothertransGradient);
+
+        transBlack = new FlxSprite().makeGraphic(FlxG.width, 100, FlxColor.BLACK);
+		transBlack.scrollFactor.set();
+        transBlack.y = Math.floor(transGradient.y - 100);
+		add(transBlack);
+
+        anothertransBlack = new FlxSprite().makeGraphic(FlxG.width, 100, FlxColor.BLACK);
+		anothertransBlack.scrollFactor.set();
+        anothertransBlack.y = FlxG.height - 100;
+		add(anothertransBlack);
+
         FC = PlayState.instance.ratingFC;
 
         DiscordClient.changePresence("Result Screen", null);
@@ -67,13 +113,26 @@ class ResultState extends MusicBeatState
 		add(accuracytxt);
         
         super.create();
+
+        if(!backtoomenu) numtween = FlxTween.tween(this, {accuracynumbertest: PlayState.instance.resultaccuracy * 100}, Math.floor(PlayState.instance.resultaccuracy / 10), {ease:FlxEase.sineOut});
     }
 
     override function update(elapsed:Float)
     {
-        if(!backtoomenu) accuracynumbertest = Math.ceil(Highscore.floorDecimal(FlxMath.lerp(accuracynumbertest, PlayState.instance.resultaccuracy * 100, CoolUtil.boundTo(elapsed * 0.6, 0, 1)), 2));
         var accuracynumbertruenow:Float = accuracynumbertest / 100;
         updateaccuracy(accuracynumbertruenow);
+
+        if(bg1.x == 0){
+            bg2.x = 1280;
+            FlxTween.tween(bg1, {x: -1280}, 4);
+            FlxTween.tween(bg2, {x: 0}, 4);
+        }
+        if(bg2.x == 0){
+            bg1.x = 1280;
+            FlxTween.tween(bg2, {x: -1280}, 4);
+            FlxTween.tween(bg1, {x: 0}, 4);
+        }
+        //idk how FlxBackdrop is bug :(
 
         score =  Math.floor(FlxMath.lerp(score, PlayState.instance.songScore, CoolUtil.boundTo(elapsed * 48, 0, 1)));
         misses =  Math.floor(FlxMath.lerp(misses, PlayState.instance.songMisses, CoolUtil.boundTo(elapsed * 48,0, 1)));
@@ -113,6 +172,7 @@ class ResultState extends MusicBeatState
         var accepted = controls.ACCEPT && backtoomenu;
         if(!accepted && controls.ACCEPT)
         {
+            numtween.cancel();
             accuracynumbertest = Math.ceil(PlayState.instance.resultaccuracy * 100);
         }
         if(accepted)
@@ -131,8 +191,18 @@ class ResultState extends MusicBeatState
 		coolText.screenCenter();
 		coolText.x = FlxG.width * 0.35;
 
-        var accuracyarray:Array<String> = Std.string(accuracy).split("");
+        var accuracyarray:Array<String> = [];
         var accuracyarraytwo:Array<String> = Std.string(Math.floor(accuracy)).split("");
+
+        var numshitwtfbro:Int = Math.floor(accuracy * 100);
+        if(numshitwtfbro >= 10000) accuracyarray.push(Std.string(Math.floor(numshitwtfbro / 10000) % 10));
+        if(numshitwtfbro >= 1000) accuracyarray.push(Std.string(Math.floor(numshitwtfbro / 1000) % 10));
+        if(numshitwtfbro >= 100) accuracyarray.push(Std.string(Math.floor(numshitwtfbro / 100) % 10));
+        if(numshitwtfbro >= 10) {
+            accuracyarray.push('.');
+            accuracyarray.push(Std.string(Math.floor(numshitwtfbro / 10) % 10));
+        }
+        if(numshitwtfbro >= 0) accuracyarray.push(Std.string(Math.floor(numshitwtfbro / 1) % 10));
 
         var loopshit:Float = 0;
         var numScore:FlxSprite;
@@ -142,9 +212,6 @@ class ResultState extends MusicBeatState
 		add(numscoregroup);
 
         var rankingpicturre:FlxSprite = new FlxSprite().loadGraphic(Paths.image('rankings/${rank}'));
-        /*#if desktop
-	    DiscordClient.changePresence('Ranking : '+ rank, PlayState.SONG.song, Std.string(rankingpicturre));
-        #end*/
         rankingpicturre.scale.set(0.86, 0.86);
         
         if(rank == 'E' || rank == 'D' || rank == 'B') rankingpicturre.x += 50;
