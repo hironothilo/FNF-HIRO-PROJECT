@@ -196,9 +196,27 @@ class ResultState extends MusicBeatState
 
         if(accepted)
         {
-            FlxG.sound.play(Paths.sound('confirmMenu'));
-            MusicBeatState.switchState(new FreeplayState());
-            FlxG.sound.playMusic(Paths.music('freakyMenu'));
+            if(PlayState.isStoryMode){
+                if(PlayState.storyPlaylist.length <= 0){
+                    FlxG.sound.play(Paths.sound('confirmMenu'));
+                    FlxG.sound.playMusic(Paths.music('freakyMenu'));
+                    MusicBeatState.switchState(new StoryMenuState());
+                }
+                else {
+                    var difficulty:String = CoolUtil.getDifficultyFilePath();
+
+                    FlxG.sound.play(Paths.sound('confirmMenu'));
+                    PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0] + difficulty, PlayState.storyPlaylist[0]);
+
+				    PlayState.cancelMusicFadeTween();
+				    LoadingState.loadAndSwitchState(new PlayState());
+                }
+            }
+            else {
+                FlxG.sound.play(Paths.sound('confirmMenu'));
+                MusicBeatState.switchState(new FreeplayState());
+                FlxG.sound.playMusic(Paths.music('freakyMenu'));
+            }
         }
     }
 
