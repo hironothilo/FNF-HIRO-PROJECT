@@ -4085,19 +4085,19 @@ class PlayState extends MusicBeatState
 			if(focusedChar.animation.curAnim != null){
 			switch (focusedChar.animation.curAnim.name){
 				case 'singUP' | 'singUP-alt' | 'singUPmiss':
-					camFollow.y = FlxMath.lerp(camFollow.y, camsetshit_y - 30 , CoolUtil.boundTo(elapsed * 2, 0, 1));
+					camFollow.y = FlxMath.lerp(camFollow.y, camsetshit_y - 30 , CoolUtil.boundTo(elapsed * 3, 0, 1));
 					//FlxTween.tween(camFollow, {y: camFollow.y - 15}, 0.05, {ease: FlxEase.sineOut});
 					//camFollow.y -= 15;
 				case 'singDOWN' | 'singDOWN-alt' | 'singDOWNmiss':
-					camFollow.y = FlxMath.lerp(camFollow.y, camsetshit_y + 30 , CoolUtil.boundTo(elapsed * 2, 0, 1));
+					camFollow.y = FlxMath.lerp(camFollow.y, camsetshit_y + 30 , CoolUtil.boundTo(elapsed * 3, 0, 1));
 					//camFollow.y += 15;
 					//FlxTween.tween(camFollow, {y: camFollow.y + 15}, 0.05, {ease: FlxEase.sineOut});
 				case 'singLEFT' | 'singLEFT-alt' | 'singLEFTmiss':
-					camFollow.x = FlxMath.lerp(camFollow.x, camsetshit_x - 30, CoolUtil.boundTo(elapsed * 2, 0, 1));
+					camFollow.x = FlxMath.lerp(camFollow.x, camsetshit_x - 30, CoolUtil.boundTo(elapsed * 3, 0, 1));
 					//camFollow.x -= 15;
 					//FlxTween.tween(camFollow, {x: camFollow.x - 15}, 0.05, {ease: FlxEase.sineOut});
 				case 'singRIGHT' | 'singRIGHT-alt' | 'singRIGHTmiss':
-					camFollow.x = FlxMath.lerp(camFollow.x, camsetshit_x + 30, CoolUtil.boundTo(elapsed * 2, 0, 1));
+					camFollow.x = FlxMath.lerp(camFollow.x, camsetshit_x + 30, CoolUtil.boundTo(elapsed * 3, 0, 1));
 					//camFollow.x += 15;
 					//camsetshit_x += 0.5;
 					//FlxTween.tween(camFollow, {x: camFollow.x + 15}, 0.05, {ease: FlxEase.sineOut});
@@ -4943,8 +4943,8 @@ class PlayState extends MusicBeatState
 
 			if(char != null)
 			{
-				if(!note.isSustainNote || char.holdTimer >= Conductor.stepCrochet * 0.004) char.playAnim(animToPlay, true);
-				//if(note.isSustainNote) char.playAnim(animToPlay, false);
+				if(!note.isSustainNote) char.playAnim(animToPlay, true);
+				//if((note.sustainLength / 250) >= 1) char.playAnim(animToPlay, true);
 				char.holdTimer = 0;
 			}
 		}
@@ -5043,14 +5043,14 @@ class PlayState extends MusicBeatState
 				{
 					if(gf != null)
 					{
-						//if(note.isSustainNote) gf.playAnim(animToPlay + note.animSuffix, false);
+						//if((note.sustainLength % 250) >= 1) gf.playAnim(animToPlay + note.animSuffix, true);
 						if(!note.isSustainNote) gf.playAnim(animToPlay + note.animSuffix, true);
 						gf.holdTimer = 0;
 					}
 				}
 				else
 				{
-					//if(note.isSustainNote) boyfriend.playAnim(animToPlay + note.animSuffix, false);
+					//if((note.sustainLength % 250) >= 1) boyfriend.playAnim(animToPlay + note.animSuffix, true);
 					if(!note.isSustainNote) boyfriend.playAnim(animToPlay + note.animSuffix, true);
 					boyfriend.holdTimer = 0;
 				}

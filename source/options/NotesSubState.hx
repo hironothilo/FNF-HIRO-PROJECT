@@ -303,7 +303,7 @@ class NotesSubState extends MusicBeatSubstate
 	function resetValue(selected:Int, type:Int) {
 		curValue = 0;
 		if(ClientPrefs.noteskinlol == 'Default') ClientPrefs.arrowHSV[selected][type] = 0;
-		if(ClientPrefs.noteskinlol == 'Default') ClientPrefs.arrowQUANTHSV[selected][type] = 0;
+		if(ClientPrefs.noteskinlol == 'Quant') ClientPrefs.arrowQUANTHSV[selected][type] = 0;
 		switch(type) {
 			case 0: shaderArray[selected].hue = 0;
 			case 1: shaderArray[selected].saturation = 0;
