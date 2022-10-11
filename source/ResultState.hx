@@ -74,7 +74,7 @@ class ResultState extends MusicBeatState
         ['SS', 0.9990], //From 99%-99.49%
         ['SS+', 0.99950], //From 99.5%-99.89%
         ['X-', 0.99980], //From 99.9%-99.94% EPIC PART
-		['X', 0.999935],//From 99.95%-99.9935%
+		['X', 1],//From 99.95%-99.9935% //lol sorry apro
 		['PERFECT', 1] //The value on this one isn't used actually, since Perfect is always "1" EPIC GOLD
 	];
 
@@ -435,11 +435,11 @@ class ResultState extends MusicBeatState
         fcrating.antialiasing = ClientPrefs.globalAntialiasing;
         fcrating.scale.set(0.5, 0.5);
         fcrating.screenCenter();
-        fcrating.x = rating.x + rating.width;
+        fcrating.x = rating.width;
         fcrating.y -= FlxG.height / 4;
         fcrating.alpha = 0;
 
-        add(rating);
+        if(FC != 'Clear') add(rating);
         rating.scale.set(5, 5);
         rating.alpha = 0;
         FlxTween.tween(rating, {alpha: 1}, 0.25, {ease: FlxEase.cubeInOut, startDelay: 0.5});

@@ -110,7 +110,7 @@ class PlayState extends MusicBeatState
         ['SS', 0.9990], //From 99%-99.49%
         ['SS+', 0.99950], //From 99.5%-99.89%
         ['X-', 0.99980], //From 99.98%-99.94%
-		['X', 0.999935],//From 99.95%-99.9935%
+		['X', 1],//From 99.95%-99.9935% //lol sorry apro
 		['PERFECT', 1] //The value on this one isn't used actually, since Perfect is always "1"
 	];
 	public var modchartTweens:Map<String, FlxTween> = new Map<String, FlxTween>();
@@ -1952,7 +1952,7 @@ class PlayState extends MusicBeatState
 					focusshit = 'dad';
 				});
 			case 'stress':
-				focusshit = '';
+				focusshit = 'dad';
 				cutsceneHandler.endTime = 35.5;
 				tankman.x -= 54;
 				tankman.y -= 14;
@@ -2012,8 +2012,8 @@ class PlayState extends MusicBeatState
 				var calledTimes:Int = 0;
 				var zoomBack:Void->Void = function()
 				{
-					var camPosX:Float = 630;
-					var camPosY:Float = 425;
+					var camPosX:Float = 950;
+					var camPosY:Float = 605;
 					camFollow.set(camPosX, camPosY);
 					camFollowPos.setPosition(camPosX, camPosY);
 					FlxG.camera.zoom = 0.8;
