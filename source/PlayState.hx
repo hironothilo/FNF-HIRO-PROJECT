@@ -95,23 +95,24 @@ class PlayState extends MusicBeatState
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
 	public static var ratingStuff:Array<Dynamic> = [
-		['F', 0.1], //From 0.01% to 9%
-		['E', 0.60], //From 50% to 59%
-		['D', 0.70], //From 60% to 68%
-		['C', 0.80], //69% to 69.99%
-		['B', 0.85], //From 70% to 75%
-		['A-', 0.90], //From 76% to 80%
-		['A', 0.93], //From 80% to 85%
-		['A+', 0.9650], //From 86% to 89%
-        ['S-', 0.99], //From 90% to 92%
-        ['S', 0.9950], //From 93% to 94%
-        ['S+', 0.9970], //From 95% to 96%
-        ['SS-', 0.9980], //From 97% to 98%
-        ['SS', 0.9990], //From 99%-99.49%
-        ['SS+', 0.99950], //From 99.5%-99.89%
-        ['X-', 0.99980], //From 99.98%-99.94%
-		['X', 0.999935],//From 99.95%-99.9935%
-		['PERFECT', 1] //The value on this one isn't used actually, since Perfect is always "1"
+		['F', 0.1], //From 0.01% to 9.99%
+		['E', 0.60], //From 50% to 59.99%
+		['D', 0.70], //From 60% to 69.99%
+		['C', 0.80], //From 70% to 79.99%
+		['B', 0.85], //From 80% to 84.99%
+		['A-', 0.90], //From 85% to 89.99%
+		['A', 0.93], //From 90% to 92.99%
+		['A+', 0.9650], //From 93% to 96.49%
+        	['S-', 0.99], //From 96.5% to 98.99%
+        	['S', 0.9950], //From 99% to 99.49%
+        	['S+', 0.9970], //From 99.5% to 99.69%
+        	['SS-', 0.9980], //From 99.7% to 99.79%
+        	['SS', 0.9990], //From 99.8%-99.89%
+        	['SS+', 0.99950], //From 99.9%-99.949%
+        	['X-', 0.99980], //From 99.95%-99.979%
+		['X', 0.999935],//From 99.98%-99.9935%
+		['PERFECT!', 1] //From 99.9935%-99.99999 It Will Show N/A Lol
+		['PERFECT!!!', 1] //Absolutely Perfect!!!
 	];
 	public var modchartTweens:Map<String, FlxTween> = new Map<String, FlxTween>();
 	public var modchartSprites:Map<String, ModchartSprite> = new Map<String, ModchartSprite>();
