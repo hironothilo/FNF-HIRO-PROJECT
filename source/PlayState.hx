@@ -111,7 +111,7 @@ class PlayState extends MusicBeatState
         	['SS+', 0.99950], //From 99.9%-99.949%
         	['X-', 0.99980], //From 99.95%-99.979%
 		['X', 0.999935],//From 99.98%-99.9935%
-		['PERFECT!', 1] //From 99.9935%-99.99999 It Will Show N/A Lol
+		['PERFECT!', 1], //From 99.9935%-99.99999 It Will Show N/A Lol
 		['PERFECT!!!', 1] //Absolutely Perfect!!!
 	];
 	public var modchartTweens:Map<String, FlxTween> = new Map<String, FlxTween>();
