@@ -67,15 +67,16 @@ class ResultState extends MusicBeatState
 		['A-', 0.90], //From 76% to 80% SICK PART
 		['A', 0.93], //From 80% to 85%
 		['A+', 0.9650], //From 86% to 89%
-        ['S-', 0.99], //From 90% to 92% SICK GOLD
-        ['S', 0.9950], //From 93% to 94%
-        ['S+', 0.9970], //From 95% to 96%
-        ['SS-', 0.9980], //From 97% to 98%
-        ['SS', 0.9990], //From 99%-99.49%
-        ['SS+', 0.99950], //From 99.5%-99.89%
-        ['X-', 0.99980], //From 99.9%-99.94% EPIC PART
-		['X', 0.999935],//From 99.95%-99.9935%
-		['PERFECT', 1] //The value on this one isn't used actually, since Perfect is always "1" EPIC GOLD
+        	['S-', 0.99], //From 90% to 92% SICK GOLD
+        	['S', 0.9950], //From 93% to 94%
+        	['S+', 0.9970], //From 95% to 96%
+        	['SS-', 0.9980], //From 97% to 98%
+        	['SS', 0.9990], //From 99%-99.49%
+        	['SS+', 0.99950], //From 99.5%-99.89%
+        	['X-', 0.99980], //From 99.9%-99.94% EPIC PART
+		['X', 0.999935],//From 99.95%-99.99349%
+	    	['PERFECT!', 1], //Prevent N/A Rank From 99.9935%-99.9999%
+		['PERFECT!!!', 1] //The value on this one isn't used actually, since Perfect is always "1" EPIC GOLD
 	];
 
     override function create()
