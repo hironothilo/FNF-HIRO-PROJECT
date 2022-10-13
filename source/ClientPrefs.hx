@@ -27,7 +27,7 @@ class ClientPrefs {
 	public static var hideHud:Bool = false;
 	public static var noteOffset:Int = 0;
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
-	public static var arrowQUANTHSV:Array<Array<Int>> = [[0, 0, 0], [-130, 0, 0], [-80, 0, 0], [128, 0, 0], [-120, -20, -35], [-55, 0, 0], [50, 0, 0], [-80, 0, 0], [-160, 0, 0], [-120, -20, -35]];
+	public static var arrowQUANTHSV:Array<Array<Int>> = [[0, 0, 0], [-130, 0, 0], [-80, 0, 0], [128, 0, 0], [-120, -70, -35], [-55, 0, 0], [50, 0, 0], [-80, 0, 0], [-160, 0, 0], [-120, -70, -35]];
 	public static var imagesPersist:Bool = false;
 	public static var ghostTapping:Bool = true;
 	public static var timeBarType:String = 'Time Left';

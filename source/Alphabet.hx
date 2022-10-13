@@ -28,6 +28,8 @@ class Alphabet extends FlxSpriteGroup
 	public var isMenuItem:Bool = false;
 	public var textSize:Float = 1.0;
 
+	public var center:Bool = false;
+
 	public var text:String = "";
 
 	var _finalText:String = "";
@@ -76,7 +78,7 @@ class Alphabet extends FlxSpriteGroup
 	public function changeText(newText:String, newTypingSpeed:Float = -1)
 	{
 		for (i in 0...lettersArray.length) {
-			var letter = lettersArray[0];
+			var letter:AlphaCharacter = lettersArray[0];
 			letter.destroy();
 			remove(letter);
 			lettersArray.remove(letter);
@@ -354,7 +356,7 @@ class Alphabet extends FlxSpriteGroup
 			if(forceX != Math.NEGATIVE_INFINITY) {
 				x = forceX;
 			} else {
-				x = FlxMath.lerp(x, (Math.abs(targetY) * 40 * -1) + 90 + xAdd, lerpVal);
+				if(!center) x = FlxMath.lerp(x, (Math.abs(targetY) * 40 * -1) + 90 + xAdd, lerpVal);
 			}
 		}
 

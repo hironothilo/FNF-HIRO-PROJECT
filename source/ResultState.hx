@@ -395,7 +395,6 @@ class ResultState extends MusicBeatState
         }
         if(accuracy == PlayState.instance.resultaccuracy)
         {
-            rank = PlayState.instance.ratingName;
             backtoomenu = true;
             if(!ratingfinish) {
                 giverating();
@@ -405,6 +404,7 @@ class ResultState extends MusicBeatState
     }
 
     function giverating(){
+        rank = PlayState.instance.ratingName;
         var ratingstring:String = '';
         switch(rank){
             case 'F':
@@ -445,7 +445,7 @@ class ResultState extends MusicBeatState
         FlxTween.tween(rating, {alpha: 1}, 0.25, {ease: FlxEase.cubeInOut, startDelay: 0.5});
         FlxTween.tween(rating.scale, {x: 1, y: 1}, 0.25, {ease: FlxEase.cubeInOut, startDelay: 0.5, onComplete: 
             function (twn:FlxTween) {
-                FlxG.cameras.shake(0.05, 0.05);
+                FlxG.cameras.shake(0.005, 0.25);
             }});
         
         add(fcrating);
@@ -458,8 +458,8 @@ class ResultState extends MusicBeatState
 
         var pressenter:FlxText = new FlxText(0, 0, 0, "Press ENTER to continue", 40);
         pressenter.setFormat(Paths.font("phantommuff.ttf"), 40, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-        pressenter.x = FlxG.width - pressenter.width;
-        pressenter.y = FlxG.height - 40;
+        pressenter.x = FlxG.width - pressenter.width - 25;
+        pressenter.y = FlxG.height - 65;
         pressenter.alpha = 0;
         FlxTween.tween(pressenter, {alpha: 1}, 0.25, {startDelay: 0.25});
         add(pressenter);

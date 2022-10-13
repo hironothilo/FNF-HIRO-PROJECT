@@ -128,9 +128,7 @@ class NotesSubState extends MusicBeatSubstate
 		{
 			for (i in 0...grpNotes.length) {
 				var item = grpNotes.members[i];
-				//item.y -= 200 * (curSelected - 3);
 				item.y = FlxMath.lerp(item.y, 200 * (curSelected + i - plzzzzzz - 0.5), CoolUtil.boundTo(elapsed * 10, 0, 1));
-				var item = grpNotes.members[i];
 				if (curSelected == i) {
 					hsbText.y = item.y - 70;
 					blackBG.y = item.y - 20;
@@ -300,18 +298,29 @@ class NotesSubState extends MusicBeatSubstate
 		}
 	}
 
+	var numshit:Array<Array<Int>> = [[0, 0, 0], [-130, 0, 0], [-80, 0, 0], [128, 0, 0], [-120, -20, -35], [-55, 0, 0], [50, 0, 0], [-80, 0, 0], [-160, 0, 0], [-120, -20, -35]];
 	function resetValue(selected:Int, type:Int) {
-		curValue = 0;
-		if(ClientPrefs.noteskinlol == 'Default') ClientPrefs.arrowHSV[selected][type] = 0;
-		if(ClientPrefs.noteskinlol == 'Quant') ClientPrefs.arrowQUANTHSV[selected][type] = 0;
-		switch(type) {
-			case 0: shaderArray[selected].hue = 0;
-			case 1: shaderArray[selected].saturation = 0;
-			case 2: shaderArray[selected].brightness = 0;
+		if(ClientPrefs.noteskinlol == 'Default') {
+			curValue = 0;
+			ClientPrefs.arrowHSV[selected][type] = 0;
+			switch(type) {
+				case 0: shaderArray[selected].hue = 0;
+				case 1: shaderArray[selected].saturation = 0;
+				case 2: shaderArray[selected].brightness = 0;
+			}
+		}
+		if(ClientPrefs.noteskinlol == 'Quant') {
+			curValue = numshit[selected][type];
+			ClientPrefs.arrowQUANTHSV[selected][type] = numshit[selected][type];
+			switch(type) {
+				case 0: shaderArray[selected].hue = numshit[selected][0];
+				case 1: shaderArray[selected].saturation = numshit[selected][1];
+				case 2: shaderArray[selected].brightness = numshit[selected][2];
+			}
 		}
 
 		var item = grpNumbers.members[(selected * 3) + type];
-		item.changeText('0');
+		if(ClientPrefs.noteskinlol == 'Default') item.changeText('0');
 		item.offset.x = (40 * (item.lettersArray.length - 1)) / 2;
 	}
 	function updateValue(change:Float = 0) {

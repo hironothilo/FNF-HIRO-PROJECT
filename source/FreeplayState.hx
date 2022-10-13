@@ -441,10 +441,12 @@ class FreeplayState extends MusicBeatState
 				if (item.targetY == 0)
 				{
 					item.alpha = 1;
-					/*FlxTween.tween(item, {x : FlxG.width / 2 - (item.width + 150) / 2}, 1.6, {
-						ease: FlxEase.sineOut,
-					});	*/
-					//item.x = FlxG.width / 2 - (item.width + 150) / 2;
+					item.color = 0x0055FF00;
+					item.center = true;
+					FlxTween.tween(item, {x : FlxG.width / 2 - (item.width + 150) / 2}, 1, {onComplete:
+						function (twn:FlxTween) {
+							item.x = FlxG.width / 2 - (item.width + 150) / 2;
+						}});
 					FlxFlicker.flicker(item, 1.5, 0.05, false);
 				}
 			}
@@ -452,8 +454,12 @@ class FreeplayState extends MusicBeatState
 			for (i in 0...iconArray.length)
 			{
 				if(i != curSelected) FlxTween.tween(iconArray[i], {alpha: 0}, 0.3);
-				if(i == curSelected) FlxFlicker.flicker(iconArray[curSelected], 1.5, 0.05, false);
+				if(i == curSelected) {
+					FlxFlicker.flicker(iconArray[curSelected], 1.5, 0.05, false);
+				}
 			}
+
+			FlxTween.tween(FlxG.camera, {zoom: 2}, 1, {ease: FlxEase.quadInOut, startDelay: 0.75});
 
 			new FlxTimer().start(1.5, function(tmr:FlxTimer)
 			{
@@ -588,12 +594,12 @@ class FreeplayState extends MusicBeatState
 			bullShit++;
 
 			item.alpha = 0.6;
-			// item.setGraphicSize(Std.int(item.width * 0.8));
+			item.color = 0x00FFFFFF;
 
 			if (item.targetY == 0)
 			{
 				item.alpha = 1;
-				// item.setGraphicSize(Std.int(item.width));
+				item.color = 0xFFCDCA44;
 			}
 		}
 		
