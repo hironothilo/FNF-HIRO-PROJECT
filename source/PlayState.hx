@@ -2240,12 +2240,12 @@ class PlayState extends MusicBeatState
 								countdownReady.destroy();
 							}
 						});
-						iconP1.scale.set(1.3, 1.3);
+						iconP1.scale.set(0.8, 0.8);
 						iconP2.scale.set(1.3, 1.3);
 						FlxG.sound.play(Paths.sound('intro2' + introSoundsSuffix), 0.6);
 					case 2:
 						iconP1.scale.set(1.3, 1.3);
-						iconP2.scale.set(1.3, 1.3);
+						iconP2.scale.set(0.8, 0.8);
 						countdownSet = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
 						countdownSet.cameras = [camHUD];
 						countdownSet.scrollFactor.set();
@@ -2266,8 +2266,8 @@ class PlayState extends MusicBeatState
 						});
 						FlxG.sound.play(Paths.sound('intro1' + introSoundsSuffix), 0.6);
 					case 3:
-						iconP1.scale.set(1.3, 1.3);
-						iconP2.scale.set(1.3, 1.3);
+						iconP1.scale.set(0.8, 0.8);
+						iconP2.scale.set(0.8, 0.8);
 						countdownGo = new FlxSprite().loadGraphic(Paths.image(introAlts[2]));
 						countdownGo.cameras = [camHUD];
 						countdownGo.scrollFactor.set();
@@ -3528,14 +3528,20 @@ class PlayState extends MusicBeatState
 				FlxG.sound.music.stop();
 
 				persistentUpdate = false;
-				persistentDraw = false;
+				persistentDraw = true;
+				camHUD.alpha = 0;
+				camSus.alpha = 0;
+				cambeforeHUD.alpha = 0;
+				boyfriend.alpha = 0.00001;
+				camGame.angle = 0;
+
 				for (tween in modchartTweens) {
 					tween.active = true;
 				}
 				for (timer in modchartTimers) {
 					timer.active = true;
 				}
-				openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x - boyfriend.positionArray[0], boyfriend.getScreenPosition().y - boyfriend.positionArray[1], camFollowPos.x, camFollowPos.y));
+				openSubState(new GameOverSubstate(boyfriendGroup.x, boyfriendGroup.y, camFollowPos.x, camFollowPos.y));
 
 				// MusicBeatState.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
@@ -4082,19 +4088,19 @@ class PlayState extends MusicBeatState
 			if(focusedChar.animation.curAnim != null){
 			switch (focusedChar.animation.curAnim.name){
 				case 'singUP' | 'singUP-alt' | 'singUPmiss':
-					camFollow.y = FlxMath.lerp(camFollow.y, camsetshit_y - 30 , CoolUtil.boundTo(elapsed * 2, 0, 1));
+					camFollow.y = FlxMath.lerp(camFollow.y, camsetshit_y - 50 , CoolUtil.boundTo(elapsed * 2, 0, 1));
 					//FlxTween.tween(camFollow, {y: camFollow.y - 15}, 0.05, {ease: FlxEase.sineOut});
 					//camFollow.y -= 15;
 				case 'singDOWN' | 'singDOWN-alt' | 'singDOWNmiss':
-					camFollow.y = FlxMath.lerp(camFollow.y, camsetshit_y + 30 , CoolUtil.boundTo(elapsed * 2, 0, 1));
+					camFollow.y = FlxMath.lerp(camFollow.y, camsetshit_y + 50 , CoolUtil.boundTo(elapsed * 2, 0, 1));
 					//camFollow.y += 15;
 					//FlxTween.tween(camFollow, {y: camFollow.y + 15}, 0.05, {ease: FlxEase.sineOut});
 				case 'singLEFT' | 'singLEFT-alt' | 'singLEFTmiss':
-					camFollow.x = FlxMath.lerp(camFollow.x, camsetshit_x - 30, CoolUtil.boundTo(elapsed * 2, 0, 1));
+					camFollow.x = FlxMath.lerp(camFollow.x, camsetshit_x - 50, CoolUtil.boundTo(elapsed * 2, 0, 1));
 					//camFollow.x -= 15;
 					//FlxTween.tween(camFollow, {x: camFollow.x - 15}, 0.05, {ease: FlxEase.sineOut});
 				case 'singRIGHT' | 'singRIGHT-alt' | 'singRIGHTmiss':
-					camFollow.x = FlxMath.lerp(camFollow.x, camsetshit_x + 30, CoolUtil.boundTo(elapsed * 2, 0, 1));
+					camFollow.x = FlxMath.lerp(camFollow.x, camsetshit_x + 50, CoolUtil.boundTo(elapsed * 2, 0, 1));
 					//camFollow.x += 15;
 					//camsetshit_x += 0.5;
 					//FlxTween.tween(camFollow, {x: camFollow.x + 15}, 0.05, {ease: FlxEase.sineOut});
@@ -5029,20 +5035,16 @@ class PlayState extends MusicBeatState
 						anotherlightshitlol.color = 0xC43136;
 				}
 
-				//FlxTween.tween(anotherlightshitlol, {alpha: 0}, 0.5);
-
 				if(note.gfNote)
 				{
 					if(gf != null)
 					{
-						//if((note.sustainLength % 250) >= 1) gf.playAnim(animToPlay + note.animSuffix, true);
 						if(!note.isSustainNote) gf.playAnim(animToPlay + note.animSuffix, true);
 						gf.holdTimer = 0;
 					}
 				}
 				else
 				{
-					//if((note.sustainLength % 250) >= 1) boyfriend.playAnim(animToPlay + note.animSuffix, true);
 					if(!note.isSustainNote) boyfriend.playAnim(animToPlay + note.animSuffix, true);
 					boyfriend.holdTimer = 0;
 				}
