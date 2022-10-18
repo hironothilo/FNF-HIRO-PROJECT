@@ -1064,7 +1064,7 @@ class PlayState extends MusicBeatState
 
 		var showTime:Bool = (ClientPrefs.timeBarType != 'Disabled');
 		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
-		timeTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		timeTxt.setFormat(Paths.font("phantommuff.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.scrollFactor.set();
 		timeTxt.alpha = 0;
 		timeTxt.borderSize = 2;
@@ -1269,7 +1269,7 @@ class PlayState extends MusicBeatState
 		reloadHealthBarColors();
 
 		scoreTxt = new FlxText(0, healthBarBG.y + 50, FlxG.width, "", 20);
-		scoreTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreTxt.setFormat(Paths.font("phantommuff.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		scoreTxt.borderSize = 1.25;
 		scoreTxt.visible = !ClientPrefs.hideHud;
@@ -1333,7 +1333,7 @@ class PlayState extends MusicBeatState
 		add(anotherlightshitlol);
 
 		judgementCounter = new FlxText(-25, 0, 0, "", 20); //https://github.com/ShadowMario/FNF-PsychEngine/discussions/3707 so COOL LOL
-		judgementCounter.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		judgementCounter.setFormat(Paths.font("phantommuff.ttf"), 20, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		judgementCounter.borderSize = 2;
 		judgementCounter.borderQuality = 2;
 		judgementCounter.scrollFactor.set();
@@ -1348,7 +1348,7 @@ class PlayState extends MusicBeatState
 		}
 
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
-		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		botplayTxt.setFormat(Paths.font("phantommuff.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
 		botplayTxt.visible = cpuControlled;
@@ -3531,6 +3531,7 @@ class PlayState extends MusicBeatState
 				persistentDraw = true;
 				camHUD.alpha = 0;
 				camSus.alpha = 0;
+				camwtfHUD.alpha = 0;
 				cambeforeHUD.alpha = 0;
 				boyfriend.alpha = 0.00001;
 				camGame.angle = 0;
@@ -4942,6 +4943,7 @@ class PlayState extends MusicBeatState
 			if(char != null)
 			{
 				if(!note.isSustainNote) char.playAnim(animToPlay, true);
+				if(note.isSustainNote) char.playAnim(animToPlay, false);
 				//if((note.sustainLength / 250) >= 1) char.playAnim(animToPlay, true);
 				char.holdTimer = 0;
 			}
@@ -5040,12 +5042,14 @@ class PlayState extends MusicBeatState
 					if(gf != null)
 					{
 						if(!note.isSustainNote) gf.playAnim(animToPlay + note.animSuffix, true);
+						if(note.isSustainNote) gf.playAnim(animToPlay + note.animSuffix, false);
 						gf.holdTimer = 0;
 					}
 				}
 				else
 				{
 					if(!note.isSustainNote) boyfriend.playAnim(animToPlay + note.animSuffix, true);
+					if(note.isSustainNote) boyfriend.playAnim(animToPlay + note.animSuffix, false);
 					boyfriend.holdTimer = 0;
 				}
 
