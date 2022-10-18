@@ -83,6 +83,7 @@ class PlayState extends MusicBeatState
 	var anotherlightshitlol:FlxSprite;
 	var blackScreenfunky:FlxSprite;
 	var funkyStrips:FlxSprite;
+	public var funkyround:Int = 0;
 
 	var add1cam:Float = 0;
 	var add2cam:Float = 0; //that fucking stupid
@@ -228,6 +229,7 @@ class PlayState extends MusicBeatState
 	public var camHUD:FlxCamera;
 	public var cambeforeHUD:FlxCamera;
 	public var camwtfHUD:FlxCamera;
+	public var camnote:FlxCamera;
 	public var camGame:FlxCamera;
 	public var camOther:FlxCamera;
 	public var camSus:FlxCamera;
@@ -411,12 +413,14 @@ class PlayState extends MusicBeatState
 		camGame.y = -180;
 		//trace(camGame.width + ' and ' + camGame.height);
 		camwtfHUD = new FlxCamera();
+		camnote = new FlxCamera();
 		camHUD = new FlxCamera();
 		camOther = new FlxCamera();
 		camSus = new FlxCamera();
 		cambeforeHUD = new FlxCamera();
 
 		camwtfHUD.bgColor.alpha = 0;
+		camnote.bgColor.alpha = 0;
 		camHUD.bgColor.alpha = 0;
 		camSus.bgColor.alpha = 0;
 		camOther.bgColor.alpha = 0;
@@ -424,9 +428,10 @@ class PlayState extends MusicBeatState
 
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camwtfHUD);
+		FlxG.cameras.add(camHUD);
 		FlxG.cameras.add(cambeforeHUD);
 		FlxG.cameras.add(camSus);
-		FlxG.cameras.add(camHUD);
+		FlxG.cameras.add(camnote);
 		FlxG.cameras.add(camOther);
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 
@@ -2978,7 +2983,7 @@ class PlayState extends MusicBeatState
 
 		wiggleShit.update(elapsed);
 		
-		for (hudcam in [camSus, camwtfHUD, cambeforeHUD]) {
+		for (hudcam in [camSus, camwtfHUD, cambeforeHUD, camnote]) {
 			if (hudcam != null) {
 				hudcam.zoom = camHUD.zoom;
 				hudcam.visible = camHUD.visible;
@@ -3277,9 +3282,11 @@ class PlayState extends MusicBeatState
 			camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125 * camZoomingDecay), 0, 1));
 			cambeforeHUD.zoom = FlxMath.lerp(1, camHUD.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125 * camZoomingDecay), 0, 1));
 			camSus.zoom = FlxMath.lerp(1, camHUD.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125 * camZoomingDecay), 0, 1));
+			camnote.zoom = FlxMath.lerp(1, camHUD.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125 * camZoomingDecay), 0, 1));
 			camGame.angle = FlxMath.lerp(0, camGame.angle, CoolUtil.boundTo(1 - (elapsed * 3.125 * camZoomingDecay), 0, 1));
 			camHUD.angle = FlxMath.lerp(0, camHUD.angle, CoolUtil.boundTo(1 - (elapsed * 3.125 * camZoomingDecay), 0, 1));
 			camSus.angle = FlxMath.lerp(0, camHUD.angle, CoolUtil.boundTo(1 - (elapsed * 3.125 * camZoomingDecay), 0, 1));
+			camnote.angle = FlxMath.lerp(0, camHUD.angle, CoolUtil.boundTo(1 - (elapsed * 3.125 * camZoomingDecay), 0, 1));
 			cambeforeHUD.angle = FlxMath.lerp(0, camHUD.angle, CoolUtil.boundTo(1 - (elapsed * 3.125 * camZoomingDecay), 0, 1));
 		}
 
@@ -3332,6 +3339,7 @@ class PlayState extends MusicBeatState
 					strumGroup = opponentStrums;
 				}
 				if (daNote.isSustainNote) daNote.cameras = [camSus];
+				else daNote.cameras = [camnote];
 
 				var strumX:Float = strumGroup.members[daNote.noteData].x;
 				var strumY:Float = strumGroup.members[daNote.noteData].y;
@@ -3531,6 +3539,7 @@ class PlayState extends MusicBeatState
 				persistentDraw = true;
 				camHUD.alpha = 0;
 				camSus.alpha = 0;
+				camnote.alpha = 0;
 				camwtfHUD.alpha = 0;
 				cambeforeHUD.alpha = 0;
 				boyfriend.alpha = 0.00001;
@@ -3781,6 +3790,7 @@ class PlayState extends MusicBeatState
 					camGame.angle = camangle;
 					camHUD.angle = camHUDangle;
 					camSus.angle = camHUDangle;
+					camnote.angle = camHUDangle;
 					cambeforeHUD.angle = camHUDangle; //;-;
 				}
 
@@ -3853,7 +3863,7 @@ class PlayState extends MusicBeatState
 
 			case 'Screen Shake':
 				var valuesArray:Array<String> = [value1, value2];
-				var targetsArray:Array<FlxCamera> = [camGame, camHUD, cambeforeHUD, camwtfHUD, camSus];
+				var targetsArray:Array<FlxCamera> = [camGame, camHUD, cambeforeHUD, camwtfHUD, camSus, camnote];
 				for (i in 0...targetsArray.length) {
 					var split:Array<String> = valuesArray[i].split(',');
 					var duration:Float = 0;
@@ -5125,6 +5135,7 @@ class PlayState extends MusicBeatState
 
 		var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
 		splash.setupNoteSplash(x, y, data, skin, hue, sat, brt);
+		splash.cameras = [camnote];
 		grpNoteSplashes.add(splash);
 	}
 
@@ -5679,6 +5690,7 @@ class PlayState extends MusicBeatState
 
 	function funkybarfukup()
 	{
+		funkyround++;
 		FlxTween.tween(blackScreenfunky, {alpha: 0.35}, 0.1, {ease: FlxEase.sineOut});
 
 		bartween = FlxTween.tween(this, {FUNKYNUM_LOL: 0}, 20, {onComplete:

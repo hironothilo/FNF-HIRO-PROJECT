@@ -86,7 +86,7 @@ class FPS extends TextField
 			var memoryMegas:Float = 0;
 			
 			#if openfl
-			memoryMegas = Math.round(System.totalMemory / (1e+6));
+			memoryMegas = Math.abs(Math.round(System.totalMemory / (1e+6)));
 			var memPeak:Float = 0;
 			if (memoryMegas > memPeak) memPeak = memoryMegas;
 			text += "\nMemory: " + memoryMegas + " MB" + "\nMemory Peak: " + memPeak + " MB";

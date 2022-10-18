@@ -132,6 +132,10 @@ class ResultState extends MusicBeatState
         
         super.create();
 
+        var expwant:Int = 0;
+        expwant = Math.round((PlayState.instance.songScore / 3000) + (PlayState.instance.resultaccuracy / 5) + (PlayState.instance.funkyround * 5));
+        trace(expwant);
+
         if(!backtoomenu) numtween = FlxTween.tween(this, {accuracynumbertest: PlayState.instance.resultaccuracy * 100}, Math.floor(PlayState.instance.resultaccuracy / 10), {ease:FlxEase.sineOut});
     }
 
