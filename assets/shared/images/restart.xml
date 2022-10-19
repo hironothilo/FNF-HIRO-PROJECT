@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="restart.png">
+	<!-- Created with Adobe Animate version 20.0.3.25487 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="restart? instance 10000" x="1172" y="0" width="1059" height="291" frameX="-56" frameY="-15" frameWidth="1172" frameHeight="322"/>
+	<SubTexture name="restart? instance 10001" x="0" y="0" width="1172" height="322"/>
+	<SubTexture name="restart? instance 10002" x="0" y="0" width="1172" height="322"/>
+	<SubTexture name="restart? instance 10003" x="1172" y="0" width="1059" height="291" frameX="-56" frameY="-15" frameWidth="1172" frameHeight="322"/>
+	<SubTexture name="restart? instance 10004" x="1172" y="0" width="1059" height="291" frameX="-56" frameY="-15" frameWidth="1172" frameHeight="322"/>
+	<SubTexture name="restart? instance 10005" x="2231" y="0" width="1012" height="278" frameX="-80" frameY="-22" frameWidth="1172" frameHeight="322"/>
+	<SubTexture name="restart? instance 10006" x="2231" y="0" width="1012" height="278" frameX="-80" frameY="-22" frameWidth="1172" frameHeight="322"/>
+	<SubTexture name="restart? instance 10007" x="2231" y="0" width="1012" height="278" frameX="-80" frameY="-22" frameWidth="1172" frameHeight="322"/>
+	<SubTexture name="restart? instance 10008" x="2231" y="0" width="1012" height="278" frameX="-80" frameY="-22" frameWidth="1172" frameHeight="322"/>
+	<SubTexture name="restart? instance 10009" x="2231" y="0" width="1012" height="278" frameX="-80" frameY="-22" frameWidth="1172" frameHeight="322"/>
+	<SubTexture name="restart? instance 10010" x="2231" y="0" width="1012" height="278" frameX="-80" frameY="-22" frameWidth="1172" frameHeight="322"/>
+	<SubTexture name="restart? instance 10011" x="2231" y="0" width="1012" height="278" frameX="-80" frameY="-22" frameWidth="1172" frameHeight="322"/>
+</TextureAtlas>

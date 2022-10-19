@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.FlxObject;
 import flixel.FlxSubState;
 import flixel.math.FlxMath;
@@ -27,6 +28,8 @@ class GameOverSubstate extends MusicBeatSubstate
 
 	public static var instance:GameOverSubstate;
 
+	var restartbutton:FlxSprite;
+
 	public static function resetVariables() {
 		characterName = 'bf-dead';
 		deathSoundName = 'fnf_loss_sfx';
@@ -49,6 +52,17 @@ class GameOverSubstate extends MusicBeatSubstate
 		PlayState.instance.setOnLuas('inGameOver', true);
 
 		Conductor.songPosition = 0;
+
+		restartbutton = new FlxSprite().loadGraphic(Paths.image('restart'));
+		restartbutton.frames = Paths.getSparrowAtlas('restart');
+		restartbutton.scale.set(0.5, 0.5);
+		restartbutton.screenCenter(X);
+		restartbutton.x += 320;
+		restartbutton.y = 75;
+		restartbutton.scrollFactor.set();
+		restartbutton.animation.addByPrefix('bumping', 'restart?', 24, false);
+		if (!isEnding) restartbutton.animation.play('bumping');
+		add(restartbutton);
 
 		boyfriend = new Boyfriend(x, y, characterName);
 		boyfriend.x += 180;
@@ -147,6 +161,7 @@ class GameOverSubstate extends MusicBeatSubstate
 	override function beatHit()
 	{
 		super.beatHit();
+		if (!isEnding) restartbutton.animation.play('bumping');
 
 		//FlxG.log.add('beat');
 	}
@@ -164,6 +179,17 @@ class GameOverSubstate extends MusicBeatSubstate
 		{
 			isEnding = true;
 			boyfriend.playAnim('deathConfirm', true);
+			remove(restartbutton);
+			restartbutton = new FlxSprite().loadGraphic(Paths.image('Click-restart'));
+			restartbutton.frames = Paths.getSparrowAtlas('Click-restart');
+			restartbutton.scale.set(0.5, 0.5);
+			restartbutton.screenCenter(X);
+			restartbutton.x += 320;
+			restartbutton.y = 100;
+			restartbutton.scrollFactor.set();
+			restartbutton.animation.addByPrefix('finish', 'restart click', 24, false);
+			add(restartbutton);
+			restartbutton.animation.play('finish');
 			FlxG.sound.music.stop();
 			FlxG.sound.play(Paths.music(endSoundName));
 			new FlxTimer().start(0.7, function(tmr:FlxTimer)
