@@ -195,7 +195,7 @@ class PlayState extends MusicBeatState
 
 	private var healthBarBG:AttachedSprite;
 	public var healthBar:FlxBar;
-	var songPercent:Float = 0;
+	public var songPercent:Float = 0;
 
 	private var timeBarBG:AttachedSprite;
 	public var timeBar:FlxBar;
@@ -231,6 +231,7 @@ class PlayState extends MusicBeatState
 	public var camwtfHUD:FlxCamera;
 	public var camnote:FlxCamera;
 	public var camGame:FlxCamera;
+	public var camgameover:FlxCamera;
 	public var camOther:FlxCamera;
 	public var camSus:FlxCamera;
 	public var cameraSpeed:Float = 1;
@@ -411,6 +412,7 @@ class PlayState extends MusicBeatState
 		camGame.height = Math.ceil(FlxG.height * 1.5);
 		camGame.x = -320;
 		camGame.y = -180;
+		camgameover = new FlxCamera();
 		//trace(camGame.width + ' and ' + camGame.height);
 		camwtfHUD = new FlxCamera();
 		camnote = new FlxCamera();
@@ -424,12 +426,14 @@ class PlayState extends MusicBeatState
 		camHUD.bgColor.alpha = 0;
 		camSus.bgColor.alpha = 0;
 		camOther.bgColor.alpha = 0;
+		camgameover.bgColor.alpha = 0;
 		cambeforeHUD.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camwtfHUD);
 		FlxG.cameras.add(camHUD);
 		FlxG.cameras.add(cambeforeHUD);
+		FlxG.cameras.add(camgameover);
 		FlxG.cameras.add(camSus);
 		FlxG.cameras.add(camnote);
 		FlxG.cameras.add(camOther);
@@ -2787,7 +2791,7 @@ class PlayState extends MusicBeatState
 			else{
 				char = SONG.player2;
 			}
-			var targetAlpha:Float = 1;
+			var targetAlpha:Float = 0.8;
 			if (player < 1)
 			{
 				if(!ClientPrefs.opponentStrums) targetAlpha = 0;
@@ -2795,12 +2799,19 @@ class PlayState extends MusicBeatState
 			}
 
 			var babyArrow:StrumNote = new StrumNote(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, strumLine.y, i, player, char);
+			if(player < 1){
+				babyArrow.x = ((FlxG.width / 4)) - (babyArrow.width * 2.5);
+			}
 			babyArrow.downScroll = ClientPrefs.downScroll;
 			if (!isStoryMode && !skipArrowStartTween)
 			{
 				//babyArrow.y -= 10;
 				babyArrow.alpha = 0;
-				FlxTween.tween(babyArrow, {/*y: babyArrow.y + 10,*/ alpha: targetAlpha}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
+				FlxTween.tween(babyArrow, {/*y: babyArrow.y + 10,*/ alpha: targetAlpha}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i), onComplete:
+					function (twn:FlxTween) {
+						babyArrow.tweenfinish = true;
+						babyArrow.alpha = 1;
+					}});
 			}
 			else
 			{
@@ -3368,8 +3379,8 @@ class PlayState extends MusicBeatState
 				if (daNote.copyAngle)
 					daNote.angle = strumDirection - 90 + strumAngle;
 
-				if(daNote.copyAlpha)
-					daNote.alpha = strumAlpha;
+				/*if(daNote.copyAlpha)
+					daNote.alpha = strumAlpha;*/ //sike
 
 				if(daNote.copyX)
 					daNote.x = strumX + Math.cos(angleDir) * daNote.distance;
@@ -5218,7 +5229,7 @@ class PlayState extends MusicBeatState
 			gf.playAnim('hairFall');
 			gf.specialAnim = true;
 		}
-		phillyTrain.x = FlxG.width + 200;
+		phillyTrain.x = FlxG.width + 520;
 		trainMoving = false;
 		// trainSound.stop();
 		// trainSound.time = 0;

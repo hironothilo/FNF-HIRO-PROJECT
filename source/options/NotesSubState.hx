@@ -298,7 +298,7 @@ class NotesSubState extends MusicBeatSubstate
 		}
 	}
 
-	var numshit:Array<Array<Int>> = [[0, 0, 0], [-130, 0, 0], [-80, 0, 0], [128, 0, 0], [-120, -20, -35], [-55, 0, 0], [50, 0, 0], [-80, 0, 0], [-160, 0, 0], [-120, -20, -35]];
+	var numshit:Array<Array<Int>> = [[0, 0, 0], [-130, 0, 0], [-80, 0, 0], [128, 0, 0], [-120, -70, -35], [-55, 0, 0], [50, 0, 0], [-80, 0, 0], [-160, 0, 0], [-120, -70, -35]];
 	function resetValue(selected:Int, type:Int) {
 		if(ClientPrefs.noteskinlol == 'Default') {
 			curValue = 0;

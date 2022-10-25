@@ -30,6 +30,8 @@ class GameOverSubstate extends MusicBeatSubstate
 
 	var restartbutton:FlxSprite;
 
+	var timebarprogress:Float = 0;
+
 	public static function resetVariables() {
 		characterName = 'bf-dead';
 		deathSoundName = 'fnf_loss_sfx';
@@ -53,12 +55,15 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		Conductor.songPosition = 0;
 
+		timebarprogress = PlayState.instance.songPercent;
+		//trace(timebarprogress);
+
 		restartbutton = new FlxSprite().loadGraphic(Paths.image('restart'));
 		restartbutton.frames = Paths.getSparrowAtlas('restart');
 		restartbutton.scale.set(0.5, 0.5);
 		restartbutton.screenCenter(X);
-		restartbutton.x += 320;
-		restartbutton.y = 75;
+		restartbutton.cameras = [PlayState.instance.camgameover];
+		restartbutton.y = -75;
 		restartbutton.scrollFactor.set();
 		restartbutton.animation.addByPrefix('bumping', 'restart?', 24, false);
 		if (!isEnding) restartbutton.animation.play('bumping');
@@ -184,14 +189,15 @@ class GameOverSubstate extends MusicBeatSubstate
 			restartbutton.frames = Paths.getSparrowAtlas('Click-restart');
 			restartbutton.scale.set(0.5, 0.5);
 			restartbutton.screenCenter(X);
-			restartbutton.x += 320;
-			restartbutton.y = 100;
+			restartbutton.cameras = [PlayState.instance.camgameover];
+			restartbutton.y = -50;
 			restartbutton.scrollFactor.set();
 			restartbutton.animation.addByPrefix('finish', 'restart click', 24, false);
 			add(restartbutton);
 			restartbutton.animation.play('finish');
 			FlxG.sound.music.stop();
 			FlxG.sound.play(Paths.music(endSoundName));
+			PlayState.instance.camgameover.fade(FlxColor.BLACK, 2);
 			new FlxTimer().start(0.7, function(tmr:FlxTimer)
 			{
 				FlxG.camera.fade(FlxColor.BLACK, 2, false, function()

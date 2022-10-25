@@ -229,6 +229,7 @@ class ResultState extends MusicBeatState
     var byebyenumshit:Bool = true;
     var accuracyarray:Array<String> = [];
     var accuracyarraytwo:Array<String> = [];
+    var ratingstring:String = '';
 
     function updateaccuracy(accuracy:Float)
     {
@@ -399,6 +400,23 @@ class ResultState extends MusicBeatState
         }
         if(accuracy == PlayState.instance.resultaccuracy)
         {
+            rank = PlayState.instance.ratingName;
+            switch(rank){
+                case 'F':
+                   ratingstring = 'shit';
+                case 'E' | 'D' :
+                    ratingstring = 'bad';
+                case 'C' | 'B':
+                    ratingstring = 'good';
+                case 'A-' | 'A' | 'A+':
+                    ratingstring = 'sick';
+                case 'S-' | 'S' | 'S+' | 'SS-' | 'SS' | 'SS+':
+                    ratingstring = 'sick-gold';
+                case 'X-' | 'X':
+                    ratingstring = 'epic';
+                case 'PERFECT':
+                    ratingstring = 'epic-gold';
+            }
             backtoomenu = true;
             if(!ratingfinish) {
                 giverating();
@@ -408,25 +426,6 @@ class ResultState extends MusicBeatState
     }
 
     function giverating(){
-        rank = PlayState.instance.ratingName;
-        var ratingstring:String = '';
-        switch(rank){
-            case 'F':
-                ratingstring = 'shit';
-            case 'E' | 'D' :
-                ratingstring = 'bad';
-            case 'C' | 'B':
-                ratingstring = 'good';
-            case 'A-' | 'A' | 'A+':
-                ratingstring = 'sick';
-            case 'S-' | 'S' | 'S+' | 'SS-' | 'SS' | 'SS+':
-                ratingstring = 'sick-gold';
-            case 'X-' | 'X':
-                ratingstring = 'epic';
-            case 'PERFECT':
-                ratingstring = 'epic-gold';
-        }
-
         var rating:FlxSprite = new FlxSprite();
         rating.loadGraphic(Paths.image(ratingstring));
         rating.antialiasing = ClientPrefs.globalAntialiasing;

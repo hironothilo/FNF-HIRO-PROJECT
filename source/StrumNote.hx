@@ -15,6 +15,8 @@ class StrumNote extends FlxSprite
 	public var downScroll:Bool = false;//plan on doing scroll directions soon -bb
 	public var sustainReduce:Bool = true;
 	public var changecolor:Bool = true;
+
+	public var tweenfinish:Bool = false;
 	
 	private var player:Int;
 	
@@ -34,6 +36,7 @@ class StrumNote extends FlxSprite
 		this.player = player;
 		this.noteData = leData;
 		super(x, y);
+		alpha = 0;
 
 		var skin:String = 'NOTE_assets';
 		if(ClientPrefs.noteskinlol == 'Default') skin = 'NOTE_assets';
@@ -67,7 +70,7 @@ class StrumNote extends FlxSprite
 			loadGraphic(Paths.image('pixelUI/' + texture), true, Math.floor(width), Math.floor(height));
 
 			antialiasing = false;
-			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
+			setGraphicSize(Std.int(width * (PlayState.daPixelZoom - 0.6)));
 
 			animation.add('green', [6]);
 			animation.add('red', [7]);
@@ -102,7 +105,7 @@ class StrumNote extends FlxSprite
 			animation.addByPrefix('red', 'arrowRIGHT');
 
 			antialiasing = ClientPrefs.globalAntialiasing;
-			setGraphicSize(Std.int(width * 0.7));
+			setGraphicSize(Std.int(width * 0.65));
 
 			switch (Math.abs(noteData))
 			{
@@ -149,6 +152,8 @@ class StrumNote extends FlxSprite
 			}
 		}
 
+		if(tweenfinish && animation.curAnim.name != 'confirm') alpha = 0.8;
+
 		//if(animation.curAnim != null){ //my bad i was upset
 		if(animation.curAnim.name == 'confirm' && !PlayState.isPixelStage) {
 			centerOrigin();
@@ -162,6 +167,12 @@ class StrumNote extends FlxSprite
 		animation.play(anim, force);
 		centerOffsets();
 		centerOrigin();
+
+		if(tweenfinish){
+			if(anim == 'confirm') alpha = 1;
+			else alpha = 0.8;
+		}
+
 		if(animation.curAnim == null || animation.curAnim.name == 'static') {
 			colorSwap.hue = 0;
 			colorSwap.saturation = 0;
