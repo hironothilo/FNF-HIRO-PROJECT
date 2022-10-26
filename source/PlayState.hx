@@ -2305,7 +2305,7 @@ class PlayState extends MusicBeatState
 					if(ClientPrefs.opponentStrums || note.mustPress)
 					{
 						note.copyAlpha = false;
-						note.alpha = note.multAlpha;
+						note.alpha = 0;
 						if(ClientPrefs.middleScroll && !note.mustPress) {
 							note.alpha *= 0.35;
 						}
@@ -2799,7 +2799,7 @@ class PlayState extends MusicBeatState
 			}
 
 			var babyArrow:StrumNote = new StrumNote(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, strumLine.y, i, player, char);
-			if(player < 1){
+			if(player < 1 && !ClientPrefs.middleScroll){
 				babyArrow.x = ((FlxG.width / 4)) - (babyArrow.width * 2.5);
 			}
 			babyArrow.downScroll = ClientPrefs.downScroll;
@@ -2810,12 +2810,13 @@ class PlayState extends MusicBeatState
 				FlxTween.tween(babyArrow, {/*y: babyArrow.y + 10,*/ alpha: targetAlpha}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i), onComplete:
 					function (twn:FlxTween) {
 						babyArrow.tweenfinish = true;
-						babyArrow.alpha = 1;
+						if(player == 1) babyArrow.alpha = 1;
 					}});
 			}
 			else
 			{
-				babyArrow.alpha = targetAlpha;
+				babyArrow.tweenfinish = true;
+				if(player == 1) babyArrow.alpha = 1;
 			}
 
 			if (player == 1)
@@ -3381,6 +3382,12 @@ class PlayState extends MusicBeatState
 
 				/*if(daNote.copyAlpha)
 					daNote.alpha = strumAlpha;*/ //sike
+				if(ClientPrefs.middleScroll && !daNote.mustPress){
+					daNote.alpha = 0.35;
+				}
+				if(!ClientPrefs.opponentStrums && !daNote.mustPress){
+					daNote.alpha = 0;
+				}
 
 				if(daNote.copyX)
 					daNote.x = strumX + Math.cos(angleDir) * daNote.distance;

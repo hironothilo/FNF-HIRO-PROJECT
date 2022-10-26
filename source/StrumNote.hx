@@ -152,7 +152,15 @@ class StrumNote extends FlxSprite
 			}
 		}
 
-		if(tweenfinish && animation.curAnim.name != 'confirm') alpha = 0.8;
+		var alphashit:Float = 0.8;
+		if(tweenfinish && animation.curAnim.name != 'confirm'){
+			alphashit = 0.8;
+			if(ClientPrefs.middleScroll && player < 1) alphashit *= 0.35;
+			if(!ClientPrefs.opponentStrums && player < 1) {
+				alphashit *= 0;
+			}
+			alpha = alphashit;
+		}
 
 		//if(animation.curAnim != null){ //my bad i was upset
 		if(animation.curAnim.name == 'confirm' && !PlayState.isPixelStage) {
@@ -168,9 +176,16 @@ class StrumNote extends FlxSprite
 		centerOffsets();
 		centerOrigin();
 
+		var alphashit:Float = 0.8;
+
 		if(tweenfinish){
-			if(anim == 'confirm') alpha = 1;
-			else alpha = 0.8;
+			if(anim == 'confirm') alphashit = 1;
+			else alphashit = 0.8;
+			if(ClientPrefs.middleScroll && player < 1) alphashit *= 0.35;
+			if(!ClientPrefs.opponentStrums && player < 1) {
+				alphashit *= 0;
+			}
+			alpha = alphashit;
 		}
 
 		if(animation.curAnim == null || animation.curAnim.name == 'static') {
