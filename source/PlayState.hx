@@ -231,6 +231,7 @@ class PlayState extends MusicBeatState
 	public var camwtfHUD:FlxCamera;
 	public var camnote:FlxCamera;
 	public var camGame:FlxCamera;
+	public var camtime:FlxCamera;
 	public var camgameover:FlxCamera;
 	public var camOther:FlxCamera;
 	public var camSus:FlxCamera;
@@ -415,6 +416,7 @@ class PlayState extends MusicBeatState
 		camgameover = new FlxCamera();
 		//trace(camGame.width + ' and ' + camGame.height);
 		camwtfHUD = new FlxCamera();
+		camtime = new FlxCamera();
 		camnote = new FlxCamera();
 		camHUD = new FlxCamera();
 		camOther = new FlxCamera();
@@ -428,10 +430,12 @@ class PlayState extends MusicBeatState
 		camOther.bgColor.alpha = 0;
 		camgameover.bgColor.alpha = 0;
 		cambeforeHUD.bgColor.alpha = 0;
+		camtime.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camwtfHUD);
 		FlxG.cameras.add(camHUD);
+		FlxG.cameras.add(camtime);
 		FlxG.cameras.add(cambeforeHUD);
 		FlxG.cameras.add(camgameover);
 		FlxG.cameras.add(camSus);
@@ -1097,14 +1101,13 @@ class PlayState extends MusicBeatState
 		timeBarBG.yAdd = -4;
 		//add(timeBarBG);
 
-		timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 32), Std.int(timeBarBG.height - 4), this,
+		timeBar = new FlxBar(0, 0, LEFT_TO_RIGHT, FlxG.width, 13, this,
 			'songPercent', 0, 1);
 		timeBar.scrollFactor.set();
-		timeBar.createFilledBar(0xFF000000, 0xFFFFFFFF);
-		timeBar.numDivisions = 200; //How much lag this causes?? Should i tone it down to idk, 400 or 200?
+		timeBar.createFilledBar(0x0, 0xFFFFFFFF);
+		timeBar.numDivisions = 2000; //How much lag this causes?? Should i tone it down to idk, 400 or 200?
 		timeBar.alpha = 0;
 		timeBar.visible = showTime;
-		timeBar.x += 10;
 		add(timeBar);
 		add(timeBarBG);
 		add(timeTxt);
@@ -1375,7 +1378,7 @@ class PlayState extends MusicBeatState
 		iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
 		botplayTxt.cameras = [camHUD];
-		timeBar.cameras = [camHUD];
+		timeBar.cameras = [camtime];
 		timeBarBG.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
@@ -2463,7 +2466,7 @@ class PlayState extends MusicBeatState
 
 		// Song duration in a float, useful for the time left feature
 		songLength = FlxG.sound.music.length;
-		FlxTween.tween(timeBarBG, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		//FlxTween.tween(timeBarBG, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(timeBar, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 
@@ -3561,6 +3564,7 @@ class PlayState extends MusicBeatState
 				cambeforeHUD.alpha = 0;
 				boyfriend.alpha = 0.00001;
 				camGame.angle = 0;
+				camtime.alpha = 0;
 
 				for (tween in modchartTweens) {
 					tween.active = true;
@@ -4010,7 +4014,7 @@ class PlayState extends MusicBeatState
 		{
 			callOnLuas('onMoveCamera', ['gf']);
 			focusshit = 'gf';
-			timeBar.createFilledBar(0xFF000000, FlxColor.fromRGB(gf.healthColorArray[0], gf.healthColorArray[1], gf.healthColorArray[2])); //cool
+			timeBar.createFilledBar(0x0, FlxColor.fromRGB(gf.healthColorArray[0], gf.healthColorArray[1], gf.healthColorArray[2])); //cool
 			return;
 		}
 
@@ -4019,14 +4023,14 @@ class PlayState extends MusicBeatState
 			//moveCamera(true);
 			callOnLuas('onMoveCamera', ['dad']);
 			focusshit = 'dad';
-			timeBar.createFilledBar(0xFF000000, FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]));
+			timeBar.createFilledBar(0x0, FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]));
 		}
 		else
 		{
 			//moveCamera(false);
 			callOnLuas('onMoveCamera', ['boyfriend']);
 			focusshit = 'bf';
-			timeBar.createFilledBar(0xFF000000, FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
+			timeBar.createFilledBar(0x0, FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
 		}
 	}
 
@@ -5045,8 +5049,8 @@ class PlayState extends MusicBeatState
 				popUpScore(note);
 				health += note.hitHealth * healthGain;
 				//trace(FUNKYNUM_LOL);
-				vocals.volume = 1;
 			}
+			vocals.volume = 1;
 			//health += note.hitHealth * healthGain;
 
 			if(!note.noAnimation) {
