@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="noteCombo.png">
+	<!-- Created with Adobe Animate version 20.0.3.25487 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="NoteCombofix instance 10000" x="0" y="0" width="750" height="450" frameX="0" frameY="-5" frameWidth="752" frameHeight="455"/>
+	<SubTexture name="NoteCombofix instance 10001" x="750" y="0" width="750" height="450" frameX="0" frameY="-5" frameWidth="752" frameHeight="455"/>
+	<SubTexture name="NoteCombofix instance 10002" x="0" y="450" width="750" height="450" frameX="0" frameY="0" frameWidth="752" frameHeight="455"/>
+	<SubTexture name="NoteCombofix instance 10003" x="750" y="450" width="750" height="450" frameX="0" frameY="-5" frameWidth="752" frameHeight="455"/>
+	<SubTexture name="NoteCombofix instance 10004" x="0" y="900" width="750" height="450" frameX="-2" frameY="-2" frameWidth="752" frameHeight="455"/>
+	<SubTexture name="NoteCombofix instance 10005" x="750" y="900" width="750" height="450" frameX="0" frameY="-2" frameWidth="752" frameHeight="455"/>
+	<SubTexture name="NoteCombofix instance 10006" x="0" y="1350" width="750" height="450" frameX="-1" frameY="-4" frameWidth="752" frameHeight="455"/>
+	<SubTexture name="NoteCombofix instance 10007" x="0" y="1350" width="750" height="450" frameX="-1" frameY="-4" frameWidth="752" frameHeight="455"/>
+	<SubTexture name="NoteCombofix instance 10008" x="0" y="1350" width="750" height="450" frameX="-1" frameY="-4" frameWidth="752" frameHeight="455"/>
+	<SubTexture name="NoteCombofix instance 10009" x="0" y="1350" width="750" height="450" frameX="-1" frameY="-4" frameWidth="752" frameHeight="455"/>
+	<SubTexture name="NoteCombofix instance 10010" x="0" y="1350" width="750" height="450" frameX="-1" frameY="-4" frameWidth="752" frameHeight="455"/>
+	<SubTexture name="NoteCombofix instance 10011" x="0" y="1350" width="750" height="450" frameX="-1" frameY="-4" frameWidth="752" frameHeight="455"/>
+	<SubTexture name="NoteCombofix instance 10012" x="0" y="1350" width="750" height="450" frameX="-1" frameY="-4" frameWidth="752" frameHeight="455"/>
+	<SubTexture name="NoteCombofix instance 10013" x="0" y="1350" width="750" height="450" frameX="-1" frameY="-4" frameWidth="752" frameHeight="455"/>
+	<SubTexture name="NoteCombofix instance 10014" x="0" y="1350" width="750" height="450" frameX="-1" frameY="-4" frameWidth="752" frameHeight="455"/>
+	<SubTexture name="NoteCombofix instance 10015" x="0" y="1350" width="750" height="450" frameX="-1" frameY="-4" frameWidth="752" frameHeight="455"/>
+	<SubTexture name="NoteCombofix instance 10016" x="0" y="1350" width="750" height="450" frameX="-1" frameY="-4" frameWidth="752" frameHeight="455"/>
+	<SubTexture name="NoteCombofix instance 10017" x="0" y="1350" width="750" height="450" frameX="-1" frameY="-4" frameWidth="752" frameHeight="455"/>
+	<SubTexture name="NoteCombofix instance 10018" x="0" y="1350" width="750" height="450" frameX="-1" frameY="-4" frameWidth="752" frameHeight="455"/>
+	<SubTexture name="NoteCombofix instance 10019" x="0" y="1350" width="750" height="450" frameX="-1" frameY="-4" frameWidth="752" frameHeight="455"/>
+	<SubTexture name="NoteCombofix instance 10020" x="750" y="450" width="750" height="450" frameX="0" frameY="-5" frameWidth="752" frameHeight="455"/>
+	<SubTexture name="NoteCombofix instance 10021" x="0" y="450" width="750" height="450" frameX="0" frameY="0" frameWidth="752" frameHeight="455"/>
+	<SubTexture name="NoteCombofix instance 10022" x="750" y="1350" width="750" height="450" frameX="0" frameY="-5" frameWidth="752" frameHeight="455"/>
+	<SubTexture name="NoteCombofix instance 10023" x="750" y="1350" width="750" height="450" frameX="0" frameY="-5" frameWidth="752" frameHeight="455"/>
+	<SubTexture name="NoteCombofix instance 10024" x="0" y="0" width="0" height="0" frameX="0" frameY="-5" frameWidth="752" frameHeight="455"/>
+</TextureAtlas>

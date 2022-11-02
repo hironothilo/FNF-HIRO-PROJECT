@@ -85,6 +85,10 @@ class PlayState extends MusicBeatState
 	var funkyStrips:FlxSprite;
 	public var funkyround:Int = 0;
 
+	var notecomboSpritelol:FlxSprite;
+	var focusfornotecombo:String = 'dad';
+	var coolcombo:Int = 0;
+
 	var add1cam:Float = 0;
 	var add2cam:Float = 0; //that fucking stupid
 
@@ -1101,7 +1105,7 @@ class PlayState extends MusicBeatState
 		timeBarBG.yAdd = -4;
 		//add(timeBarBG);
 
-		timeBar = new FlxBar(0, 0, LEFT_TO_RIGHT, FlxG.width, 13, this,
+		timeBar = new FlxBar(0, 0, LEFT_TO_RIGHT, FlxG.width, 10, this,
 			'songPercent', 0, 1);
 		timeBar.scrollFactor.set();
 		timeBar.createFilledBar(0x0, 0xFFFFFFFF);
@@ -1250,6 +1254,16 @@ class PlayState extends MusicBeatState
 		healthBar.visible = !ClientPrefs.hideHud;
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
 
+		notecomboSpritelol = new FlxSprite().loadGraphic(Paths.image('noteCombo'));
+		notecomboSpritelol.frames = Paths.getSparrowAtlas('noteCombo');
+		notecomboSpritelol.scale.set(0.6, 0.6);
+		notecomboSpritelol.x = boyfriend.x + boyfriend.width - notecomboSpritelol.width;
+		notecomboSpritelol.y = (boyfriend.y + boyfriend.height) / 4;
+		notecomboSpritelol.visible = !ClientPrefs.hideHud;
+		notecomboSpritelol.alpha = 0.00001;
+		notecomboSpritelol.animation.addByPrefix('appear', 'NoteCombofix', 24, false);
+		add(notecomboSpritelol);
+
 		healthStrips = new FlxSprite().loadGraphic(Paths.image('coolhealthBar'));
 		healthStrips.frames = Paths.getSparrowAtlas('coolhealthBar');
 		healthStrips.y = FlxG.height * 0.89 - 7.5;
@@ -1257,7 +1271,7 @@ class PlayState extends MusicBeatState
 		healthStrips.scrollFactor.set();
 		healthStrips.visible = !ClientPrefs.hideHud;
 		healthStrips.blend = MULTIPLY;
-		healthStrips.alpha = 0.7;
+		healthStrips.alpha = 0.7 * ClientPrefs.healthBarAlpha;
 		healthStrips.x = healthBarBG.x - 1.9;
 		healthStrips.cameras = [camHUD];
 		if(ClientPrefs.downScroll) healthStrips.y = 0.11 * FlxG.height + 7.5;
@@ -2991,6 +3005,15 @@ class PlayState extends MusicBeatState
 		}*/
 
 		updatecam(elapsed);
+		if(focusfornotecombo != focusshit && focusshit != 'none'){
+			//sikenumcombo(coolcombo); //haha bug
+			notecomboSpritelol.alpha = 1;
+			FlxG.sound.play(Paths.sound('noteComboSound'));
+			notecomboSpritelol.animation.play('appear');
+			focusfornotecombo = focusshit;
+		}
+		if(notecomboSpritelol.animation.finished) notecomboSpritelol.alpha = 0.00001;
+
 		resultaccuracy = Highscore.floorDecimal(ratingPercent * 100, 2);
 		wiggleShit.waveAmplitude = FlxMath.lerp(wiggleShit.waveAmplitude, 0, 0.035 / (ClientPrefs.framerate / 75));
  		wiggleShit.waveFrequency = FlxMath.lerp(wiggleShit.waveFrequency, 0, 0.035 / (ClientPrefs.framerate / 75));
@@ -4003,6 +4026,10 @@ class PlayState extends MusicBeatState
 				} else {
 					FunkinLua.setVarInArray(this, value1, value2);
 				}
+			case 'Note Combo':
+				notecomboSpritelol.alpha = 1;
+				FlxG.sound.play(Paths.sound('noteComboSound'));
+				notecomboSpritelol.animation.play('appear');
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
 	}
@@ -4060,6 +4087,30 @@ class PlayState extends MusicBeatState
 					}
 				});
 			}
+		}
+	}
+
+	function sikenumcombo(notecombo:Int)
+	{
+		trace('nok');
+		var loop:Int = 1;
+		var seperatedNoteCombo:Array<String> = Std.string(notecombo).split("");
+		var numbernotecomboSpritelol:FlxSprite;
+		for (i in seperatedNoteCombo){
+			numbernotecomboSpritelol = new FlxSprite().loadGraphic(Paths.image('noteComboNumbers'));
+			numbernotecomboSpritelol.frames = Paths.getSparrowAtlas('noteComboNumbers');
+			numbernotecomboSpritelol.scale.set(0.6, 0.6);
+			numbernotecomboSpritelol.x = notecomboSpritelol.x - numbernotecomboSpritelol.width * loop;
+			numbernotecomboSpritelol.y = notecomboSpritelol.y;
+			numbernotecomboSpritelol.visible = !ClientPrefs.hideHud;
+			numbernotecomboSpritelol.alpha = 0.00001;
+			numbernotecomboSpritelol.animation.addByPrefix('appear', i + '_appear', 24, false);
+			numbernotecomboSpritelol.animation.addByPrefix('disappear', i + '_disappear', 24, false);
+			add(numbernotecomboSpritelol);
+			numbernotecomboSpritelol.animation.play('appear');
+			if(notecomboSpritelol.animation.finished && notecomboSpritelol.animation.curAnim.name == 'appear') numbernotecomboSpritelol.animation.play('disappear');
+			if(notecomboSpritelol.animation.finished && notecomboSpritelol.animation.curAnim.name == 'disappear') remove(numbernotecomboSpritelol);
+			loop++;
 		}
 	}
 
@@ -4855,6 +4906,7 @@ class PlayState extends MusicBeatState
 			}
 		});
 		combo = 0;
+		coolcombo = 0;
 		
 		if(instakillOnMiss)
 		{
@@ -4863,7 +4915,7 @@ class PlayState extends MusicBeatState
 		}
 
 		if(!daNote.isSustainNote && daNote.nextNote.isSustainNote) daNote.nextNote.countmiss = false;
-		else daNote.nextNote.countmiss = true;
+		else if(daNote.nextNote != null) daNote.nextNote.countmiss = true;
 
 		if(daNote.countmiss) {
 			songMisses += 1;
@@ -4906,6 +4958,7 @@ class PlayState extends MusicBeatState
 				gf.playAnim('sad');
 			}
 			combo = 0;
+			coolcombo = 0;
 
 			if(!practiceMode) songScore -= 10;
 			if(!endingSong) {
@@ -5044,8 +5097,10 @@ class PlayState extends MusicBeatState
 			if (!note.isSustainNote)
 			{
 				combo += 1;
+				coolcombo += 1;
 				FUNKYNUM_LOL += note.hitHealth;
 				if(combo > 9999) combo = 9999;
+				if(coolcombo > 9999) coolcombo = 9999;
 				popUpScore(note);
 				health += note.hitHealth * healthGain;
 				//trace(FUNKYNUM_LOL);
