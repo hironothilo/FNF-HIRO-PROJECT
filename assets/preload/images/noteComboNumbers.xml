@@ -90,12 +90,6 @@
 	<SubTexture name="3_appear0019" x="3108" y="0" width="175" height="226"/>
 	<SubTexture name="3_disappear0000" x="798" y="237" width="175" height="226"/>
 	<SubTexture name="3_disappear0001" x="2577" y="0" width="175" height="226"/>
-	<SubTexture name="3_disappear0002" x="975" y="237" width="0" height="0" frameX="-8" frameY="-3" frameWidth="175" frameHeight="226"/>
-	<SubTexture name="3_disappear0003" x="975" y="237" width="0" height="0" frameX="-8" frameY="-3" frameWidth="175" frameHeight="226"/>
-	<SubTexture name="3_disappear0004" x="975" y="237" width="0" height="0" frameX="-8" frameY="-3" frameWidth="175" frameHeight="226"/>
-	<SubTexture name="3_disappear0005" x="975" y="237" width="0" height="0" frameX="-8" frameY="-3" frameWidth="175" frameHeight="226"/>
-	<SubTexture name="3_disappear0006" x="975" y="237" width="0" height="0" frameX="-8" frameY="-3" frameWidth="175" frameHeight="226"/>
-	<SubTexture name="3_disappear0007" x="975" y="237" width="0" height="0" frameX="-8" frameY="-3" frameWidth="175" frameHeight="226"/>
 	<SubTexture name="4_appear0000" x="3285" y="0" width="200" height="235"/>
 	<SubTexture name="4_appear0001" x="3487" y="0" width="200" height="235"/>
 	<SubTexture name="4_appear0002" x="3689" y="0" width="200" height="235"/>

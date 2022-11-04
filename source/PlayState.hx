@@ -2996,6 +2996,8 @@ class PlayState extends MusicBeatState
 	var startedCountdown:Bool = false;
 	var canPause:Bool = true;
 	var limoSpeed:Float = 0;
+	var numbernotecomboSpritelol:FlxSprite;
+	var spritenoob:Array<FlxSprite> = [];
 
 	override public function update(elapsed:Float)
 	{
@@ -3005,8 +3007,36 @@ class PlayState extends MusicBeatState
 		}*/
 
 		updatecam(elapsed);
-		if(focusfornotecombo != focusshit && focusshit != 'none'){
+		if(focusfornotecombo != focusshit && focusshit != 'none' && coolcombo > 0){
 			//sikenumcombo(coolcombo); //haha bug
+			var loop:Int = 1;
+			var seperatedNoteCombo:Array<String> = Std.string(coolcombo).split("");
+			for (i in seperatedNoteCombo){
+				numbernotecomboSpritelol = new FlxSprite().loadGraphic(Paths.image('noteComboNumbers'));
+				numbernotecomboSpritelol.frames = Paths.getSparrowAtlas('noteComboNumbers');
+				numbernotecomboSpritelol.scale.set(0.6, 0.6);
+				numbernotecomboSpritelol.x = boyfriend.x + boyfriend.width - notecomboSpritelol.width + (loop * 100) + 200; 
+				numbernotecomboSpritelol.x -= 90 * (seperatedNoteCombo.length - 1);
+				numbernotecomboSpritelol.y = (boyfriend.y + boyfriend.height) / 4 + 112.5 - (loop * 25);
+				numbernotecomboSpritelol.visible = !ClientPrefs.hideHud;
+				numbernotecomboSpritelol.updateHitbox();
+				numbernotecomboSpritelol.animation.addByPrefix('appear', i + '_appear', 24, false);
+				numbernotecomboSpritelol.animation.addByPrefix('disappear', i + '_disappear', 24, false);
+				add(numbernotecomboSpritelol);
+				spritenoob.push(numbernotecomboSpritelol);
+				numbernotecomboSpritelol.animation.play('appear');
+				loop++;
+			}
+			for (i in 0...spritenoob.length){
+				new FlxTimer().start(0.7, function(tmr:FlxTimer) {
+					spritenoob[i].animation.play('disappear');
+					new FlxTimer().start(0.15, function(tmr:FlxTimer) {
+						spritenoob[i].visible = false;
+						spritenoob[i].active = false;
+					});
+				});
+			}
+			coolcombo = 0;
 			notecomboSpritelol.alpha = 1;
 			FlxG.sound.play(Paths.sound('noteComboSound'));
 			notecomboSpritelol.animation.play('appear');
@@ -4030,6 +4060,34 @@ class PlayState extends MusicBeatState
 				notecomboSpritelol.alpha = 1;
 				FlxG.sound.play(Paths.sound('noteComboSound'));
 				notecomboSpritelol.animation.play('appear');
+				var loop:Int = 1;
+				var seperatedNoteCombo:Array<String> = Std.string(coolcombo).split("");
+				for (i in seperatedNoteCombo){
+					numbernotecomboSpritelol = new FlxSprite().loadGraphic(Paths.image('noteComboNumbers'));
+					numbernotecomboSpritelol.frames = Paths.getSparrowAtlas('noteComboNumbers');
+					numbernotecomboSpritelol.scale.set(0.6, 0.6);
+					numbernotecomboSpritelol.x = boyfriend.x + boyfriend.width - notecomboSpritelol.width + (loop * 100) + 200;
+					numbernotecomboSpritelol.x -= 90 * (seperatedNoteCombo.length - 1);
+					numbernotecomboSpritelol.y = (boyfriend.y + boyfriend.height) / 4 + 112.5 - (loop * 25);
+					numbernotecomboSpritelol.visible = !ClientPrefs.hideHud;
+					numbernotecomboSpritelol.updateHitbox();
+					numbernotecomboSpritelol.animation.addByPrefix('appear', i + '_appear', 24, false);
+					numbernotecomboSpritelol.animation.addByPrefix('disappear', i + '_disappear', 24, false);
+					add(numbernotecomboSpritelol);
+					spritenoob.push(numbernotecomboSpritelol);
+					numbernotecomboSpritelol.animation.play('appear');
+					loop++;
+				}
+				for (i in 0...spritenoob.length){
+					new FlxTimer().start(0.7, function(tmr:FlxTimer) {
+						spritenoob[i].animation.play('disappear');
+						new FlxTimer().start(0.15, function(tmr:FlxTimer) {
+							spritenoob[i].visible = false;
+							spritenoob[i].active = false;
+						});
+					});
+				}
+
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
 	}
@@ -4092,26 +4150,6 @@ class PlayState extends MusicBeatState
 
 	function sikenumcombo(notecombo:Int)
 	{
-		trace('nok');
-		var loop:Int = 1;
-		var seperatedNoteCombo:Array<String> = Std.string(notecombo).split("");
-		var numbernotecomboSpritelol:FlxSprite;
-		for (i in seperatedNoteCombo){
-			numbernotecomboSpritelol = new FlxSprite().loadGraphic(Paths.image('noteComboNumbers'));
-			numbernotecomboSpritelol.frames = Paths.getSparrowAtlas('noteComboNumbers');
-			numbernotecomboSpritelol.scale.set(0.6, 0.6);
-			numbernotecomboSpritelol.x = notecomboSpritelol.x - numbernotecomboSpritelol.width * loop;
-			numbernotecomboSpritelol.y = notecomboSpritelol.y;
-			numbernotecomboSpritelol.visible = !ClientPrefs.hideHud;
-			numbernotecomboSpritelol.alpha = 0.00001;
-			numbernotecomboSpritelol.animation.addByPrefix('appear', i + '_appear', 24, false);
-			numbernotecomboSpritelol.animation.addByPrefix('disappear', i + '_disappear', 24, false);
-			add(numbernotecomboSpritelol);
-			numbernotecomboSpritelol.animation.play('appear');
-			if(notecomboSpritelol.animation.finished && notecomboSpritelol.animation.curAnim.name == 'appear') numbernotecomboSpritelol.animation.play('disappear');
-			if(notecomboSpritelol.animation.finished && notecomboSpritelol.animation.curAnim.name == 'disappear') remove(numbernotecomboSpritelol);
-			loop++;
-		}
 	}
 
 	function updatecam(elapsed:Float)
