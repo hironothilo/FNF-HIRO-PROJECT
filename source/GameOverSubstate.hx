@@ -13,6 +13,8 @@ import flixel.tweens.FlxTween;
 import flixel.ui.FlxBar;
 import flixel.text.FlxText;
 import flixel.util.FlxStringUtil;
+import flixel.group.FlxGroup.FlxTypedGroup;
+import flash.system.System;
 
 class GameOverSubstate extends MusicBeatSubstate
 {
@@ -23,6 +25,8 @@ class GameOverSubstate extends MusicBeatSubstate
 	var playingDeathSound:Bool = false;
 
 	var timebarGameOver:FlxBar;
+
+	var stopplz:Bool = false;
 
 	var stageSuffix:String = "";
 
@@ -39,7 +43,11 @@ class GameOverSubstate extends MusicBeatSubstate
 
 	var timeelapsed:Int = 0;
 	var fulltime:Float = 0;
+	var curSelected = 0;
 	var timeTxt:FlxText;
+	var hitbox:FlxSprite;
+	var menuItems:FlxTypedGroup<FlxSprite>;
+	var menuItemsOG:Array<String> = ['Retry', 'Exit to menu', 'Quit Game'];
 
 	public static function resetVariables() {
 		characterName = 'bf-dead';
@@ -103,6 +111,33 @@ class GameOverSubstate extends MusicBeatSubstate
 		timebarGameOver.y = FlxG.height * 0.85;
 		add(timebarGameOver);
 
+		hitbox = new FlxSprite().loadGraphic(Paths.image('boxgameover'));
+		hitbox.scale.set(0.4, 0.5);
+		hitbox.x = FlxG.width * 0.45;
+		hitbox.screenCenter(Y);
+		hitbox.cameras = [PlayState.instance.camgameover];
+		hitbox.scrollFactor.set();
+		hitbox.alpha = 0;
+		add(hitbox);
+		
+		menuItems = new FlxTypedGroup<FlxSprite>();
+		add(menuItems);
+
+		for (i in 0...menuItemsOG.length)
+		{
+			var menuTxt = new FlxText(0, 0, 1080, "", 16);
+			menuTxt.cameras = [PlayState.instance.camgameover];
+			menuTxt.setFormat(Paths.font("phantommuff.ttf"), 40, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			menuTxt.scrollFactor.set();
+			menuTxt.text = menuItemsOG[i];
+			menuTxt.x = FlxG.width * 0.45 + (hitbox.width - menuTxt.width) / 2 - (i * 25) + 20;
+			menuTxt.y = hitbox.height / 2 + ((hitbox.height / 8) * i) - 30;
+			menuTxt.alpha = 0;
+			menuTxt.ID = i;
+			menuItems.add(menuTxt);
+			FlxTween.tween(menuTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut, startDelay: 0.5});
+		}
+
 		icon = new HealthIcon(boyfriend.healthIcon, false);
 		icon.y = timebarGameOver.y - 70;
 		icon.cameras = [PlayState.instance.camgameover];
@@ -127,6 +162,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		FlxTween.tween(timebarGameOver, {alpha: 1}, 0.5, {ease: FlxEase.circOut, startDelay: 0.5});
 		FlxTween.tween(icon, {alpha: 1}, 0.5, {ease: FlxEase.circOut, startDelay: 0.5});
 		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut, startDelay: 0.5});
+		FlxTween.tween(hitbox, {alpha: 1}, 0.5, {ease: FlxEase.circOut, startDelay: 0.5});
 	}
 
 	var isFollowingAlready:Bool = false;
@@ -146,25 +182,42 @@ class GameOverSubstate extends MusicBeatSubstate
 			camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 		}
 
-		if (controls.ACCEPT)
+		if (controls.UI_UP_P && !stopplz)
 		{
-			endBullshit();
+			changeItem(-1);
+		}
+		if (controls.UI_DOWN_P && !stopplz)
+		{
+			changeItem(1);
 		}
 
-		if (controls.BACK)
-		{
-			FlxG.sound.music.stop();
-			PlayState.deathCounter = 0;
-			PlayState.seenCutscene = false;
+		if (controls.ACCEPT && !stopplz){
+			var daChoice:String = menuItemsOG[curSelected];
+			stopplz = true;
+			switch (daChoice)
+			{
+				case 'Retry':
+					endBullshit();
+				case 'Exit to menu':
+					FlxG.sound.music.stop();
+					PlayState.deathCounter = 0;
+					PlayState.seenCutscene = false;
 
-			WeekData.loadTheFirstEnabledMod();
-			if (PlayState.isStoryMode)
-				MusicBeatState.switchState(new StoryMenuState());
-			else
-				MusicBeatState.switchState(new FreeplayState());
+					WeekData.loadTheFirstEnabledMod();
+					if (PlayState.isStoryMode)
+						MusicBeatState.switchState(new StoryMenuState());
+					else
+						MusicBeatState.switchState(new FreeplayState());
 
-			FlxG.sound.playMusic(Paths.music('freakyMenu'));
-			PlayState.instance.callOnLuas('onGameOverConfirm', [false]);
+					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+					PlayState.instance.callOnLuas('onGameOverConfirm', [false]);
+				case 'Quit Game':
+					PlayState.instance.camgameover.fade(FlxColor.BLACK, 2);
+					FlxG.sound.music.fadeOut(1.5, 0);
+					new FlxTimer().start(2, function(tmr:FlxTimer){
+						System.exit(0);
+					});
+			}
 		}
 
 		if (boyfriend.animation.curAnim.name == 'firstDeath')
@@ -218,6 +271,26 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		//FlxG.log.add('beat');
 	}
+
+	function changeItem(huh:Int = 0)
+		{
+			curSelected += huh;
+	
+			if (curSelected >= menuItemsOG.length)
+				curSelected = 0;
+			if (curSelected < 0)
+				curSelected = menuItemsOG.length - 1;
+	
+			menuItems.forEach(function(spr:FlxSprite)
+			{
+				spr.scale.set(0.95, 0.95);
+				spr.color = 0x00FFFFFF;
+				if (spr.ID == curSelected){
+					spr.scale.set(1, 1);
+					spr.color = 0x0033FF00;
+				}
+			});
+		}
 
 	var isEnding:Bool = false;
 
