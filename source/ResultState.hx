@@ -133,7 +133,7 @@ class ResultState extends MusicBeatState
         super.create();
 
         var expwant:Int = 0;
-        expwant = Math.round((PlayState.instance.songScore / 3000) + (PlayState.instance.resultaccuracy / 5) + (PlayState.instance.funkyround * 5));
+        expwant = Math.round((PlayState.instance.songScore / 2500) + (PlayState.instance.resultaccuracy / 4) + (PlayState.instance.funkyround * 5));
         trace(expwant);
 
         if(!backtoomenu) numtween = FlxTween.tween(this, {accuracynumbertest: PlayState.instance.resultaccuracy * 100}, Math.floor(PlayState.instance.resultaccuracy / 10), {ease:FlxEase.sineOut});
@@ -195,6 +195,23 @@ class ResultState extends MusicBeatState
         if(controls.ACCEPT)
         {
             numtween.cancel();
+            rank = PlayState.instance.ratingName;
+            switch(rank){
+                case 'F':
+                   ratingstring = 'shit';
+                case 'E' | 'D' :
+                    ratingstring = 'bad';
+                case 'C' | 'B':
+                    ratingstring = 'good';
+                case 'A-' | 'A' | 'A+':
+                    ratingstring = 'sick';
+                case 'S-' | 'S' | 'S+' | 'SS-' | 'SS' | 'SS+':
+                    ratingstring = 'sick-gold';
+                case 'X-' | 'X':
+                    ratingstring = 'epic';
+                case 'PERFECT':
+                    ratingstring = 'epic-gold';
+            }
             accuracynumbertest = Math.floor(PlayState.instance.resultaccuracy * 100);
         }
 
@@ -426,8 +443,8 @@ class ResultState extends MusicBeatState
     }
 
     function giverating(){
-        var rating:FlxSprite = new FlxSprite();
-        rating.loadGraphic(Paths.image(ratingstring));
+        var rating:FlxSprite = new FlxSprite().loadGraphic(Paths.image(ratingstring));
+        //rating.loadGraphic(Paths.image(ratingstring));
         rating.antialiasing = ClientPrefs.globalAntialiasing;
         rating.screenCenter();
         rating.x -= FlxG.width / 4 + 75;
@@ -442,7 +459,7 @@ class ResultState extends MusicBeatState
         fcrating.y -= FlxG.height / 4;
         fcrating.alpha = 0;
 
-        if(FC != 'Clear') add(rating);
+        add(rating);
         rating.scale.set(5, 5);
         rating.alpha = 0;
         FlxTween.tween(rating, {alpha: 1}, 0.25, {ease: FlxEase.cubeInOut, startDelay: 0.5});
@@ -451,7 +468,7 @@ class ResultState extends MusicBeatState
                 FlxG.cameras.shake(0.005, 0.25);
             }});
         
-        add(fcrating);
+        if(FC != 'Clear') add(fcrating);
         FlxTween.tween(fcrating, {alpha: 1}, 0.25, {ease: FlxEase.cubeInOut, startDelay: 0.5});
         ratingfinish = true;
     }

@@ -10,6 +10,9 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.ui.FlxBar;
+import flixel.text.FlxText;
+import flixel.util.FlxStringUtil;
 
 class GameOverSubstate extends MusicBeatSubstate
 {
@@ -18,6 +21,8 @@ class GameOverSubstate extends MusicBeatSubstate
 	var camFollowPos:FlxObject;
 	var updateCamera:Bool = false;
 	var playingDeathSound:Bool = false;
+
+	var timebarGameOver:FlxBar;
 
 	var stageSuffix:String = "";
 
@@ -29,8 +34,12 @@ class GameOverSubstate extends MusicBeatSubstate
 	public static var instance:GameOverSubstate;
 
 	var restartbutton:FlxSprite;
-
 	var timebarprogress:Float = 0;
+	var icon:HealthIcon;
+
+	var timeelapsed:Int = 0;
+	var fulltime:Float = 0;
+	var timeTxt:FlxText;
 
 	public static function resetVariables() {
 		characterName = 'bf-dead';
@@ -55,8 +64,17 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		Conductor.songPosition = 0;
 
-		timebarprogress = PlayState.instance.songPercent;
-		//trace(timebarprogress);
+		timeelapsed = PlayState.instance.timefloat;
+		fulltime = Math.floor(PlayState.instance.songLength / 1000);
+
+		timeTxt = new FlxText(0, FlxG.height * 0.75, 400, "", 40);
+		timeTxt.screenCenter(X);
+		timeTxt.cameras = [PlayState.instance.camgameover];
+		timeTxt.setFormat(Paths.font("phantommuff.ttf"), 40, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		timeTxt.scrollFactor.set();
+		timeTxt.alpha = 0;
+		timeTxt.text = '${FlxStringUtil.formatTime(timeelapsed, false)} / ${FlxStringUtil.formatTime(fulltime, false)}';
+		add(timeTxt);
 
 		restartbutton = new FlxSprite().loadGraphic(Paths.image('restart'));
 		restartbutton.frames = Paths.getSparrowAtlas('restart');
@@ -74,6 +92,24 @@ class GameOverSubstate extends MusicBeatSubstate
 		boyfriend.y += 320;
 		add(boyfriend);
 
+		timebarGameOver = new FlxBar(0, 0, LEFT_TO_RIGHT, Math.round(FlxG.width / 2), 15, this,
+			'timebarprogress', 0, 1);
+		timebarGameOver.scrollFactor.set();
+		timebarGameOver.createFilledBar(0xFF000000, FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
+		timebarGameOver.numDivisions = 2000; //How much lag this causes?? Should i tone it down to idk, 400 or 200?
+		timebarGameOver.alpha = 0;
+		timebarGameOver.cameras = [PlayState.instance.camgameover];
+		timebarGameOver.x = FlxG.width / 2 - timebarGameOver.width / 2;
+		timebarGameOver.y = FlxG.height * 0.85;
+		add(timebarGameOver);
+
+		icon = new HealthIcon(boyfriend.healthIcon, false);
+		icon.y = timebarGameOver.y - 70;
+		icon.cameras = [PlayState.instance.camgameover];
+		icon.x = timebarGameOver.x / 2 + icon.width / 2;
+		icon.alpha = 0;
+		add(icon);
+
 		camFollow = new FlxPoint(boyfriend.getGraphicMidpoint().x, boyfriend.getGraphicMidpoint().y);
 
 		FlxG.sound.play(Paths.sound(deathSoundName));
@@ -88,12 +124,21 @@ class GameOverSubstate extends MusicBeatSubstate
 		camFollowPos = new FlxObject(0, 0, 1, 1);
 		camFollowPos.setPosition(FlxG.camera.scroll.x + (FlxG.camera.width / 2), FlxG.camera.scroll.y + (FlxG.camera.height / 2));
 		add(camFollowPos);
+		FlxTween.tween(timebarGameOver, {alpha: 1}, 0.5, {ease: FlxEase.circOut, startDelay: 0.5});
+		FlxTween.tween(icon, {alpha: 1}, 0.5, {ease: FlxEase.circOut, startDelay: 0.5});
+		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut, startDelay: 0.5});
 	}
 
 	var isFollowingAlready:Bool = false;
+	var numtween:FlxTween;
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+		var mult:Float = FlxMath.lerp(1, icon.scale.x, CoolUtil.boundTo(1 - (elapsed * 7), 0, 1));
+		numtween = FlxTween.tween(this, {timebarprogress: PlayState.instance.songPercent}, 2, {ease:FlxEase.sineOut, startDelay: 1});
+		//icon.x = timebarGameOver.x + (timebarGameOver.width * (FlxMath.remapToRange(timebarGameOver.percent, 0, 100, 100, 0) * 0.01) - (icon.width - 20));
+		icon.scale.set(mult, mult);
+		FlxTween.tween(icon, {x: (timebarGameOver.x + PlayState.instance.songPercent * timebarGameOver.width - icon.width / 2)}, 1.25, {startDelay: 0.75});
 
 		PlayState.instance.callOnLuas('onUpdate', [elapsed]);
 		if(updateCamera) {
@@ -166,7 +211,10 @@ class GameOverSubstate extends MusicBeatSubstate
 	override function beatHit()
 	{
 		super.beatHit();
-		if (!isEnding) restartbutton.animation.play('bumping');
+		if (!isEnding) {
+			restartbutton.animation.play('bumping');
+			icon.scale.set(1.3, 1.3);
+		}
 
 		//FlxG.log.add('beat');
 	}

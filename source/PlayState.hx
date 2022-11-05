@@ -89,6 +89,8 @@ class PlayState extends MusicBeatState
 	var focusfornotecombo:String = 'dad';
 	var coolcombo:Int = 0;
 
+	public var timefloat:Int = 0;
+
 	var add1cam:Float = 0;
 	var add2cam:Float = 0; //that fucking stupid
 
@@ -311,7 +313,7 @@ class PlayState extends MusicBeatState
 
 	public var inCutscene:Bool = false;
 	public var skipCountdown:Bool = false;
-	var songLength:Float = 0;
+	public var songLength:Float = 0;
 
 	public var boyfriendCameraOffset:Array<Float> = null;
 	public var opponentCameraOffset:Array<Float> = null;
@@ -1257,7 +1259,7 @@ class PlayState extends MusicBeatState
 		notecomboSpritelol = new FlxSprite().loadGraphic(Paths.image('noteCombo'));
 		notecomboSpritelol.frames = Paths.getSparrowAtlas('noteCombo');
 		notecomboSpritelol.scale.set(0.6, 0.6);
-		notecomboSpritelol.x = boyfriend.x + boyfriend.width - notecomboSpritelol.width;
+		notecomboSpritelol.x = boyfriend.x + boyfriend.width- notecomboSpritelol.width;
 		notecomboSpritelol.y = (boyfriend.y + boyfriend.height) / 4;
 		notecomboSpritelol.visible = !ClientPrefs.hideHud;
 		notecomboSpritelol.alpha = 0.00001;
@@ -3008,14 +3010,13 @@ class PlayState extends MusicBeatState
 
 		updatecam(elapsed);
 		if(focusfornotecombo != focusshit && focusshit != 'none' && coolcombo > 0){
-			//sikenumcombo(coolcombo); //haha bug
 			var loop:Int = 1;
 			var seperatedNoteCombo:Array<String> = Std.string(coolcombo).split("");
 			for (i in seperatedNoteCombo){
 				numbernotecomboSpritelol = new FlxSprite().loadGraphic(Paths.image('noteComboNumbers'));
 				numbernotecomboSpritelol.frames = Paths.getSparrowAtlas('noteComboNumbers');
 				numbernotecomboSpritelol.scale.set(0.6, 0.6);
-				numbernotecomboSpritelol.x = boyfriend.x + boyfriend.width - notecomboSpritelol.width + (loop * 100) + 200; 
+				numbernotecomboSpritelol.x = boyfriend.x+ boyfriend.width - notecomboSpritelol.width + (loop * 100) + 200; 
 				numbernotecomboSpritelol.x -= 90 * (seperatedNoteCombo.length - 1);
 				numbernotecomboSpritelol.y = (boyfriend.y + boyfriend.height) / 4 + 112.5 - (loop * 25);
 				numbernotecomboSpritelol.visible = !ClientPrefs.hideHud;
@@ -3023,6 +3024,7 @@ class PlayState extends MusicBeatState
 				numbernotecomboSpritelol.animation.addByPrefix('appear', i + '_appear', 24, false);
 				numbernotecomboSpritelol.animation.addByPrefix('disappear', i + '_disappear', 24, false);
 				add(numbernotecomboSpritelol);
+				precacheList.set('noteComboNumbers', 'image');
 				spritenoob.push(numbernotecomboSpritelol);
 				numbernotecomboSpritelol.animation.play('appear');
 				loop++;
@@ -3337,6 +3339,8 @@ class PlayState extends MusicBeatState
 
 					if(ClientPrefs.timeBarType != 'Song Name')
 						timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false);
+
+					timefloat = Math.floor(curTime / 1000);
 				}
 			}
 
@@ -4146,10 +4150,6 @@ class PlayState extends MusicBeatState
 				});
 			}
 		}
-	}
-
-	function sikenumcombo(notecombo:Int)
-	{
 	}
 
 	function updatecam(elapsed:Float)
