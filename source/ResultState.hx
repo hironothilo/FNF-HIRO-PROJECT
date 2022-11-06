@@ -14,8 +14,10 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.tweens.FlxEase;
 import flixel.util.FlxGradient;
-import flixel.addons.display.FlxBackdrop;
 import flixel.system.FlxSound;
+import flixel.addons.transition.FlxTransitionableState;
+import flixel.util.FlxTimer;
+import flixel.FlxCamera;
 
 //"Static access to instance field (varible) is not allowed" mean you stupid go read kade version lol
 
@@ -30,13 +32,14 @@ class ResultState extends MusicBeatState
     var rank:String = "F";
     var anotherrank:String = "G";
     var FC:String = "";
-    var accuracytxt:FlxText;
     var epicnum:Int = 0;
     var sicknum:Int = 0;
     var goodnum:Int = 0;
     var badnum:Int = 0;
     var shitnum:Int = 0;
     var numscoregroup:FlxGroup = new FlxGroup();
+
+    public var cam:FlxCamera;
 
     var rankingpicturre:FlxSprite;
 
@@ -50,8 +53,8 @@ class ResultState extends MusicBeatState
     var anothertransGradient:FlxSprite;
     var transBlack:FlxSprite;
     var anothertransBlack:FlxSprite;
-    var bg1:FlxSprite;
-    var bg2:FlxSprite;
+    public static var bg1:FlxSprite;
+    public static var bg2:FlxSprite;
 
     var flash:FlxSprite;
     var whitetransGradient:FlxSprite;
@@ -80,6 +83,9 @@ class ResultState extends MusicBeatState
 
     override function create()
     {
+        cam = new FlxCamera();
+        FlxG.cameras.add(cam);
+
         bg1 = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
         bg1.x = 0;
         bg1.updateHitbox();
@@ -119,17 +125,13 @@ class ResultState extends MusicBeatState
         whitetransGradient.screenCenter(Y);
         whitetransGradient.x = 200;
         whitetransGradient.alpha = 0;
+        whitetransGradient.cameras = [cam];//
         add(whitetransGradient);
 
         FC = PlayState.instance.ratingFC;
 
         DiscordClient.changePresence("Result Screen", null);
 
-        accuracytxt = new FlxText(12, 12, 0, "", 6);
-        accuracytxt.scrollFactor.set();
-		accuracytxt.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(accuracytxt);
-        
         super.create();
 
         var expwant:Int = 0;
@@ -181,16 +183,6 @@ class ResultState extends MusicBeatState
             }
         }
 
-        /*accuracytxt.text = 'accuracy = ${accuracynumbertest/100} %
-        \nscore = ${score}
-        \nmisses = ${misses}
-        \nhighestCombo = ${topcombo}
-        \nRanking = ${rank} [${FC}]
-        \nepic = ${epicnum}                         sick = ${sicknum}
-        \ngood = ${goodnum}                         bad = ${badnum}
-        \nshit = ${shitnum}
-        ';*/
-
         var accepted = controls.ACCEPT && backtoomenu;
         if(controls.ACCEPT)
         {
@@ -200,7 +192,13 @@ class ResultState extends MusicBeatState
 
         if(accepted)
         {
-            if(PlayState.isStoryMode){
+            FlxTransitionableState.skipNextTransIn = true;
+			FlxTransitionableState.skipNextTransOut = true;
+            FlxTween.tween(cam, {alpha: 0}, 0.5, {ease: FlxEase.cubeInOut});
+            new FlxTimer().start(1, function(tmr:FlxTimer) {
+                MusicBeatState.switchState(new EXPState());
+            });
+            /*if(PlayState.isStoryMode){
                 if(PlayState.storyPlaylist.length <= 0){
                     FlxG.sound.play(Paths.sound('confirmMenu'));
                     FlxG.sound.playMusic(Paths.music('freakyMenu'));
@@ -220,7 +218,7 @@ class ResultState extends MusicBeatState
                 FlxG.sound.play(Paths.sound('confirmMenu'));
                 MusicBeatState.switchState(new FreeplayState());
                 FlxG.sound.playMusic(Paths.music('freakyMenu'));
-            }
+            }*/
         }
     }
 
@@ -355,6 +353,7 @@ class ResultState extends MusicBeatState
             if(rank == 'SS+') rankingpicturre.y -= 40;
             if(rank == 'S') rankingpicturre.y += 25;
             rankingpicturre.antialiasing = ClientPrefs.globalAntialiasing;
+            rankingpicturre.cameras = [cam];
             add(rankingpicturre);
             
             anotherrank = rank;
@@ -432,6 +431,7 @@ class ResultState extends MusicBeatState
         rating.screenCenter();
         rating.x -= FlxG.width / 4 + 75;
         rating.y -= FlxG.height / 4;
+        rating.cameras = [cam];
 
         var fcrating:FlxSprite = new FlxSprite();
         fcrating.loadGraphic(Paths.image('rankings/${FC}'));
@@ -441,6 +441,7 @@ class ResultState extends MusicBeatState
         fcrating.x = rating.width;
         fcrating.y -= FlxG.height / 4;
         fcrating.alpha = 0;
+        fcrating.cameras = [cam];
 
         add(rating);
         rating.scale.set(5, 5);
@@ -466,6 +467,7 @@ class ResultState extends MusicBeatState
         pressenter.alpha = 0;
         FlxTween.tween(pressenter, {alpha: 1}, 0.25, {startDelay: 0.25});
         add(pressenter);
+        pressenter.cameras = [cam];
 
         var placement:String = Std.string(accuracynumbertest / 100);
 
@@ -489,6 +491,9 @@ class ResultState extends MusicBeatState
         score.scale.set(0.75, 0.75);
         misses.scale.set(0.75, 0.75);
         top_combo.scale.set(0.75, 0.75);
+        score.cameras = [cam];
+        misses.cameras = [cam];
+        top_combo.cameras = [cam];
         score.alpha = 0;
         misses.alpha = 0;
         top_combo.alpha = 0;
@@ -517,6 +522,7 @@ class ResultState extends MusicBeatState
             numScore.alpha = 0;
             add(numScore);
             FlxTween.tween(numScore, {alpha: 1}, 0.25, {ease: FlxEase.cubeInOut});
+            numScore.cameras = [cam];
         }
         for (i in missesarray){
             var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image('num' + Std.string(i)));
@@ -532,6 +538,7 @@ class ResultState extends MusicBeatState
             numScore.alpha = 0;
             add(numScore);
             FlxTween.tween(numScore, {alpha: 1}, 0.25, {ease: FlxEase.cubeInOut});
+            numScore.cameras = [cam];
         }
         for (i in top_comboarray){
             var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image('num' + Std.string(i)));
@@ -547,6 +554,7 @@ class ResultState extends MusicBeatState
             numScore.alpha = 0;
             add(numScore);
             FlxTween.tween(numScore, {alpha: 1}, 0.25, {ease: FlxEase.cubeInOut});
+            numScore.cameras = [cam];
         }
         for (i in accuracyarray){
             if(i=="."){
@@ -574,6 +582,7 @@ class ResultState extends MusicBeatState
             numScore.alpha = 0;
             add(numScore);
             FlxTween.tween(numScore, {alpha: 1}, 0.25, {ease: FlxEase.cubeInOut});
+            numScore.cameras = [cam];
         }
     }
 }
