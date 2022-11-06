@@ -163,6 +163,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		FlxTween.tween(icon, {alpha: 1}, 0.5, {ease: FlxEase.circOut, startDelay: 0.5});
 		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut, startDelay: 0.5});
 		FlxTween.tween(hitbox, {alpha: 1}, 0.5, {ease: FlxEase.circOut, startDelay: 0.5});
+		changeItem();
 	}
 
 	var isFollowingAlready:Bool = false;

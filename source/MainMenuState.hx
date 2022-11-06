@@ -134,8 +134,8 @@ class MainMenuState extends MusicBeatState
 		{
 			var offset:Float = 108 - (Math.max(optionShit.length, 4) - 4) * 80;
 			var menuItem:FlxSprite = new FlxSprite(0, (i * 240) + 10  + offset);
-			menuItem.scale.x = 0.95;
-			menuItem.scale.y = 0.95;
+			menuItem.scale.x = 0.9;
+			menuItem.scale.y = 0.9;
 			menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[i]);
 			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
 			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
@@ -342,14 +342,22 @@ class MainMenuState extends MusicBeatState
 		{
 			spr.animation.play('idle');
 			//spr.updateHitbox();
-			spr.scale.x = 0.95;
-			spr.scale.y = 0.95;
+			spr.scale.x = 0.9;
+			spr.scale.y = 0.9;
+			if(optionShit[spr.ID] == 'story_mode') {
+				spr.scale.x = 0.8;
+				spr.scale.y = 0.8;
+			}
 
 			if (spr.ID == curSelected)
 			{
 				spr.animation.play('selected');
-				spr.scale.x = 0.9;
-				spr.scale.y = 0.9;
+				spr.scale.x = 0.85;
+				spr.scale.y = 0.85;
+				if(optionShit[spr.ID] == 'story_mode') {
+					spr.scale.x = 0.75;
+					spr.scale.y = 0.75;
+				}
 				//trace(spr.x);
 				var add:Float = 0;
 				if(menuItems.length > 4) {

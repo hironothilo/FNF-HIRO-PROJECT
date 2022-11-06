@@ -195,23 +195,6 @@ class ResultState extends MusicBeatState
         if(controls.ACCEPT)
         {
             numtween.cancel();
-            rank = PlayState.instance.ratingName;
-            switch(rank){
-                case 'F':
-                   ratingstring = 'shit';
-                case 'E' | 'D' :
-                    ratingstring = 'bad';
-                case 'C' | 'B':
-                    ratingstring = 'good';
-                case 'A-' | 'A' | 'A+':
-                    ratingstring = 'sick';
-                case 'S-' | 'S' | 'S+' | 'SS-' | 'SS' | 'SS+':
-                    ratingstring = 'sick-gold';
-                case 'X-' | 'X':
-                    ratingstring = 'epic';
-                case 'PERFECT':
-                    ratingstring = 'epic-gold';
-            }
             accuracynumbertest = Math.floor(PlayState.instance.resultaccuracy * 100);
         }
 
