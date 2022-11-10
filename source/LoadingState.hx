@@ -36,7 +36,7 @@ class LoadingState extends MusicBeatState
 	var chashit:Character;
 	var bfshit:Boyfriend;
 	var main_Checker:FlxBackdrop;
-	var textbf:String = '';
+	public static var textbf:String = '';
 	var textlol:String = '';
 
 	function new(target:FlxState, stopMusic:Bool, directory:String)
@@ -54,7 +54,6 @@ class LoadingState extends MusicBeatState
 		var bg:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, 0xffcaff4d);
 		add(bg);
 
-		Conductor.changeBPM(180);
 
 		funkay = new FlxSprite(0, 0).loadGraphic(Paths.getPath('images/funkay.png', IMAGE));
 		funkay.setGraphicSize(0, FlxG.height);

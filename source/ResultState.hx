@@ -192,13 +192,14 @@ class ResultState extends MusicBeatState
 
         if(accepted)
         {
-            FlxTransitionableState.skipNextTransIn = true;
+            FlxG.sound.play(Paths.sound('confirmMenu'));
+            /*FlxTransitionableState.skipNextTransIn = true;
 			FlxTransitionableState.skipNextTransOut = true;
             FlxTween.tween(cam, {alpha: 0}, 0.5, {ease: FlxEase.cubeInOut});
-            new FlxTimer().start(1, function(tmr:FlxTimer) {
+            new FlxTimer().start(0.6, function(tmr:FlxTimer) {
                 MusicBeatState.switchState(new EXPState());
-            });
-            /*if(PlayState.isStoryMode){
+            });*/
+            if(PlayState.isStoryMode){
                 if(PlayState.storyPlaylist.length <= 0){
                     FlxG.sound.play(Paths.sound('confirmMenu'));
                     FlxG.sound.playMusic(Paths.music('freakyMenu'));
@@ -218,7 +219,7 @@ class ResultState extends MusicBeatState
                 FlxG.sound.play(Paths.sound('confirmMenu'));
                 MusicBeatState.switchState(new FreeplayState());
                 FlxG.sound.playMusic(Paths.music('freakyMenu'));
-            }*/
+            }
         }
     }
 
