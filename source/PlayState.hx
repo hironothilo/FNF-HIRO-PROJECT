@@ -2465,7 +2465,7 @@ class PlayState extends MusicBeatState
 		lastReportedPlayheadPosition = 0;
 
 		FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
-		FlxG.sound.music.onComplete = onSongComplete;
+		FlxG.sound.music.onComplete = finishSong.bind();
 		vocals.play();
 
 		if(startOnTime > 0)
@@ -2828,13 +2828,11 @@ class PlayState extends MusicBeatState
 				FlxTween.tween(babyArrow, {/*y: babyArrow.y + 10,*/ alpha: targetAlpha}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i), onComplete:
 					function (twn:FlxTween) {
 						babyArrow.tweenfinish = true;
-						if(player == 1) babyArrow.alpha = 1;
 					}});
 			}
 			else
 			{
 				babyArrow.tweenfinish = true;
-				if(player == 1) babyArrow.alpha = 1;
 			}
 
 			if (player == 1)
@@ -3009,39 +3007,41 @@ class PlayState extends MusicBeatState
 		}*/
 
 		updatecam(elapsed);
-		if(focusfornotecombo != focusshit && focusshit != 'none' && coolcombo > 0){
+		if(focusfornotecombo != focusshit && focusshit != 'none'){
 			var loop:Int = 1;
 			var seperatedNoteCombo:Array<String> = Std.string(coolcombo).split("");
-			for (i in seperatedNoteCombo){
-				numbernotecomboSpritelol = new FlxSprite().loadGraphic(Paths.image('noteComboNumbers'));
-				numbernotecomboSpritelol.frames = Paths.getSparrowAtlas('noteComboNumbers');
-				numbernotecomboSpritelol.scale.set(0.6, 0.6);
-				numbernotecomboSpritelol.x = boyfriend.x+ boyfriend.width - notecomboSpritelol.width + (loop * 100) + 200; 
-				numbernotecomboSpritelol.x -= 90 * (seperatedNoteCombo.length - 1);
-				numbernotecomboSpritelol.y = (boyfriend.y + boyfriend.height) / 4 + 112.5 - (loop * 25);
-				numbernotecomboSpritelol.visible = !ClientPrefs.hideHud;
-				numbernotecomboSpritelol.updateHitbox();
-				numbernotecomboSpritelol.animation.addByPrefix('appear', i + '_appear', 24, false);
-				numbernotecomboSpritelol.animation.addByPrefix('disappear', i + '_disappear', 24, false);
-				add(numbernotecomboSpritelol);
-				precacheList.set('noteComboNumbers', 'image');
-				spritenoob.push(numbernotecomboSpritelol);
-				numbernotecomboSpritelol.animation.play('appear');
-				loop++;
-			}
-			for (i in 0...spritenoob.length){
-				new FlxTimer().start(0.7, function(tmr:FlxTimer) {
-					spritenoob[i].animation.play('disappear');
-					new FlxTimer().start(0.15, function(tmr:FlxTimer) {
-						spritenoob[i].visible = false;
-						spritenoob[i].active = false;
+			if(coolcombo > 0){
+				for (i in seperatedNoteCombo){
+					numbernotecomboSpritelol = new FlxSprite().loadGraphic(Paths.image('noteComboNumbers'));
+					numbernotecomboSpritelol.frames = Paths.getSparrowAtlas('noteComboNumbers');
+					numbernotecomboSpritelol.scale.set(0.6, 0.6);
+					numbernotecomboSpritelol.x = boyfriend.x+ boyfriend.width - notecomboSpritelol.width + (loop * 100) + 200; 
+					numbernotecomboSpritelol.x -= 90 * (seperatedNoteCombo.length - 1);
+					numbernotecomboSpritelol.y = (boyfriend.y + boyfriend.height) / 4 + 112.5 - (loop * 25);
+					numbernotecomboSpritelol.visible = !ClientPrefs.hideHud;
+					numbernotecomboSpritelol.updateHitbox();
+					numbernotecomboSpritelol.animation.addByPrefix('appear', i + '_appear', 24, false);
+					numbernotecomboSpritelol.animation.addByPrefix('disappear', i + '_disappear', 24, false);
+					add(numbernotecomboSpritelol);
+					precacheList.set('noteComboNumbers', 'image');
+					spritenoob.push(numbernotecomboSpritelol);
+					numbernotecomboSpritelol.animation.play('appear');
+					loop++;
+				}
+				for (i in 0...spritenoob.length){
+					new FlxTimer().start(0.7, function(tmr:FlxTimer) {
+						spritenoob[i].animation.play('disappear');
+						new FlxTimer().start(0.15, function(tmr:FlxTimer) {
+							spritenoob[i].visible = false;
+							spritenoob[i].active = false;
+						});
 					});
-				});
+				}
+				coolcombo = 0;
+				notecomboSpritelol.alpha = 1;
+				FlxG.sound.play(Paths.sound('noteComboSound'));
+				notecomboSpritelol.animation.play('appear');
 			}
-			coolcombo = 0;
-			notecomboSpritelol.alpha = 1;
-			FlxG.sound.play(Paths.sound('noteComboSound'));
-			notecomboSpritelol.animation.play('appear');
 			focusfornotecombo = focusshit;
 		}
 		if(notecomboSpritelol.animation.finished) notecomboSpritelol.alpha = 0.00001;
@@ -3068,6 +3068,7 @@ class PlayState extends MusicBeatState
 		if(!boyfriend.animation.curAnim.name.startsWith('sing') || boyfriend.animation.curAnim.name.endsWith('miss')) FlxTween.tween(anotherlightshitlol, {alpha: 0}, 0.4);
 		if(!dad.animation.curAnim.name.startsWith('sing') || dad.animation.curAnim.name.endsWith('miss')) FlxTween.tween(lightshitlol, {alpha: 0}, 0.4);
 
+		//trace(fUNKYNUMBar.percent);
 		if(FUNKYNUM_LOL >= 3){
 			FUNKYNUM_LOL = 3;
 			if(!timeforfunk){
@@ -4245,10 +4246,10 @@ class PlayState extends MusicBeatState
 	}
 
 	//Any way to do this without using a different function? kinda dumb
-	private function onSongComplete()
+	/*private function onSongComplete()
 	{
 		finishSong(false);
-	}
+	}*/
 	public function finishSong(?ignoreNoteOffset:Bool = false):Void
 	{
 		var finishCallback:Void->Void = endSong; //In case you want to change it in a specific song.
@@ -5488,6 +5489,33 @@ class PlayState extends MusicBeatState
 		if(curBeat % 2 == 0) {
 			wiggleShit.waveAmplitude = -0.035;
 			wiggleShit.waveFrequency = -7.5;
+		}
+
+		for (i in 0...5){
+			var spr:StrumNote = null;
+			spr = playerStrums.members[i];
+			var spr2:StrumNote = null;
+			spr2 = strumLineNotes.members[i];
+			if(!isPixelStage){
+				if(spr != null)	{
+					spr.scale.set(1.075 * 0.65, 1.075 * 0.65);
+					FlxTween.tween(spr.scale, {x: 1 * 0.65, y: 1 * 0.65}, 0.2);
+				}
+				if(spr2 != null)	{
+					spr2.scale.set(1.075 * 0.65, 1.075 * 0.65);
+					FlxTween.tween(spr2.scale, {x: 1 * 0.65, y: 1 * 0.65}, 0.2);
+				}
+			}
+			else{
+				if(spr != null)	{
+					spr.scale.set(1.1 * (daPixelZoom - 0.6), 1.1 * (daPixelZoom - 0.6));
+					FlxTween.tween(spr.scale, {x: 1 * (daPixelZoom - 0.6), y: 1 * (daPixelZoom - 0.6)}, 0.2);
+				}
+				if(spr2 != null){
+					spr2.scale.set(1.1 * (daPixelZoom - 0.6), 1.1 * (daPixelZoom - 0.6));
+					FlxTween.tween(spr2.scale, {x: 1 * (daPixelZoom - 0.6), y: 1 * (daPixelZoom - 0.6)}, 0.2);
+				}
+			}
 		}
 
 		if(lastBeatHit >= curBeat) {

@@ -58,6 +58,7 @@ class ResultState extends MusicBeatState
 
     var flash:FlxSprite;
     var whitetransGradient:FlxSprite;
+    public static var exppmg:Float = 0;
 
     var pitchshit:Array<Float> = [0.7, 0.8, 0.85, 0.9, 0.95, 1, 1.05, 1.1, 1.15];
 
@@ -133,10 +134,6 @@ class ResultState extends MusicBeatState
         DiscordClient.changePresence("Result Screen", null);
 
         super.create();
-
-        var expwant:Int = 0;
-        expwant = Math.round((PlayState.instance.songScore / 2500) + (PlayState.instance.resultaccuracy / 4) + (PlayState.instance.funkyround * 5));
-        trace(expwant);
 
         if(!backtoomenu) numtween = FlxTween.tween(this, {accuracynumbertest: PlayState.instance.resultaccuracy * 100}, Math.floor(PlayState.instance.resultaccuracy / 10), {ease:FlxEase.sineOut});
     }
@@ -223,7 +220,7 @@ class ResultState extends MusicBeatState
         }
     }
 
-	public var vocals:FlxSound;
+	public var shitvocals:FlxSound;
     var numcountpitch:Int = -1;
     var byebyenumshit:Bool = true;
     var accuracyarray:Array<String> = [];
@@ -319,13 +316,13 @@ class ResultState extends MusicBeatState
             if(rank == 'X-') numcountpitch = 7;
             if(rank == 'PERFECT') numcountpitch = 8;
 
-            vocals = new FlxSound().loadEmbedded(Paths.sound('confirmMenu'));
-            FlxG.sound.list.add(vocals);
+            shitvocals = new FlxSound().loadEmbedded(Paths.sound('confirmMenu'));
+            FlxG.sound.list.add(shitvocals);
             if(numcountpitch >= 0){
-                vocals.pitch = pitchshit[numcountpitch];
+                shitvocals.pitch = pitchshit[numcountpitch];
                 switch (rank){
                     case 'E' | 'D' | 'C' | 'B' | 'A-' | 'S-' | 'SS-' | 'X-' | 'PERFECT' :
-                        vocals.play();
+                        shitvocals.play();
                 }
             }
             remove(rankingpicturre);
