@@ -5519,7 +5519,7 @@ class PlayState extends MusicBeatState
 		}
 
 		if(lastBeatHit >= curBeat) {
-			//trace('BEAT HIT: ' + curBeat + ', LAST HIT: ' + lastBeatHit);
+			//trace('BEAT HIT: ' + curBeat + ', LAST HIT: ' + lastBeatHit);s
 			return;
 		}
 	
