@@ -23,6 +23,11 @@ import flixel.effects.FlxFlicker;
 import flixel.addons.display.FlxBackdrop;
 import openfl.utils.Assets as OpenFlAssets;
 import WeekData;
+import openfl.filters.ShaderFilter;
+import openfl.display.GraphicsShader;
+import CameffectShader.CamShader;
+import openfl.filters.ShaderFilter;
+import openfl.filters.BitmapFilter;
 #if MODS_ALLOWED
 import sys.FileSystem;
 #end
@@ -45,6 +50,9 @@ class FreeplayState extends MusicBeatState
 	var lerpRating:Float = 0;
 	var intendedScore:Int = 0;
 	var intendedRating:Float = 0;
+	public var chromaticAberration:CameffectShader;
+	public var aberrateTimeValue:Float = 0.025;
+	var filter:Array<BitmapFilter> = [];
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 	private var curPlaying:Bool = false;
@@ -70,6 +78,14 @@ class FreeplayState extends MusicBeatState
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
 		#end
+		//FlxCamera.defaultCameras = [camGame];
+		//FlxG.cameras.setDefaultDrawTarget(camGame, false);
+		chromaticAberration = new CameffectShader();
+		chromaticAberration.shader.distort.value = [aberrateTimeValue];
+		var susfilter = new ShaderFilter(chromaticAberration.shader);
+		filter.push(susfilter);
+		FlxG.camera.setFilters(filter);
+		FlxG.camera.filtersEnabled = true;
 
 		for (i in 0...WeekData.weeksList.length) {
 			if(weekIsLocked(WeekData.weeksList[i])) continue;
@@ -266,10 +282,14 @@ class FreeplayState extends MusicBeatState
 	var instPlaying:Int = -1;
 	public static var vocals:FlxSound = null;
 	var holdTime:Float = 0;
+	public var speed:Float = 0.055;
+	var comingshader:Bool = false;
 	override function update(elapsed:Float)
 	{
 		//var mult:Float = FlxMath.lerp(1, iconP2.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
 		//iconP2.scale.set(mult, mult);
+		var fakeElapsed:Float = CoolUtil.clamp(elapsed, 0, 1);
+		//var fakeElapsed:Float = FlxMath.lerp(elapsed, 0, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
 
 		for (i in 0...iconArray.length)
 		{
@@ -313,6 +333,20 @@ class FreeplayState extends MusicBeatState
 		var accepted = controls.ACCEPT;
 		var space = FlxG.keys.justPressed.SPACE;
 		var ctrl = FlxG.keys.justPressed.CONTROL;
+
+		if(comingshader){
+			if (chromaticAberration != null)
+			{
+				if (aberrateTimeValue < 1.35)
+				{
+					aberrateTimeValue += (fakeElapsed / (1 / 15)) * speed;
+					speed += 0.0003125 * (fakeElapsed / (1 / 160));
+					chromaticAberration.shader.distort.value = [aberrateTimeValue * 0.75];
+					trace(chromaticAberration.shader.distort.value);
+					//chromaticAberration.shader.effectTime.value = [aberrateTimeValue];
+				}
+			}
+		}
 
 		var shiftMult:Int = 1;
 		if(FlxG.keys.pressed.SHIFT && !stopbro) shiftMult = 3;
@@ -398,16 +432,15 @@ class FreeplayState extends MusicBeatState
 				#end
 			}
 		}
-
 		else if (accepted && !stopbro)
 		{
+			comingshader = true;
 			stopbro = true;
 			FlxG.sound.music.volume = 0;
 			FlxG.sound.music.pause();
 					
 			destroyFreeplayVocals();
 
-			persistentUpdate = false;
 			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
 			var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
 			/*#if MODS_ALLOWED
@@ -440,10 +473,7 @@ class FreeplayState extends MusicBeatState
 					item.alpha = 1;
 					item.color = 0x0055FF00;
 					item.center = true;
-					FlxTween.tween(item, {x : FlxG.width / 2 - (item.width + 150) / 2}, 1, {onComplete:
-						function (twn:FlxTween) {
-							item.x = FlxG.width / 2 - (item.width + 150) / 2;
-						}});
+					FlxTween.tween(item, {x : FlxG.width / 2 - (item.width + 150) / 2}, 1.25);
 					FlxFlicker.flicker(item, 1.5, 0.05, false);
 				}
 			}
@@ -456,7 +486,7 @@ class FreeplayState extends MusicBeatState
 				}
 			}
 
-			FlxTween.tween(FlxG.camera, {zoom: 2}, 1, {ease: FlxEase.quadInOut, startDelay: 0.75});
+			FlxTween.tween(FlxG.camera, {zoom: 2}, 1.2, {ease: FlxEase.quadInOut, startDelay: 0.75});
 
 			new FlxTimer().start(1.5, function(tmr:FlxTimer)
 			{

@@ -1259,8 +1259,6 @@ class PlayState extends MusicBeatState
 		notecomboSpritelol = new FlxSprite().loadGraphic(Paths.image('noteCombo'));
 		notecomboSpritelol.frames = Paths.getSparrowAtlas('noteCombo');
 		notecomboSpritelol.scale.set(0.6, 0.6);
-		notecomboSpritelol.x = boyfriend.x + boyfriend.width- notecomboSpritelol.width;
-		notecomboSpritelol.y = (boyfriend.y + boyfriend.height) / 4;
 		notecomboSpritelol.visible = !ClientPrefs.hideHud;
 		notecomboSpritelol.alpha = 0.00001;
 		notecomboSpritelol.animation.addByPrefix('appear', 'NoteCombofix', 24, false);
@@ -3038,6 +3036,8 @@ class PlayState extends MusicBeatState
 					});
 				}
 				coolcombo = 0;
+				notecomboSpritelol.x = boyfriend.x + boyfriend.width- notecomboSpritelol.width;
+				notecomboSpritelol.y = (boyfriend.y + boyfriend.height) / 4;
 				notecomboSpritelol.alpha = 1;
 				FlxG.sound.play(Paths.sound('noteComboSound'));
 				notecomboSpritelol.animation.play('appear');
@@ -4062,6 +4062,8 @@ class PlayState extends MusicBeatState
 					FunkinLua.setVarInArray(this, value1, value2);
 				}
 			case 'Note Combo':
+				notecomboSpritelol.x = boyfriend.x + boyfriend.width- notecomboSpritelol.width;
+				notecomboSpritelol.y = (boyfriend.y + boyfriend.height) / 4;
 				notecomboSpritelol.alpha = 1;
 				FlxG.sound.play(Paths.sound('noteComboSound'));
 				notecomboSpritelol.animation.play('appear');
@@ -5067,7 +5069,6 @@ class PlayState extends MusicBeatState
 			{
 				if(!note.isSustainNote) char.playAnim(animToPlay, true);
 				if(note.isSustainNote) char.playAnim(animToPlay, false);
-				//if((note.sustainLength / 250) >= 1) char.playAnim(animToPlay, true);
 				char.holdTimer = 0;
 			}
 		}
@@ -5490,30 +5491,31 @@ class PlayState extends MusicBeatState
 			wiggleShit.waveAmplitude = -0.035;
 			wiggleShit.waveFrequency = -7.5;
 		}
-
-		for (i in 0...5){
-			var spr:StrumNote = null;
-			spr = playerStrums.members[i];
-			var spr2:StrumNote = null;
-			spr2 = strumLineNotes.members[i];
-			if(!isPixelStage){
-				if(spr != null)	{
-					spr.scale.set(1.075 * 0.65, 1.075 * 0.65);
-					FlxTween.tween(spr.scale, {x: 1 * 0.65, y: 1 * 0.65}, 0.2);
+		if(curBeat % 4 == 0){
+			for (i in 0...5){
+				var spr:StrumNote = null;
+				spr = playerStrums.members[i];
+				var spr2:StrumNote = null;
+				spr2 = strumLineNotes.members[i];
+				if(!isPixelStage){
+					if(spr != null)	{
+						spr.scale.set(1.1 * 0.65, 1.1 * 0.65);
+						FlxTween.tween(spr.scale, {x: 1 * 0.65, y: 1 * 0.65}, 0.2);
+					}
+					if(spr2 != null)	{
+						spr2.scale.set(1.1 * 0.65, 1.1 * 0.65);
+						FlxTween.tween(spr2.scale, {x: 1 * 0.65, y: 1 * 0.65}, 0.2);
+					}
 				}
-				if(spr2 != null)	{
-					spr2.scale.set(1.075 * 0.65, 1.075 * 0.65);
-					FlxTween.tween(spr2.scale, {x: 1 * 0.65, y: 1 * 0.65}, 0.2);
-				}
-			}
-			else{
-				if(spr != null)	{
-					spr.scale.set(1.1 * (daPixelZoom - 0.6), 1.1 * (daPixelZoom - 0.6));
-					FlxTween.tween(spr.scale, {x: 1 * (daPixelZoom - 0.6), y: 1 * (daPixelZoom - 0.6)}, 0.2);
-				}
-				if(spr2 != null){
-					spr2.scale.set(1.1 * (daPixelZoom - 0.6), 1.1 * (daPixelZoom - 0.6));
-					FlxTween.tween(spr2.scale, {x: 1 * (daPixelZoom - 0.6), y: 1 * (daPixelZoom - 0.6)}, 0.2);
+				else{
+					if(spr != null)	{
+						spr.scale.set(1.1 * (daPixelZoom - 0.6), 1.1 * (daPixelZoom - 0.6));
+						FlxTween.tween(spr.scale, {x: 1 * (daPixelZoom - 0.6), y: 1 * (daPixelZoom - 0.6)}, 0.2);
+					}
+					if(spr2 != null){
+						spr2.scale.set(1.1 * (daPixelZoom - 0.6), 1.1 * (daPixelZoom - 0.6));
+						FlxTween.tween(spr2.scale, {x: 1 * (daPixelZoom - 0.6), y: 1 * (daPixelZoom - 0.6)}, 0.2);
+					}
 				}
 			}
 		}
