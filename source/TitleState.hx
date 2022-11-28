@@ -41,7 +41,6 @@ import openfl.Assets;
 using StringTools;
 typedef TitleData =
 {
-
 	titlex:Float,
 	titley:Float,
 	startx:Float,
@@ -586,18 +585,15 @@ class TitleState extends MusicBeatState
 		super.update(elapsed);
 	}
 
-	function createCoolText(textArray:Array<String>, ?offset:Float = 0)
+	function createCoolText(textArray:Array<String>, ?offset:Float = 0, sustext:String = 'L')
 	{
 		for (i in 0...textArray.length)
 		{
-			var money:Alphabet = new Alphabet(0, 0, textArray[i], true, false);
-			money.screenCenter(X);
+			var money:Alphabet = new Alphabet(0, 0, textArray[i], true, false, 0.05, 0.8);
 			money.y += (i * 60) + 200 + offset;
-			money.x += 90;
-			money.alpha = 0;
-			money.scale.set(0.5 ,0.5);
-			FlxTween.tween(money, {x: money.x - 90, alpha: 1}, 0.3, {ease: FlxEase.quadInOut});
-			FlxTween.tween(money.scale, {x: 1, y: 1}, 0.3, {ease: FlxEase.quadInOut});
+			money.screenCenter(X);
+			if(sustext == 'L') money.x -= 275;
+			if(sustext == 'R') money.x += 275;
 			if(credGroup != null && textGroup != null) {
 				credGroup.add(money);
 				textGroup.add(money);
@@ -605,17 +601,14 @@ class TitleState extends MusicBeatState
 		}
 	}
 
-	function addMoreText(text:String, ?offset:Float = 0)
+	function addMoreText(text:String, ?offset:Float = 0, sustext:String = 'L')
 	{
 		if(textGroup != null && credGroup != null) {
-			var coolText:Alphabet = new Alphabet(0, 0, text, true, false);
-			coolText.screenCenter(X);
+			var coolText:Alphabet = new Alphabet(0, 0, text, true, false, 0.05, 0.8);
 			coolText.y += (textGroup.length * 60) + 200 + offset;
-			coolText.x -= 90;
-			coolText.alpha = 0;
-			coolText.scale.set(0.5 ,0.5);
-			FlxTween.tween(coolText, {x: coolText.x + 90, alpha: 1}, 0.3, {ease: FlxEase.quadInOut});
-			FlxTween.tween(coolText.scale, {x: 1, y: 1}, 0.3, {ease: FlxEase.quadInOut});
+			coolText.screenCenter(X);
+			if(sustext == 'L') coolText.x -= 275;
+			if(sustext == 'R') coolText.x += 275;
 			credGroup.add(coolText);
 			textGroup.add(coolText);
 		}
@@ -659,16 +652,16 @@ class TitleState extends MusicBeatState
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 				case 2:
 					#if PSYCH_WATERMARKS
-					createCoolText(['Psych Engine by'], 15);
+					createCoolText(['Psych Engine by'], 15, 'L');
 					#else
 					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
 					#end
 				// credTextShit.visible = true;
 				case 4:
 					#if PSYCH_WATERMARKS
-					addMoreText('Shadow Mario', 15);
-					addMoreText('RiverOaken', 15);
-					addMoreText('shubs', 15);
+					addMoreText('Shadow Mario', 15, 'L');
+					addMoreText('RiverOaken', 15, 'L');
+					addMoreText('shubs', 15, 'L');
 					#else
 					addMoreText('present');
 					#end
@@ -680,16 +673,12 @@ class TitleState extends MusicBeatState
 				// credTextShit.text = 'In association \nwith';
 				// credTextShit.screenCenter();
 				case 6:
-					#if PSYCH_WATERMARKS
-					createCoolText(['Not associated', 'with'], -40);
-					#else
-					createCoolText(['In association', 'with'], -40);
-					#end
+					createCoolText(['Not associated', 'with'], -40, 'R');
 				case 8:
-					addMoreText('newgrounds', -40);
+					addMoreText('newgrounds', -40, 'R');
 					ngSpr.alpha = 0;
 					ngSpr.visible = true;
-					ngSpr.x -= 75;
+					ngSpr.x = (FlxG.width + ngSpr.width) / 2 - 85;
 					ngSpr.scale.set(0.5 ,0.5);
 					FlxTween.tween(ngSpr.scale, {x: 1, y: 1}, 0.2, {ease: FlxEase.cubeInOut});
 					FlxTween.tween(ngSpr, {x: ngSpr.x + 75, alpha: 1}, 0.2, {ease: FlxEase.cubeInOut});
@@ -702,10 +691,10 @@ class TitleState extends MusicBeatState
 				// credTextShit.text = 'Shoutouts Tom Fulp';
 				// credTextShit.screenCenter();
 				case 10:
-					createCoolText([curWacky[0]]);
+					createCoolText([curWacky[0]], 0, 'L');
 				// credTextShit.visible = true;
 				case 12:
-					addMoreText(curWacky[1]);
+					addMoreText(curWacky[1], 0, 'L');
 				// credTextShit.text += '\nlmao';
 				case 13:
 					deleteCoolText();
@@ -713,13 +702,13 @@ class TitleState extends MusicBeatState
 				// credTextShit.text = "Friday";
 				// credTextShit.screenCenter();
 				case 14:
-					addMoreText('Friday');
+					addMoreText('Friday', 0, 'R');
 				// credTextShit.visible = true;
 				case 15:
-					addMoreText('Night');
+					addMoreText('Night', 0, 'R');
 				// credTextShit.text += '\nNight';
 				case 16:
-					addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
+					addMoreText('Funkin', 0, 'R'); // credTextShit.text += '\nFunkin';
 
 				case 17:
 					skipIntro();

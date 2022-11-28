@@ -7,6 +7,7 @@ import editors.ChartingState;
 import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.group.FlxGroup;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -51,8 +52,29 @@ class FreeplayState extends MusicBeatState
 	var intendedScore:Int = 0;
 	var intendedRating:Float = 0;
 	public var chromaticAberration:CameffectShader;
-	public var aberrateTimeValue:Float = 0.025;
+	public var aberrateTimeValue:Float = 0.04;
 	var filter:Array<BitmapFilter> = [];
+
+	var accuracy:Float = 0;
+	public static var ratingStuff:Array<Dynamic> = [
+		['F', 0.50], //From 0.01% to 9% SHIT PART
+		['E', 0.60], //From 50% to 59% BAD PART
+		['D', 0.70], //From 60% to 68%
+		['C', 0.80], //69% to 69.99% GOOD PART
+		['B', 0.85], //From 70% to 75%
+		['A-', 0.90], //From 76% to 80% SICK PART
+		['A', 0.93], //From 80% to 85%
+		['A+', 0.9650], //From 86% to 89%
+        ['S-', 0.99], //From 90% to 92% SICK GOLD
+        ['S', 0.9950], //From 93% to 94%
+        ['S+', 0.9970], //From 95% to 96%
+        ['SS-', 0.9980], //From 97% to 98%
+        ['SS', 0.9990], //From 99%-99.49%
+        ['SS+', 0.99950], //From 99.5%-99.89%
+        ['X-', 0.99980], //From 99.9%-99.94% EPIC PART
+		['X', 1],//From 99.95%-99.9935% //lol sorry apro
+		['PERFECT', 1] //The value on this one isn't used actually, since Perfect is always "1" EPIC GOLD
+	];
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 	private var curPlaying:Bool = false;
@@ -323,6 +345,8 @@ class FreeplayState extends MusicBeatState
 			ratingSplit[1] += '0';
 		}
 
+		accuracy = Std.parseFloat(ratingSplit.join('.'));
+		//trace(ratingSplit.join('.'));
 		scoreText.text = 'PERSONAL BEST: ' + lerpScore + ' (' + ratingSplit.join('.') + '%)';
 		positionHighscore();
 
@@ -337,13 +361,11 @@ class FreeplayState extends MusicBeatState
 		if(comingshader){
 			if (chromaticAberration != null)
 			{
-				if (aberrateTimeValue < 1.35)
+				if (aberrateTimeValue < 0.8)
 				{
 					aberrateTimeValue += (fakeElapsed / (1 / 15)) * speed;
 					speed += 0.0003125 * (fakeElapsed / (1 / 160));
 					chromaticAberration.shader.distort.value = [aberrateTimeValue * 0.75];
-					trace(chromaticAberration.shader.distort.value);
-					//chromaticAberration.shader.effectTime.value = [aberrateTimeValue];
 				}
 			}
 		}
@@ -674,14 +696,38 @@ class FreeplayState extends MusicBeatState
 		}
 	}
 
+	var numscoregroup:FlxGroup = new FlxGroup();
+	var rank:String = 'NA';
+	var rankingpicturre:FlxSprite;
 	private function positionHighscore() {
-		//scoreText.x = FlxG.width - scoreText.width - 6;
+		numscoregroup.destroy();
+		numscoregroup = new FlxGroup();
+		add(numscoregroup);
 
-		//scoreBG.scale.x = FlxG.width - scoreText.x + 6;
-		//scoreBG.x = FlxG.width - (scoreBG.scale.x / 2);
-		//diffText.x = Std.int(scoreBG.x + (scoreBG.width / 2));
-		//diffText.x -= diffText.width / 2;
-		//diffText.x = Std.int(scoreBG.x - (diffText.width / 2));
+		if(accuracy / 100 >= 1)
+        {
+            rank = ratingStuff[ratingStuff.length-1][0]; //Uses last string
+        }
+        else
+        {
+            for (i in 0...ratingStuff.length-1)
+            {
+                if(accuracy / 100 < ratingStuff[i][1])
+                {
+                    rank = ratingStuff[i][0];
+                    break;
+                }
+            }
+        }
+
+		//trace('rankings/$rank');
+		//var rankingpicturre = new FlxSprite().loadGraphic(Paths.image('rankings/$rank.png'));
+		/*rankingpicturre = new FlxSprite().loadGraphic(Paths.image('rankings/$rank.png'));
+		rankingpicturre.scale.set(0.3, 0.3);
+		rankingpicturre.screenCenter();
+		rankingpicturre.x += FlxG.width / 1.5;
+		rankingpicturre.y = scoreText.y + (scoreText.height - rankingpicturre.height) / 2;
+		numscoregroup.add(rankingpicturre);*/
 	}
 }
 

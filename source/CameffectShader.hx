@@ -29,9 +29,9 @@ class CamShader extends FlxShader{
     }
 
     void main() {
-        float rChannel = texture2D(bitmap, pincushionDistortion(openfl_TextureCoordv, 0.3 * distort)).r;
-        float gChannel = texture2D(bitmap, pincushionDistortion(openfl_TextureCoordv, 0.15 * distort)).g;
-        float bChannel = texture2D(bitmap, pincushionDistortion(openfl_TextureCoordv, 0.075 * distort)).b;
+        float rChannel = texture2D(bitmap, pincushionDistortion(openfl_TextureCoordv, 0.15 * distort)).r;
+        float gChannel = texture2D(bitmap, pincushionDistortion(openfl_TextureCoordv, 0.075 * distort)).g;
+        float bChannel = texture2D(bitmap, pincushionDistortion(openfl_TextureCoordv, 0.0375 * distort)).b;
         gl_FragColor = vec4(rChannel, gChannel, bChannel, 1.0);
     }
     ')
