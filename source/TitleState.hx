@@ -651,20 +651,12 @@ class TitleState extends MusicBeatState
 					FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 				case 2:
-					#if PSYCH_WATERMARKS
-					createCoolText(['Psych Engine by'], 15, 'L');
-					#else
-					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
-					#end
+					createCoolText(['School project by'], 15, 'L');
 				// credTextShit.visible = true;
 				case 4:
-					#if PSYCH_WATERMARKS
-					addMoreText('Shadow Mario', 15, 'L');
-					addMoreText('RiverOaken', 15, 'L');
-					addMoreText('shubs', 15, 'L');
-					#else
-					addMoreText('present');
-					#end
+					addMoreText('Hiro   boss', 15, 'L');
+					addMoreText('yuu   peak', 15, 'L');
+					addMoreText('lotto', 15, 'L');
 				// credTextShit.text += '\npresent...';
 				// credTextShit.addText();
 				case 5:
@@ -673,16 +665,13 @@ class TitleState extends MusicBeatState
 				// credTextShit.text = 'In association \nwith';
 				// credTextShit.screenCenter();
 				case 6:
-					createCoolText(['Not associated', 'with'], -40, 'R');
+					createCoolText(['In association', 'with'], -40, 'R');
 				case 8:
-					addMoreText('newgrounds', -40, 'R');
-					ngSpr.alpha = 0;
+					addMoreText('CRU', -40, 'R');
+					//ngSpr.alpha = 0;
 					ngSpr.visible = true;
-					ngSpr.x = (FlxG.width + ngSpr.width) / 2 - 85;
-					ngSpr.scale.set(0.5 ,0.5);
-					FlxTween.tween(ngSpr.scale, {x: 1, y: 1}, 0.2, {ease: FlxEase.cubeInOut});
-					FlxTween.tween(ngSpr, {x: ngSpr.x + 75, alpha: 1}, 0.2, {ease: FlxEase.cubeInOut});
-				// credTextShit.text += '\nNewgrounds';
+					ngSpr.x = (FlxG.width + ngSpr.width) / 2; //ใส่โลโก้ ของไอบอสเอาXD
+					// credTextShit.text += '\nNewgrounds';
 				case 9:
 					deleteCoolText();
 					ngSpr.visible = false;
@@ -702,13 +691,13 @@ class TitleState extends MusicBeatState
 				// credTextShit.text = "Friday";
 				// credTextShit.screenCenter();
 				case 14:
-					addMoreText('Friday', 0, 'R');
+					addMoreText('FNF', 0, 'R');
 				// credTextShit.visible = true;
 				case 15:
-					addMoreText('Night', 0, 'R');
+					addMoreText('waste', 0, 'R');
 				// credTextShit.text += '\nNight';
 				case 16:
-					addMoreText('Funkin', 0, 'R'); // credTextShit.text += '\nFunkin';
+					addMoreText('project test', 0, 'R'); // credTextShit.text += '\nFunkin';
 
 				case 17:
 					skipIntro();

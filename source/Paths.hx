@@ -239,6 +239,11 @@ class Paths
 		return returnAsset;
 	}
 
+	inline static public function getimage(key:String, ?library:String)
+	{
+		return getPath('images/$key.png', IMAGE, library);
+	}
+
 	static public function getTextFromFile(key:String, ?ignoreMods:Bool = false):String
 	{
 		#if sys

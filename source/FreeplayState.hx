@@ -44,6 +44,9 @@ class FreeplayState extends MusicBeatState
 	var curDifficulty:Int = -1;
 	private static var lastDifficultyName:String = '';
 
+	var numscoregroup:FlxGroup = new FlxGroup();
+	var rankingpicturre:FlxSprite;
+
 	var scoreBG:FlxSprite;
 	var scoreText:FlxText;
 	var diffText:FlxText;
@@ -89,7 +92,7 @@ class FreeplayState extends MusicBeatState
 	{
 		//Paths.clearStoredMemory();
 		//Paths.clearUnusedMemory();
-		
+		persistentDraw = true;
 		persistentUpdate = true;
 		PlayState.isStoryMode = false;
 		WeekData.reloadWeekFiles(false);
@@ -100,8 +103,6 @@ class FreeplayState extends MusicBeatState
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
 		#end
-		//FlxCamera.defaultCameras = [camGame];
-		//FlxG.cameras.setDefaultDrawTarget(camGame, false);
 		chromaticAberration = new CameffectShader();
 		chromaticAberration.shader.distort.value = [aberrateTimeValue];
 		var susfilter = new ShaderFilter(chromaticAberration.shader);
@@ -306,12 +307,10 @@ class FreeplayState extends MusicBeatState
 	var holdTime:Float = 0;
 	public var speed:Float = 0.055;
 	var comingshader:Bool = false;
-	override function update(elapsed:Float)
-	{
-		//var mult:Float = FlxMath.lerp(1, iconP2.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
+	override function update(elapsed:Float){
+		//fakeElapsedath.lerp(1, iconP2.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
 		//iconP2.scale.set(mult, mult);
 		var fakeElapsed:Float = CoolUtil.clamp(elapsed, 0, 1);
-		//var fakeElapsed:Float = FlxMath.lerp(elapsed, 0, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
 
 		for (i in 0...iconArray.length)
 		{
@@ -361,12 +360,9 @@ class FreeplayState extends MusicBeatState
 		if(comingshader){
 			if (chromaticAberration != null)
 			{
-				if (aberrateTimeValue < 0.8)
-				{
-					aberrateTimeValue += (fakeElapsed / (1 / 15)) * speed;
-					speed += 0.0003125 * (fakeElapsed / (1 / 160));
-					chromaticAberration.shader.distort.value = [aberrateTimeValue * 0.75];
-				}
+				speed += 0.0003125 * (fakeElapsed / (1 / 160));
+				aberrateTimeValue += (fakeElapsed / (1 / 15)) * speed;
+				chromaticAberration.shader.distort.value = [aberrateTimeValue * 0.25];
 			}
 		}
 
@@ -696,14 +692,8 @@ class FreeplayState extends MusicBeatState
 		}
 	}
 
-	var numscoregroup:FlxGroup = new FlxGroup();
-	var rank:String = 'NA';
-	var rankingpicturre:FlxSprite;
 	private function positionHighscore() {
-		numscoregroup.destroy();
-		numscoregroup = new FlxGroup();
-		add(numscoregroup);
-
+		var rank:String = '';
 		if(accuracy / 100 >= 1)
         {
             rank = ratingStuff[ratingStuff.length-1][0]; //Uses last string
@@ -719,15 +709,6 @@ class FreeplayState extends MusicBeatState
                 }
             }
         }
-
-		//trace('rankings/$rank');
-		//var rankingpicturre = new FlxSprite().loadGraphic(Paths.image('rankings/$rank.png'));
-		/*rankingpicturre = new FlxSprite().loadGraphic(Paths.image('rankings/$rank.png'));
-		rankingpicturre.scale.set(0.3, 0.3);
-		rankingpicturre.screenCenter();
-		rankingpicturre.x += FlxG.width / 1.5;
-		rankingpicturre.y = scoreText.y + (scoreText.height - rankingpicturre.height) / 2;
-		numscoregroup.add(rankingpicturre);*/
 	}
 }
 
