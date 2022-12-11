@@ -423,7 +423,6 @@ class PlayState extends MusicBeatState
 		camGame.x = -320;
 		camGame.y = -180;
 		camgameover = new FlxCamera();
-		//trace(camGame.width + ' and ' + camGame.height);
 		camwtfHUD = new FlxCamera();
 		camtime = new FlxCamera();
 		camnote = new FlxCamera();
@@ -1231,7 +1230,7 @@ class PlayState extends MusicBeatState
 		}
 		add(camFollowPos);
 
-		FlxG.camera.follow(camFollowPos, LOCKON, 1);
+		FlxG.camera.follow(camFollowPos, LOCKON, 0.035);
 		// FlxG.camera.setScrollBounds(0, FlxG.width, 0, FlxG.height);
 		FlxG.camera.zoom = defaultCamZoom;
 		//camGame.zoom = defaultCamZoom;
@@ -1326,6 +1325,11 @@ class PlayState extends MusicBeatState
 		funkyStrips = new FlxSprite().loadGraphic(Paths.image('funkywtfman'));
 		funkyStrips.frames = Paths.getSparrowAtlas('funkywtfman');
 		funkyStrips.alpha = 0.4;
+		funkyStrips.scale.set(0.45, 0.45);
+		funkyStrips.x = fUNKYNUMBar.x + 30;
+		funkyStrips.screenCenter(Y);
+		funkyStrips.scrollFactor.set();
+		funkyStrips.visible = !ClientPrefs.hideHud;
 		funkyStrips.cameras = [camHUD];
 		funkyStrips.animation.addByPrefix('playshit', 'holyshit', 24, true);
 
@@ -3911,8 +3915,8 @@ class PlayState extends MusicBeatState
 				if(!Math.isNaN(Std.parseFloat(value1)) || !Math.isNaN(Std.parseFloat(value2))) {
 					focusshit = 'none';
 					isCameraOnForcedPos = true;
-					add1cam = val1;
-					add2cam = val2;
+					camFollow.x = val1;
+					camFollow.y = val2;
 				}
 
 			case 'Alt Idle Animation':
@@ -4163,32 +4167,19 @@ class PlayState extends MusicBeatState
 		{
 			case 'gf':
 				focusedChar = gf;
-				/*camFollow.set(gf.getMidpoint().x, gf.getMidpoint().y);
+				camFollow.set(gf.getMidpoint().x, gf.getMidpoint().y);
 				camFollow.x += gf.cameraPosition[0] + girlfriendCameraOffset[0];
-				camFollow.y += gf.cameraPosition[1] + girlfriendCameraOffset[1];*/
-				camsetshit_x = gf.getMidpoint().x + gf.cameraPosition[0] + girlfriendCameraOffset[0];
-				camsetshit_y = gf.getMidpoint().y + gf.cameraPosition[1] + girlfriendCameraOffset[1];
-				/*FlxTween.tween(camFollow, {x: camsetshit_x, y: camsetshit_y}, Conductor.crochet * 0.00075,
-				{ease: FlxEase.sineInOut});*/
+				camFollow.y += gf.cameraPosition[1] + girlfriendCameraOffset[1];
 			case 'dad':
 				focusedChar = dad;
-				/*camFollow.set(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
+				camFollow.set(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
 				camFollow.x += dad.cameraPosition[0] + opponentCameraOffset[0];
-				camFollow.y += dad.cameraPosition[1] + opponentCameraOffset[1];*/
-				camsetshit_x = dad.getMidpoint().x + 150 + dad.cameraPosition[0] + opponentCameraOffset[0];
-				camsetshit_y = dad.getMidpoint().y - 100 + dad.cameraPosition[1] + opponentCameraOffset[1];
-				/*FlxTween.tween(camFollow, {x: camsetshit_x, y: camsetshit_y}, Conductor.crochet * 0.00075,
-				{ease: FlxEase.sineInOut});*/
-				//tweenCamIn();
+				camFollow.y += dad.cameraPosition[1] + opponentCameraOffset[1];
 			case 'bf':
 				focusedChar = boyfriend;
-				/*camFollow.set(boyfriend.getMidpoint().x - 100, boyfriend.getMidpoint().y - 100);	
+				camFollow.set(boyfriend.getMidpoint().x - 100, boyfriend.getMidpoint().y - 100);	
 				camFollow.x -= boyfriend.cameraPosition[0] - boyfriendCameraOffset[0];
-				camFollow.y += boyfriend.cameraPosition[1] + boyfriendCameraOffset[1];*/
-				camsetshit_x = boyfriend.getMidpoint().x - 100 - (boyfriend.cameraPosition[0] - boyfriendCameraOffset[0]);
-				camsetshit_y = boyfriend.getMidpoint().y - 100 + boyfriend.cameraPosition[1] + boyfriendCameraOffset[1];
-				/*FlxTween.tween(camFollow, {x: camsetshit_x, y: camsetshit_y}, Conductor.crochet * 0.00075, 
-				{ease: FlxEase.sineInOut});*/
+				camFollow.y += boyfriend.cameraPosition[1] + boyfriendCameraOffset[1];
 				if (Paths.formatToSongPath(SONG.song) == 'tutorial' && cameraTwn == null && FlxG.camera.zoom != 1)
 					{
 						cameraTwn = FlxTween.tween(FlxG.camera, {zoom: 1}, (Conductor.stepCrochet * 4 / 1000), {ease: FlxEase.elasticInOut , onComplete:
@@ -4199,31 +4190,23 @@ class PlayState extends MusicBeatState
 						});
 					}
 			case 'none':
-				/*FlxTween.tween(camFollow, {x: add1cam, y: add2cam}, 0.01, 
-				{ease: FlxEase.sineInOut});*/
-				camsetshit_x = add1cam;
-				camsetshit_y = add2cam;
+
 		}
-		camFollow.x = FlxMath.lerp(camFollow.x, camsetshit_x, CoolUtil.boundTo(elapsed * 2, 0, 1));
-		camFollow.y = FlxMath.lerp(camFollow.y, camsetshit_y, CoolUtil.boundTo(elapsed * 2, 0, 1));
 		if(ClientPrefs.updatecam && focusedChar != null){
 			if(focusedChar.animation.curAnim != null){
 			switch (focusedChar.animation.curAnim.name){
 				case 'singUP' | 'singUP-alt' | 'singUPmiss':
-					camFollow.y = FlxMath.lerp(camFollow.y, camsetshit_y - 50 , CoolUtil.boundTo(elapsed * 2, 0, 1));
+					camFollow.y -= 15;
 					//FlxTween.tween(camFollow, {y: camFollow.y - 15}, 0.05, {ease: FlxEase.sineOut});
 					//camFollow.y -= 15;
 				case 'singDOWN' | 'singDOWN-alt' | 'singDOWNmiss':
-					camFollow.y = FlxMath.lerp(camFollow.y, camsetshit_y + 50 , CoolUtil.boundTo(elapsed * 2, 0, 1));
-					//camFollow.y += 15;
+					camFollow.y += 15;
 					//FlxTween.tween(camFollow, {y: camFollow.y + 15}, 0.05, {ease: FlxEase.sineOut});
 				case 'singLEFT' | 'singLEFT-alt' | 'singLEFTmiss':
-					camFollow.x = FlxMath.lerp(camFollow.x, camsetshit_x - 50, CoolUtil.boundTo(elapsed * 2, 0, 1));
-					//camFollow.x -= 15;
+					camFollow.x -= 15;
 					//FlxTween.tween(camFollow, {x: camFollow.x - 15}, 0.05, {ease: FlxEase.sineOut});
 				case 'singRIGHT' | 'singRIGHT-alt' | 'singRIGHTmiss':
-					camFollow.x = FlxMath.lerp(camFollow.x, camsetshit_x + 50, CoolUtil.boundTo(elapsed * 2, 0, 1));
-					//camFollow.x += 15;
+					camFollow.x += 15;
 					//camsetshit_x += 0.5;
 					//FlxTween.tween(camFollow, {x: camFollow.x + 15}, 0.05, {ease: FlxEase.sineOut});
 				}

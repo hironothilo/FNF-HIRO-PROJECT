@@ -80,7 +80,7 @@ class PauseSubState extends MusicBeatSubstate
 
 		FlxG.sound.list.add(pauseMusic);
 
-		bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		bg = new FlxSprite().makeGraphic(Math.ceil(FlxG.width * 1.25), FlxG.height, FlxColor.BLACK);
 		bg.alpha = 0;
 		bg.scrollFactor.set();
 		add(bg);
@@ -350,6 +350,7 @@ class PauseSubState extends MusicBeatSubstate
 		{
 			item.targetY = bullShit - curSelected;
 			bullShit++;
+			item.xAdd = 0;
 
 			item.alpha = 0.6;
 			// item.setGraphicSize(Std.int(item.width * 0.8));

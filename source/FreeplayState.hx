@@ -55,7 +55,7 @@ class FreeplayState extends MusicBeatState
 	var intendedScore:Int = 0;
 	var intendedRating:Float = 0;
 	public var chromaticAberration:CameffectShader;
-	public var aberrateTimeValue:Float = 0.04;
+	public var aberrateTimeValue:Float = 0.065;
 	var filter:Array<BitmapFilter> = [];
 
 	var accuracy:Float = 0;
@@ -159,22 +159,25 @@ class FreeplayState extends MusicBeatState
 
 		for (i in 0...songs.length)
 		{
-			var songText:Alphabet = new Alphabet(0, (70 * i) + 50, songs[i].songName, true, false);
+			var songText:Alphabet = new Alphabet(0, (40 * i) + 50, songs[i].songName, true, false, 0, 0.75);
 			songText.isMenuItem = true;
 			songText.targetY = i;
 			grpSongs.add(songText);
 
-			if (songText.width > 980)
+			if (songText.width > 300)
 			{
-				var textScale:Float = 980 / songText.width;
+				var textScale:Float = 300 / songText.width;
 				songText.scale.x = textScale;
+				songText.scale.y *= 0.75;
 				for (letter in songText.lettersArray)
 				{
 					letter.x *= textScale;
 					letter.offset.x *= textScale;
 				}
-				//songText.updateHitbox();
-				//trace(songs[i].songName + ' new scale: ' + textScale);
+			}
+			for (item in grpSongs){
+				item.x -= 600;
+				item.moving = 1;
 			}
 
 			Paths.currentModDirectory = songs[i].folder;
