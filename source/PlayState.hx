@@ -1325,11 +1325,6 @@ class PlayState extends MusicBeatState
 
 		funkyStrips = new FlxSprite().loadGraphic(Paths.image('funkywtfman'));
 		funkyStrips.frames = Paths.getSparrowAtlas('funkywtfman');
-		funkyStrips.scale.set(0.45, 0.45);
-		funkyStrips.x = fUNKYNUMBar.x + 30;
-		funkyStrips.screenCenter(Y);
-		funkyStrips.scrollFactor.set();
-		funkyStrips.visible = !ClientPrefs.hideHud;
 		funkyStrips.alpha = 0.4;
 		funkyStrips.cameras = [camHUD];
 		funkyStrips.animation.addByPrefix('playshit', 'holyshit', 24, true);
