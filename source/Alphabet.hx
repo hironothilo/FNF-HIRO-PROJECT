@@ -23,7 +23,7 @@ class Alphabet extends FlxSpriteGroup
 	public var forceX:Float = Math.NEGATIVE_INFINITY;
 	public var targetY:Float = 0;
 	public var yMult:Float = 120;
-	public var xAdd:Float = 675;
+	public var xAdd:Float = 550;
 	public var yAdd:Float = 0;
 	public var isMenuItem:Bool = false;
 	public var textSize:Float = 1.0;
@@ -349,6 +349,7 @@ class Alphabet extends FlxSpriteGroup
 	}
 
 	public var moving:Int = -1;
+	public var distanceletter:Int = 40;
 	override function update(elapsed:Float)
 	{
 		if (isMenuItem)
@@ -360,7 +361,7 @@ class Alphabet extends FlxSpriteGroup
 			if(forceX != Math.NEGATIVE_INFINITY) {
 				x = forceX;
 			} else {
-				if(!center) x = FlxMath.lerp(x, (Math.abs(targetY) * 40 * moving) + 90 + xAdd, lerpVal);
+				if(!center) x = FlxMath.lerp(x, (Math.abs(targetY) * distanceletter * moving) + 90 + xAdd, lerpVal);
 			}
 		}
 

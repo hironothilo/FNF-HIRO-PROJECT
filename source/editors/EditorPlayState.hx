@@ -758,7 +758,7 @@ class EditorPlayState extends MusicBeatState
 			{
 				if (Math.abs(note.noteData) == spr.ID)
 				{
-					spr.playAnim('confirm', true);
+					spr.playAnim('confirm', true, note.noteQuant);
 				}
 			});
 

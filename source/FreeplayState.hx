@@ -44,10 +44,9 @@ class FreeplayState extends MusicBeatState
 	var curDifficulty:Int = -1;
 	private static var lastDifficultyName:String = '';
 
-	var numscoregroup:FlxGroup = new FlxGroup();
-	var rankingpicturre:FlxSprite;
+	var alrumpicture:FlxSprite;
+	var rank:String = '';
 
-	var scoreBG:FlxSprite;
 	var scoreText:FlxText;
 	var diffText:FlxText;
 	var lerpScore:Int = 0;
@@ -159,15 +158,15 @@ class FreeplayState extends MusicBeatState
 
 		for (i in 0...songs.length)
 		{
-			var songText:Alphabet = new Alphabet(0, (40 * i) + 50, songs[i].songName, true, false, 0, 0.75);
+			var songText:Alphabet = new Alphabet(0, (20 * i) + 30, songs[i].songName, true, false, 0, 0.8);
 			songText.isMenuItem = true;
 			songText.targetY = i;
 			grpSongs.add(songText);
 
-			if (songText.width > 300)
+			if (songText.width > 450)
 			{
-				var textScale:Float = 300 / songText.width;
-				songText.scale.x = textScale;
+				var textScale:Float = 450 / songText.width;
+				songText.scale.x = textScale * 0.8;
 				songText.scale.y *= 0.75;
 				for (letter in songText.lettersArray)
 				{
@@ -176,8 +175,9 @@ class FreeplayState extends MusicBeatState
 				}
 			}
 			for (item in grpSongs){
-				item.x -= 600;
+				item.x += 750;
 				item.moving = 1;
+				item.distanceletter = 100;
 			}
 
 			Paths.currentModDirectory = songs[i].folder;
@@ -194,7 +194,7 @@ class FreeplayState extends MusicBeatState
 		}
 		WeekData.setDirectoryFromWeek();
 
-		var textBG:FlxSprite = new FlxSprite(0, FlxG.height - 140).makeGraphic(FlxG.width, 140, 0xFF000000);
+		var textBG:FlxSprite = new FlxSprite(0, FlxG.height - 26).makeGraphic(FlxG.width, 26, 0xFF000000);
 		textBG.alpha = 0.6;
 		add(textBG);
 
@@ -205,20 +205,29 @@ class FreeplayState extends MusicBeatState
 		var leText:String = "Press CTRL to open the Gameplay Changers Menu / Press RESET to Reset your Score and Accuracy.";
 		var size:Int = 18;
 		#end
-		var text:FlxText = new FlxText(textBG.x, textBG.y + 115, FlxG.width, leText, size);
+		var text:FlxText = new FlxText(textBG.x, textBG.y + 4, FlxG.width, leText, size);
 		text.setFormat(Paths.font("vcr.ttf"), size, FlxColor.WHITE, RIGHT);
 		text.scrollFactor.set();
 		add(text);
 
-		scoreText = new FlxText(FlxG.width * 0.05, 610, 0, "", 32);
-		scoreText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, RIGHT);
+		alrumpicture = new FlxSprite().loadGraphic(Paths.image('albumcool'));
+		alrumpicture.x = (FlxG.width - (alrumpicture.width * 0.2)) / 7.5;
+		alrumpicture.y = (FlxG.height - (alrumpicture.height * 0.2)) / 6;
+		alrumpicture.scale.set(0.2, 0.2);
+		alrumpicture.updateHitbox();
+		alrumpicture.antialiasing = ClientPrefs.globalAntialiasing;
+		add(alrumpicture);
 
-		//scoreBG = new FlxSprite(scoreText.x - 6, 0).makeGraphic(1, 66, 0xFF000000);
-		//scoreBG.alpha = 0.6;
-		//add(scoreBG);
+		scoreText = new FlxText(0, 0, 0, "", 32);
+		scoreText.x = alrumpicture.x;
+		scoreText.y = alrumpicture.y + alrumpicture.height + 32;
+		scoreText.setFormat(Paths.font("phantommuff.ttf"), 32, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreText.borderSize = 2;
 
-		diffText = new FlxText(scoreText.x, scoreText.y + 36, 0, "", 24);
-		diffText.font = scoreText.font;
+		diffText = new FlxText(0, 0, 0, "", 36);
+		diffText.y = alrumpicture.y + alrumpicture.height - 48;
+		diffText.setFormat(Paths.font("phantommuff.ttf"), 32, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		diffText.borderSize = 2;
 		add(diffText);
 
 		add(scoreText);
@@ -276,6 +285,7 @@ class FreeplayState extends MusicBeatState
 	override function closeSubState() {
 		changeSelection(0, false);
 		persistentUpdate = true;
+		stopbro = false;
 		super.closeSubState();
 	}
 
@@ -348,8 +358,7 @@ class FreeplayState extends MusicBeatState
 		}
 
 		accuracy = Std.parseFloat(ratingSplit.join('.'));
-		//trace(ratingSplit.join('.'));
-		scoreText.text = 'PERSONAL BEST: ' + lerpScore + ' (' + ratingSplit.join('.') + '%)';
+		scoreText.text = 'PERSONAL BEST\nSCORE: ${lerpScore}\nACCURACY : ${accuracy}%\nRANK : ${rank}\n';
 		positionHighscore();
 
 		if(ClientPrefs.camZooms) FlxG.camera.zoom = FlxMath.lerp(1, FlxG.camera.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1)); // fnf grafex
@@ -424,8 +433,9 @@ class FreeplayState extends MusicBeatState
 
 		if(ctrl && !stopbro)
 		{
-			persistentUpdate = false;
+			//persistentUpdate = false;
 			openSubState(new GameplayChangersSubstate());
+			stopbro = true;
 		}
 		else if(space && !stopbro)
 		{
@@ -482,6 +492,9 @@ class FreeplayState extends MusicBeatState
 			trace('CURRENT WEEK: ' + WeekData.getWeekFileName());
 
 			FlxG.sound.play(Paths.sound('confirmMenu'));
+			FlxTween.tween(alrumpicture, {alpha: 0}, 0.5);
+			FlxTween.tween(scoreText, {alpha: 0}, 0.5);
+			FlxTween.tween(diffText, {alpha: 0}, 0.5);
 
 			for (item in grpSongs.members)
 			{
@@ -529,9 +542,10 @@ class FreeplayState extends MusicBeatState
 		}
 		else if(controls.RESET && !stopbro)
 		{
-			persistentUpdate = false;
+			//persistentUpdate = false;
 			openSubState(new ResetScoreSubState(songs[curSelected].songName, curDifficulty, songs[curSelected].songCharacter));
 			FlxG.sound.play(Paths.sound('scrollMenu'));
+			stopbro = true;
 		}
 		super.update(elapsed);
 	}
@@ -578,6 +592,7 @@ class FreeplayState extends MusicBeatState
 
 		PlayState.storyDifficulty = curDifficulty;
 		diffText.text = '< ' + CoolUtil.difficultyString() + ' >';
+		diffText.x = (alrumpicture.width - diffText.width) / 2 + alrumpicture.x;
 		positionHighscore();
 
 		switch(CoolUtil.difficulties[PlayState.storyDifficulty].toUpperCase()){
@@ -639,15 +654,18 @@ class FreeplayState extends MusicBeatState
 		for (item in grpSongs.members)
 		{
 			item.targetY = bullShit - curSelected;
+			
 			bullShit++;
 
 			item.alpha = 0.6;
 			item.color = 0x00FFFFFF;
 
+			FlxTween.tween(item.scale, {x: (0.8 - (Math.abs(item.targetY) * 0.1)), y: (0.8 - (Math.abs(item.targetY) * 0.1))}, 0.1);
 			if (item.targetY == 0)
 			{
 				item.alpha = 1;
 				item.color = 0xFFCDCA44;
+				FlxTween.tween(item.scale, {x: 0.8, y: 0.8}, 0.1);
 			}
 		}
 		
@@ -696,7 +714,6 @@ class FreeplayState extends MusicBeatState
 	}
 
 	private function positionHighscore() {
-		var rank:String = '';
 		if(accuracy / 100 >= 1)
         {
             rank = ratingStuff[ratingStuff.length-1][0]; //Uses last string
@@ -712,6 +729,7 @@ class FreeplayState extends MusicBeatState
                 }
             }
         }
+		if(accuracy == 0) rank = 'N/A';
 	}
 }
 

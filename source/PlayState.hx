@@ -3023,7 +3023,6 @@ class PlayState extends MusicBeatState
 					numbernotecomboSpritelol.animation.addByPrefix('appear', i + '_appear', 24, false);
 					numbernotecomboSpritelol.animation.addByPrefix('disappear', i + '_disappear', 24, false);
 					add(numbernotecomboSpritelol);
-					precacheList.set('noteComboNumbers', 'image');
 					spritenoob.push(numbernotecomboSpritelol);
 					numbernotecomboSpritelol.animation.play('appear');
 					loop++;
@@ -5140,6 +5139,8 @@ class PlayState extends MusicBeatState
 				lightshitlol.color = 0xC43136;
 		}
 
+		//if(note.strumTime == note.prevNote.strumTime && !note.isSustainNote && !note.prevNote.isSustainNote) trace('sike ikuyoo');
+
 		if(note.noteType == 'Hey!' && dad.animOffsets.exists('hey')) {
 			dad.playAnim('hey', true);
 			dad.specialAnim = true;
@@ -5162,8 +5163,8 @@ class PlayState extends MusicBeatState
 
 			if(char != null)
 			{
-				if(!note.isSustainNote) char.playAnim(animToPlay, true);
-				if(note.isSustainNote) char.playAnim(animToPlay, false);
+				if(!note.isSustainNote) char.playAnim(animToPlay + note.animSuffix, true);
+				else char.playAnim(animToPlay + note.animSuffix, false);
 				char.holdTimer = 0;
 			}
 		}
@@ -5200,6 +5201,8 @@ class PlayState extends MusicBeatState
 			}
 
 			if(combo >= highestCombo) highestCombo = combo + 1;
+
+			//if(note.strumTime == note.prevNote.strumTime && !note.isSustainNote && !note.prevNote.isSustainNote) trace('sike ikuyoo');
 			
 			if(note.hitCausesMiss) {
 				noteMiss(note);
@@ -5264,14 +5267,14 @@ class PlayState extends MusicBeatState
 					if(gf != null)
 					{
 						if(!note.isSustainNote) gf.playAnim(animToPlay + note.animSuffix, true);
-						if(note.isSustainNote) gf.playAnim(animToPlay + note.animSuffix, false);
+						else gf.playAnim(animToPlay + note.animSuffix, false);
 						gf.holdTimer = 0;
 					}
 				}
 				else
 				{
 					if(!note.isSustainNote) boyfriend.playAnim(animToPlay + note.animSuffix, true);
-					if(note.isSustainNote) boyfriend.playAnim(animToPlay + note.animSuffix, false);
+					else boyfriend.playAnim(animToPlay + note.animSuffix, false);
 					boyfriend.holdTimer = 0;
 				}
 
@@ -5634,9 +5637,9 @@ class PlayState extends MusicBeatState
 		{
 			gf.dance();
 		}
-		if(boyfriend.animation.curAnim != null && boyfriend.holdTimer >= Conductor.stepCrochet * 0.004){
+		/*if(boyfriend.animation.curAnim != null && boyfriend.holdTimer >= Conductor.stepCrochet * 0.002){
 			boyfriend.dance();
-		}
+		}*/
 		if (curBeat % boyfriend.danceEveryNumBeats == 0 && boyfriend.animation.curAnim != null && !boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.stunned)
 		{
 			boyfriend.dance();
