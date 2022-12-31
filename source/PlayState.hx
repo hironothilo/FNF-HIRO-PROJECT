@@ -2388,12 +2388,15 @@ class PlayState extends MusicBeatState
 	public function updateScore(miss:Bool = false)
 	{
 		//ratingPercent = Math.min(1, Math.max(0, totalNotesHit / totalPlayed));
-		
+		/*scoreTxt.text = 'Score: ' + songScore
+		+ ' | Misses: ' + songMisses
+		+ ' | Rating: ' + ratingName
+		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');*/
 		if(ratingName == '?') {
 			scoreTxt.text = 'Score: ' + songScore + ' | Combo Breaks: ' + songMisses + ' | Accuracy: 0%' + ' | ' + 'Rank: N/A';
 		}
 		if(ratingName != '?') {
-			scoreTxt.text = 'Score: ' + songScore + ' | Combo Breaks: ' + songMisses + ' | Accuracy: '+ Highscore.floorDecimal(ratingPercent * 100, 2) +'%' + ' | ' + 'Rank: ' + ratingName + ' [' + ratingFC + ']';
+			scoreTxt.text = 'Score: ' + songScore + ' | Combo Breaks: ' + songMisses + ' | Accuracy: '+ resultaccuracy +'%' + ' | ' + 'Rank: ' + ratingName + ' [' + ratingFC + ']';
 		}
 		
 		if(ClientPrefs.judgementcounter){
@@ -2401,13 +2404,9 @@ class PlayState extends MusicBeatState
 				scoreTxt.text = 'Score: ' + songScore + ' | Accuracy: 0%' + ' | ' + 'Rank: N/A';
 			}
 			if(ratingName != '?') {
-				scoreTxt.text = 'Score: ' + songScore + ' | Accuracy: '  + Highscore.floorDecimal(ratingPercent * 100, 2) + '%' + ' | ' + 'Rank: ' + ratingName + ' [' + ratingFC + ']';
+				scoreTxt.text = 'Score: ' + songScore + ' | Accuracy: '  + resultaccuracy + '%' + ' | ' + 'Rank: ' + ratingName + ' [' + ratingFC + ']';
 			}
 		}
-		/*scoreTxt.text = 'Score: ' + songScore
-		+ ' | Misses: ' + songMisses
-		+ ' | Rating: ' + ratingName
-		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');*/
 
 		if(ClientPrefs.scoreZoom && !miss)
 		{
@@ -3015,11 +3014,11 @@ class PlayState extends MusicBeatState
 					numbernotecomboSpritelol = new FlxSprite().loadGraphic(Paths.image('noteComboNumbers'));
 					numbernotecomboSpritelol.frames = Paths.getSparrowAtlas('noteComboNumbers');
 					numbernotecomboSpritelol.scale.set(0.6, 0.6);
+					numbernotecomboSpritelol.visible = !ClientPrefs.hideHud;
+					numbernotecomboSpritelol.updateHitbox();
 					numbernotecomboSpritelol.x = boyfriend.x+ boyfriend.width - notecomboSpritelol.width + (loop * 100) + 200; 
 					numbernotecomboSpritelol.x -= 90 * (seperatedNoteCombo.length - 1);
 					numbernotecomboSpritelol.y = (boyfriend.y + boyfriend.height) / 4 + 112.5 - (loop * 25);
-					numbernotecomboSpritelol.visible = !ClientPrefs.hideHud;
-					numbernotecomboSpritelol.updateHitbox();
 					numbernotecomboSpritelol.animation.addByPrefix('appear', i + '_appear', 24, false);
 					numbernotecomboSpritelol.animation.addByPrefix('disappear', i + '_disappear', 24, false);
 					add(numbernotecomboSpritelol);
@@ -3032,7 +3031,6 @@ class PlayState extends MusicBeatState
 						spritenoob[i].animation.play('disappear');
 						new FlxTimer().start(0.15, function(tmr:FlxTimer) {
 							spritenoob[i].visible = false;
-							spritenoob[i].active = false;
 						});
 					});
 				}
@@ -3050,7 +3048,6 @@ class PlayState extends MusicBeatState
 		resultaccuracy = Highscore.floorDecimal(ratingPercent * 100, 2);
 		wiggleShit.waveAmplitude = FlxMath.lerp(wiggleShit.waveAmplitude, 0, 0.035 / (ClientPrefs.framerate / 75));
  		wiggleShit.waveFrequency = FlxMath.lerp(wiggleShit.waveFrequency, 0, 0.035 / (ClientPrefs.framerate / 75));
-
 		wiggleShit.update(elapsed);
 		
 		for (hudcam in [camSus, camwtfHUD, cambeforeHUD, camnote]) {
@@ -4195,17 +4192,17 @@ class PlayState extends MusicBeatState
 			if(focusedChar.animation.curAnim != null){
 			switch (focusedChar.animation.curAnim.name){
 				case 'singUP' | 'singUP-alt' | 'singUPmiss':
-					camFollow.y -= 15;
+					camFollow.y -= 20;
 					//FlxTween.tween(camFollow, {y: camFollow.y - 15}, 0.05, {ease: FlxEase.sineOut});
 					//camFollow.y -= 15;
 				case 'singDOWN' | 'singDOWN-alt' | 'singDOWNmiss':
-					camFollow.y += 15;
+					camFollow.y += 20;
 					//FlxTween.tween(camFollow, {y: camFollow.y + 15}, 0.05, {ease: FlxEase.sineOut});
 				case 'singLEFT' | 'singLEFT-alt' | 'singLEFTmiss':
-					camFollow.x -= 15;
+					camFollow.x -= 20;
 					//FlxTween.tween(camFollow, {x: camFollow.x - 15}, 0.05, {ease: FlxEase.sineOut});
 				case 'singRIGHT' | 'singRIGHT-alt' | 'singRIGHTmiss':
-					camFollow.x += 15;
+					camFollow.x += 20;
 					//camsetshit_x += 0.5;
 					//FlxTween.tween(camFollow, {x: camFollow.x + 15}, 0.05, {ease: FlxEase.sineOut});
 				}
@@ -5163,8 +5160,8 @@ class PlayState extends MusicBeatState
 
 			if(char != null)
 			{
-				if(!note.isSustainNote) char.playAnim(animToPlay + note.animSuffix, true);
-				else char.playAnim(animToPlay + note.animSuffix, false);
+				if(!note.isSustainNote) char.playAnim(animToPlay, true);
+				else char.playAnim(animToPlay, false);
 				char.holdTimer = 0;
 			}
 		}
@@ -5172,7 +5169,7 @@ class PlayState extends MusicBeatState
 		if (SONG.needsVoices)
 			vocals.volume = 1;
 
-		var time:Float = 0.15;
+		var time:Float = 0.2;
 		if(note.isSustainNote && !note.animation.curAnim.name.endsWith('end')) {
 			time += 0.15;
 		}
@@ -5294,7 +5291,7 @@ class PlayState extends MusicBeatState
 			}
 
 			if(cpuControlled) {
-				var time:Float = 0.15;
+				var time:Float = 0.2;
 				if(note.isSustainNote && !note.animation.curAnim.name.endsWith('end')) {
 					time += 0.15;
 				}

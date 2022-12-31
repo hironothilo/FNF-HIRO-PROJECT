@@ -338,7 +338,7 @@ class FreeplayState extends MusicBeatState
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 		}
-		if(controls.ACCEPT) FlxG.sound.music.volume = 0;
+		if(controls.ACCEPT && !stopbro) FlxG.sound.music.volume = 0;
 
 		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, CoolUtil.boundTo(elapsed * 24, 0, 1)));
 		lerpRating = FlxMath.lerp(lerpRating, intendedRating, CoolUtil.boundTo(elapsed * 12, 0, 1));
@@ -660,12 +660,12 @@ class FreeplayState extends MusicBeatState
 			item.alpha = 0.6;
 			item.color = 0x00FFFFFF;
 
-			FlxTween.tween(item.scale, {x: (0.8 - (Math.abs(item.targetY) * 0.1)), y: (0.8 - (Math.abs(item.targetY) * 0.1))}, 0.1);
+			//FlxTween.tween(item.scale, {x: (0.8 - (Math.abs(item.targetY) * 0.1)), y: (0.8 - (Math.abs(item.targetY) * 0.1))}, 0.1);
 			if (item.targetY == 0)
 			{
 				item.alpha = 1;
 				item.color = 0xFFCDCA44;
-				FlxTween.tween(item.scale, {x: 0.8, y: 0.8}, 0.1);
+				//FlxTween.tween(item.scale, {x: 0.8, y: 0.8}, 0.1);
 			}
 		}
 		
