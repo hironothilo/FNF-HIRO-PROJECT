@@ -458,7 +458,7 @@ class ResultState extends MusicBeatState
     function addsomethingleft(){
         FlxTween.tween(whitetransGradient, {alpha: 1}, 0.25, {startDelay: 0.25});
 
-        var pressenter:FlxText = new FlxText(0, 0, 0, "Press ENTER to continue", 40);
+        var pressenter:FlxText = new FlxText(0, 0, 0, "Press ENTER to Continue", 40);
         pressenter.setFormat(Paths.font("phantommuff.ttf"), 40, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         pressenter.x = FlxG.width - pressenter.width - 25;
         pressenter.y = FlxG.height - 65;
@@ -480,15 +480,12 @@ class ResultState extends MusicBeatState
 
         accuracyarray.push('percent');
 
-        var score = new Alphabet(-15, FlxG.height / 1.75, 'score', true, false);
-        var misses = new Alphabet(-15, FlxG.height / 1.4, 'misses', true, false);
-        var top_combo = new Alphabet(-15, FlxG.height / 1.2, 'topcombo', true, false);
-        score.x = FlxG.width / 12 - 50;
-        misses.x = FlxG.width / 12 - 50;
-        top_combo.x = FlxG.width / 12 - 50;
-        score.scale.set(0.75, 0.75);
-        misses.scale.set(0.75, 0.75);
-        top_combo.scale.set(0.75, 0.75);
+        var score = new Alphabet(0, FlxG.height / 1.775 + 25, 'score', true, false, 0, 0.75);
+        var misses = new Alphabet(0, FlxG.height / 1.425 + 25, 'misses', true, false, 0, 0.75);
+        var top_combo = new Alphabet(0, FlxG.height / 1.225 + 25, 'topcombo', true, false, 0, 0.75);
+        score.x = FlxG.width / 12 - 35;
+        misses.x = FlxG.width / 12 - 35;
+        top_combo.x = FlxG.width / 12 - 35;
         score.cameras = [cam];
         misses.cameras = [cam];
         top_combo.cameras = [cam];
@@ -510,7 +507,7 @@ class ResultState extends MusicBeatState
             var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image('num' + Std.string(i)));
 			numScore.x = coolText.x + (43 * scoreloopshit) + 100;
 			numScore.x -= 40 * (scorearray.length - 1);
-            numScore.y = score.y - 20;
+            numScore.y = score.y - 30;
 
             numScore.updateHitbox();
 
@@ -526,7 +523,7 @@ class ResultState extends MusicBeatState
             var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image('num' + Std.string(i)));
 			numScore.x = coolText.x + (43 * missloopshit) + 100;
 			numScore.x -= 40 * (missesarray.length - 1);
-            numScore.y = misses.y - 20;
+            numScore.y = misses.y - 30;
 
             numScore.updateHitbox();
 
@@ -542,7 +539,7 @@ class ResultState extends MusicBeatState
             var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image('num' + Std.string(i)));
 			numScore.x = coolText.x + (43 * topcomboloopshit) + 100;
 			numScore.x -= 40 * (top_comboarray.length - 1);
-            numScore.y = top_combo.y - 20;
+            numScore.y = top_combo.y - 30;
 
             numScore.updateHitbox();
 

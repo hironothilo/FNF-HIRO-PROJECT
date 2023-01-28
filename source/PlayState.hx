@@ -2997,6 +2997,8 @@ class PlayState extends MusicBeatState
 	var limoSpeed:Float = 0;
 	var numbernotecomboSpritelol:FlxSprite;
 	var spritenoob:Array<FlxSprite> = [];
+	var alphashit1:Float = 0;
+	var alphashit2:Float = 0;
 
 	override public function update(elapsed:Float)
 	{
@@ -3060,13 +3062,14 @@ class PlayState extends MusicBeatState
 			}  
 		}
 		if(timeforfunk){
-			if(boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss')) anotherlightshitlol.alpha = 1;
-			if(dad.animation.curAnim.name.startsWith('sing') && !dad.animation.curAnim.name.endsWith('miss')) lightshitlol.alpha = 1;
+			if((boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))) alphashit2 = 1;
+			if((dad.animation.curAnim.name.startsWith('sing') && !dad.animation.curAnim.name.endsWith('miss')) || (gf.animation.curAnim.name.startsWith('sing') && !gf.animation.curAnim.name.endsWith('miss'))) alphashit1 = 1;
+			lightshitlol.alpha = FlxMath.lerp(lightshitlol.alpha, alphashit1, CoolUtil.boundTo(elapsed * 7, 0, 1));
+			anotherlightshitlol.alpha = FlxMath.lerp(anotherlightshitlol.alpha, alphashit2, CoolUtil.boundTo(elapsed * 7, 0, 1));
 		}
-		if(!boyfriend.animation.curAnim.name.startsWith('sing') || boyfriend.animation.curAnim.name.endsWith('miss')) FlxTween.tween(anotherlightshitlol, {alpha: 0}, 0.4);
-		if(!dad.animation.curAnim.name.startsWith('sing') || dad.animation.curAnim.name.endsWith('miss')) FlxTween.tween(lightshitlol, {alpha: 0}, 0.4);
+		if((!boyfriend.animation.curAnim.name.startsWith('sing') || boyfriend.animation.curAnim.name.endsWith('miss'))) alphashit2 = 0; //sorry lol
+		if((!dad.animation.curAnim.name.startsWith('sing') || dad.animation.curAnim.name.endsWith('miss')) && (!gf.animation.curAnim.name.startsWith('sing') || gf.animation.curAnim.name.endsWith('miss'))) alphashit1 = 0;
 
-		//trace(fUNKYNUMBar.percent);
 		if(FUNKYNUM_LOL >= 3){
 			FUNKYNUM_LOL = 3;
 			if(!timeforfunk){
@@ -5169,7 +5172,7 @@ class PlayState extends MusicBeatState
 		if (SONG.needsVoices)
 			vocals.volume = 1;
 
-		var time:Float = 0.2;
+		var time:Float = 0.175;
 		if(note.isSustainNote && !note.animation.curAnim.name.endsWith('end')) {
 			time += 0.15;
 		}
@@ -5291,7 +5294,7 @@ class PlayState extends MusicBeatState
 			}
 
 			if(cpuControlled) {
-				var time:Float = 0.2;
+				var time:Float = 0.175;
 				if(note.isSustainNote && !note.animation.curAnim.name.endsWith('end')) {
 					time += 0.15;
 				}
@@ -5949,8 +5952,8 @@ class PlayState extends MusicBeatState
 				fUNKYNUMBarBG.cameras = [camHUD];
 				add(fUNKYNUMBarBG);
 				timeforfunk = false;
-				FlxTween.tween(anotherlightshitlol, {alpha: 0}, 0.4);
-				FlxTween.tween(lightshitlol, {alpha: 0}, 0.4);
+				anotherlightshitlol.alpha = 0;
+				lightshitlol.alpha = 0;
 				FlxG.sound.play(Paths.sound('backlol'));
 			}
 		});

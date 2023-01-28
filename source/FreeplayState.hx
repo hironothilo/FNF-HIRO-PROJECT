@@ -657,10 +657,12 @@ class FreeplayState extends MusicBeatState
 			
 			bullShit++;
 
-			item.alpha = 0.6;
 			item.color = 0x00FFFFFF;
 
+			//FlxTween.tween(item, {alpha: 0.6 / Math.abs(item.targetY)}, 0.1);
 			//FlxTween.tween(item.scale, {x: (0.8 - (Math.abs(item.targetY) * 0.1)), y: (0.8 - (Math.abs(item.targetY) * 0.1))}, 0.1);
+			if(Math.abs(item.targetY) == 1) FlxTween.tween(item, {alpha: 0.6}, 0.1);
+			if(Math.abs(item.targetY) == 2) FlxTween.tween(item, {alpha: 0.45}, 0.1);
 			if (item.targetY == 0)
 			{
 				item.alpha = 1;

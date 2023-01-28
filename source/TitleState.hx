@@ -621,6 +621,13 @@ class TitleState extends MusicBeatState
 			credGroup.remove(textGroup.members[0], true);
 			textGroup.remove(textGroup.members[0], true);
 		}
+		/*for (i in 0...textGroup.members.length){
+			FlxTween.tween(textGroup.members[i], {alpha: 0}, 0.075, {onComplete:
+				function (twn:FlxTween) {
+					credGroup.remove(textGroup.members[i], true);
+					textGroup.remove(textGroup.members[i], true);
+				}});
+		}*/
 	}
 
 	private var sickBeats:Int = 0; //Basically curBeat but won't be skipped if you hold the tab or resize the screen
@@ -654,9 +661,8 @@ class TitleState extends MusicBeatState
 					createCoolText(['School project by'], 15, 'L');
 				// credTextShit.visible = true;
 				case 4:
-					addMoreText('Hiro   boss', 15, 'L');
-					addMoreText('yuu   peak', 15, 'L');
-					addMoreText('lotto', 15, 'L');
+					addMoreText('Hiro', 15, 'L');
+					addMoreText('Boss Lotto Yuu Peak', 15, 'L');
 				// credTextShit.text += '\npresent...';
 				// credTextShit.addText();
 				case 5:
@@ -667,7 +673,7 @@ class TitleState extends MusicBeatState
 				case 6:
 					createCoolText(['In association', 'with'], -40, 'R');
 				case 8:
-					addMoreText('CRU', -40, 'R');
+					addMoreText('CRU', 0, 'R');
 					//ngSpr.alpha = 0;
 					ngSpr.visible = true;
 					ngSpr.x = (FlxG.width + ngSpr.width) / 2; //ใส่โลโก้ ของไอบอสเอาXD
@@ -694,11 +700,10 @@ class TitleState extends MusicBeatState
 					addMoreText('FNF', 0, 'R');
 				// credTextShit.visible = true;
 				case 15:
-					addMoreText('waste', 0, 'R');
+					addMoreText('W45T3', 0, 'R');
 				// credTextShit.text += '\nNight';
 				case 16:
-					addMoreText('project test', 0, 'R'); // credTextShit.text += '\nFunkin';
-
+					addMoreText('C0D3', 0, 'R');
 				case 17:
 					skipIntro();
 			}

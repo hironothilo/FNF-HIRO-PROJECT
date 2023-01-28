@@ -1,0 +1,77 @@
+{
+	"songs": [
+		[
+			"Sussus-Toogus",
+			"dad",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"Burning",
+			"dad",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"Danger",
+			"dad",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"Dissension",
+			"dad",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"Safety-Lullaby",
+			"dad",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"Finale",
+			"dad",
+			[
+				146,
+				113,
+				253
+			]
+		]
+	],
+	"hiddenUntilUnlocked": false,
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"difficulties": "normal",
+	"weekCharacters": [
+		"dad",
+		"bf",
+		"gf"
+	],
+	"storyName": "Your New Week",
+	"weekName": "Custom Week",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"hideStoryMode": false,
+	"weekBefore": "tutorial",
+	"startUnlocked": true
+}
