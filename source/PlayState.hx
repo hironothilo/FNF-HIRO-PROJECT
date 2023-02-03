@@ -61,6 +61,7 @@ import FunkinLua;
 import DialogueBoxPsych;
 import Conductor.Rating;
 import openfl.filters.ShaderFilter;
+import flixel.addons.display.FlxBackdrop;
 #if sys
 import sys.FileSystem;
 #end

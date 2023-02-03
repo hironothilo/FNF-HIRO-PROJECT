@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="lottoandsoji.png">
+	<!-- Created with Adobe Animate version 20.0.3.25487 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Symbol 14 instance 10000" x="0" y="748" width="704" height="734" frameX="0" frameY="-14" frameWidth="704" frameHeight="748"/>
+	<SubTexture name="Symbol 14 instance 10001" x="0" y="1482" width="704" height="734" frameX="0" frameY="-14" frameWidth="704" frameHeight="748"/>
+	<SubTexture name="Symbol 14 instance 10002" x="1400" y="744" width="700" height="743" frameX="-2" frameY="-5" frameWidth="704" frameHeight="748"/>
+	<SubTexture name="Symbol 14 instance 10003" x="2100" y="744" width="700" height="743" frameX="-2" frameY="-5" frameWidth="704" frameHeight="748"/>
+	<SubTexture name="Symbol 14 instance 10004" x="1400" y="0" width="700" height="744" frameX="-2" frameY="-4" frameWidth="704" frameHeight="748"/>
+	<SubTexture name="Symbol 14 instance 10005" x="2100" y="0" width="700" height="744" frameX="-2" frameY="-4" frameWidth="704" frameHeight="748"/>
+	<SubTexture name="Symbol 14 instance 10006" x="0" y="0" width="700" height="748" frameX="-2" frameY="0" frameWidth="704" frameHeight="748"/>
+	<SubTexture name="Symbol 14 instance 10007" x="700" y="0" width="700" height="748" frameX="-2" frameY="0" frameWidth="704" frameHeight="748"/>
+	<SubTexture name="Symbol 14 instance 10008" x="0" y="0" width="700" height="748" frameX="-2" frameY="0" frameWidth="704" frameHeight="748"/>
+	<SubTexture name="Symbol 14 instance 10009" x="700" y="0" width="700" height="748" frameX="-2" frameY="0" frameWidth="704" frameHeight="748"/>
+	<SubTexture name="Symbol 14 instance 10010" x="0" y="0" width="700" height="748" frameX="-2" frameY="0" frameWidth="704" frameHeight="748"/>
+	<SubTexture name="Symbol 14 instance 10011" x="700" y="0" width="700" height="748" frameX="-2" frameY="0" frameWidth="704" frameHeight="748"/>
+	<SubTexture name="Symbol 14 instance 10012" x="0" y="0" width="700" height="748" frameX="-2" frameY="0" frameWidth="704" frameHeight="748"/>
+	<SubTexture name="Symbol 14 instance 10013" x="700" y="0" width="700" height="748" frameX="-2" frameY="0" frameWidth="704" frameHeight="748"/>
+</TextureAtlas>
