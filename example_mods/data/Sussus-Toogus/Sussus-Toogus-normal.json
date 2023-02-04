@@ -15,96 +15,6 @@
 				]
 			],
 			[
-				11200,
-				[
-					[
-						"Add Camera Zoom",
-						"",
-						""
-					]
-				]
-			],
-			[
-				11204.1666666667,
-				[
-					[
-						"Play Animation",
-						"bopL",
-						"Dad"
-					]
-				]
-			],
-			[
-				11600,
-				[
-					[
-						"Add Camera Zoom",
-						"",
-						""
-					]
-				]
-			],
-			[
-				11604.1666666667,
-				[
-					[
-						"Play Animation",
-						"bopR",
-						"Dad"
-					]
-				]
-			],
-			[
-				12000,
-				[
-					[
-						"Add Camera Zoom",
-						"",
-						""
-					]
-				]
-			],
-			[
-				12004.1666666667,
-				[
-					[
-						"Play Animation",
-						"bopL",
-						"Dad"
-					]
-				]
-			],
-			[
-				12400,
-				[
-					[
-						"Add Camera Zoom",
-						"",
-						""
-					]
-				]
-			],
-			[
-				12404.1666666667,
-				[
-					[
-						"Play Animation",
-						"bopR",
-						"Dad"
-					]
-				]
-			],
-			[
-				12700,
-				[
-					[
-						"HUD Fade",
-						"0",
-						""
-					]
-				]
-			],
-			[
 				24000,
 				[
 					[
@@ -8076,6 +7986,26 @@
 				"bpm": 150
 			},
 			{
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"sectionBeats": 4,
+				"altAnim": false,
+				"gfSection": false,
+				"bpm": 150,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"sectionBeats": 4,
+				"sectionNotes": [],
+				"typeOfSection": 0,
+				"gfSection": false,
+				"altAnim": false,
+				"mustHitSection": true,
+				"changeBPM": false,
+				"bpm": 150
+			},
+			{
 				"gfSection": false,
 				"altAnim": false,
 				"typeOfSection": 0,
@@ -8090,7 +8020,7 @@
 		"player3": null,
 		"sliderVelocities": null,
 		"song": "Sussus-Toogus",
-		"stage": "stage",
+		"stage": "darkroom",
 		"needsVoices": true,
 		"validScore": true,
 		"gf": "gf",

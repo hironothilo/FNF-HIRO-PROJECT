@@ -38,10 +38,10 @@
 				-14,
 				-26
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "singRIGHT",
-			"loop": false,
+			"indices": [],
 			"name": "HIROSCAREDLEFT"
 		},
 		{
@@ -49,18 +49,18 @@
 				160,
 				-12
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "singLEFT",
-			"loop": false,
+			"indices": [],
 			"name": "HIROSCAREDRIGHT"
 		}
 	],
 	"no_antialiasing": false,
 	"image": "characters/HIROSCARED",
 	"position": [
-		0,
-		0
+		60,
+		200
 	],
 	"healthicon": "icon-hiroscared",
 	"flip_x": false,

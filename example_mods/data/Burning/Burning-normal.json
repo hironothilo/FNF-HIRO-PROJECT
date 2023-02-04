@@ -1739,11 +1739,6 @@
 						0
 					],
 					[
-						52200,
-						2,
-						0
-					],
-					[
 						51600,
 						3,
 						0,
@@ -1756,19 +1751,23 @@
 						"GF Sing"
 					],
 					[
-						52200,
-						3,
-						0,
-						"GF Sing"
-					],
-					[
 						52500,
 						2,
 						0,
 						"GF Sing"
 					],
 					[
+						52200,
+						3,
+						0
+					],
+					[
 						52650,
+						1,
+						0
+					],
+					[
+						52200,
 						2,
 						0,
 						"GF Sing"
@@ -8230,6 +8229,56 @@
 				"bpm": 200
 			},
 			{
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"sectionBeats": 4,
+				"altAnim": false,
+				"gfSection": false,
+				"bpm": 200,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"sectionBeats": 4,
+				"sectionNotes": [],
+				"typeOfSection": 0,
+				"gfSection": false,
+				"altAnim": false,
+				"mustHitSection": true,
+				"changeBPM": false,
+				"bpm": 200
+			},
+			{
+				"sectionBeats": 4,
+				"sectionNotes": [],
+				"typeOfSection": 0,
+				"gfSection": false,
+				"altAnim": false,
+				"mustHitSection": true,
+				"changeBPM": false,
+				"bpm": 200
+			},
+			{
+				"sectionBeats": 4,
+				"sectionNotes": [],
+				"typeOfSection": 0,
+				"gfSection": false,
+				"altAnim": false,
+				"mustHitSection": true,
+				"changeBPM": false,
+				"bpm": 200
+			},
+			{
+				"gfSection": false,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"bpm": 200,
+				"sectionBeats": 4,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
 				"gfSection": false,
 				"altAnim": false,
 				"typeOfSection": 0,
@@ -8241,6 +8290,21 @@
 			}
 		],
 		"events": [
+			[
+				27600,
+				[
+					[
+						"Change Character",
+						"gf",
+						"beelze"
+					],
+					[
+						"Add Camera Zoom",
+						"0.25",
+						""
+					]
+				]
+			],
 			[
 				38250,
 				[
@@ -8366,9 +8430,9 @@
 		],
 		"player2": "boss",
 		"song": "Burning",
-		"validScore": true,
-		"stage": "stage",
+		"stage": "mountain",
 		"needsVoices": true,
+		"validScore": true,
 		"bpm": 200,
 		"speed": 2.8
 	}

@@ -7,6 +7,7 @@ import Discord.DiscordClient;
 import Section.SwagSection;
 import Song.SwagSong;
 import WiggleEffect.WiggleEffectType;
+import flixel.util.FlxGradient;
 import flixel.group.FlxGroup;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
@@ -77,6 +78,12 @@ class PlayState extends MusicBeatState
 	var focusshit:String = '';
 
 	var misspop:Int = 0;
+
+	var hirook:Character = null;
+	var hironotok:Character = null;
+
+	var stageinrun:Array<BGSprite> = [];
+	var skateboard:FlxSprite;
 	
 	public var FUNKYNUM_LOL:Float = 0;
 	private var fUNKYNUMBarBG:AttachedSprite;
@@ -888,6 +895,92 @@ class PlayState extends MusicBeatState
 				if(!ClientPrefs.lowQuality) foregroundSprites.add(new BGSprite('tank4', 1300+holyuck, 900+holyuck2, 1.5, 1.5, ['fg']));
 				foregroundSprites.add(new BGSprite('tank5', 1620+holyuck, 700+holyuck2, 1.5, 1.5, ['fg']));
 				if(!ClientPrefs.lowQuality) foregroundSprites.add(new BGSprite('tank3', 1300+holyuck, 1200+holyuck2, 3.5, 2.5, ['fg']));
+
+			case 'sodark' :
+				
+			case 'darkroom' :
+				var wall:BGSprite = new BGSprite('stagesong1/wal', -80, -20, 0.9, 0.9);
+				add(wall);
+				var irontehe:BGSprite = new BGSprite('stagesong1/ironmeme', 20, 250, 0.9, 0.9);
+				add(irontehe);
+				var pic:BGSprite = new BGSprite('stagesong1/grouppic', 1325, 200, 0.9, 0.9);
+				add(pic);
+			case 'mountain':
+				var sky:FlxSprite = FlxGradient.createGradientFlxSprite(Math.floor(FlxG.width*2.5), Math.floor(FlxG.height*2.5), [0xFF99FFFF	, 0xFFA3E3E3]);
+				sky.scrollFactor.set();
+				sky.x -= 300;
+				sky.y -= 100;
+				add(sky);
+				var bigoneagain:BGSprite = new BGSprite('stagesong2/bigoneagain', -800, -125, 0.75, 0.75);
+				add(bigoneagain);
+				bigoneagain.scale.set(0.75,0.75);
+				var bigball:BGSprite = new BGSprite('stagesong2/bigball', -500, 250, 0.9, 0.9);
+				add(bigball);
+				bigball.scale.set(1.5, 1.5);
+				var floor:BGSprite = new BGSprite('stagesong2/floor', -400, 800, 0.9, 0.9);
+				floor.scale.set(1.5, 1.5);
+				add(floor);
+				var tree:BGSprite = new BGSprite('stagesong2/tree', 550, 675, 1, 1);
+				tree.scale.set(0.5, 0.5);
+				add(tree);
+				hirook = new Character(-100, 850, 'hirogfok');
+				hirook.scrollFactor.set(0.95, 0.95);
+				add(hirook);
+				hironotok = new Character(-100, 850, 'hirogfnotok');
+				hironotok.scrollFactor.set(0.95, 0.95);
+				add(hironotok);
+				hironotok.alpha = 0;
+			case 'running':
+				var sky:FlxSprite = FlxGradient.createGradientFlxSprite(Math.floor(FlxG.width*2.5), Math.floor(FlxG.height*2.5), [0xFF6699FF	, 0xFF66CCCC]);
+				sky.scrollFactor.set();
+				sky.x -= 500;
+				sky.y -= 100;
+				add(sky);
+
+				var tower:BGSprite = new BGSprite('stagesong3/bigone', -300, 400,  1, 1);
+				add(tower);
+				tower.scale.set(1.25, 1.25);
+				stageinrun.push(tower);
+				var tower2:BGSprite = new BGSprite('stagesong3/bigone', tower.width + 650, 400,  1, 1);
+				add(tower2);
+				tower2.scale.set(1.25, 1.25);
+				stageinrun.push(tower2);
+
+				var grass:BGSprite = new BGSprite('stagesong3/grass', -300, 1050, 1, 1);
+				add(grass);
+				grass.scale.set(1.75, 1.35);
+				stageinrun.push(grass);
+				var grass2:BGSprite = new BGSprite('stagesong3/grass', grass.width + 400, 1050,  1, 1);
+				add(grass2);
+				grass2.scale.set(1.75, 1.35);
+				stageinrun.push(grass2);
+
+				var wall:BGSprite = new BGSprite('stagesong3/wall', -300, 850,  1, 1);
+				add(wall);
+				wall.scale.set(1.6, 1.25);
+				stageinrun.push(wall);
+				var wall2:BGSprite = new BGSprite('stagesong3/wall', wall.width+800, 850,  1, 1);
+				add(wall2);
+				wall2.scale.set(1.6, 1.25);
+				stageinrun.push(wall2);
+
+				var road:BGSprite = new BGSprite('stagesong3/road', -200, 1400, 1, 1);
+				road.scale.set(1.75, 1.75);
+				add(road);
+				stageinrun.push(road);
+				var road2:BGSprite = new BGSprite('stagesong3/road', road.width + 400, 1400, 1, 1);
+				road2.scale.set(1.75, 1.75);
+				add(road2);
+				stageinrun.push(road2);
+
+				skateboard = new FlxSprite().loadGraphic(Paths.image('stagesong3/skateboard'));
+				skateboard.frames = Paths.getSparrowAtlas('skateboard');
+				skateboard.animation.addByPrefix('brrr', 'Symbol 45 instance', 24, true);
+				skateboard.x = 1275;
+				skateboard.y = 1330;
+				for (i in 0...stageinrun.length){
+					trace(stageinrun[i].x);
+				}
 		}
 
 		switch(Paths.formatToSongPath(SONG.song))
@@ -907,6 +1000,10 @@ class PlayState extends MusicBeatState
 			add(limo);
 
 		add(dadGroup);
+		if(curStage == 'running'){
+			add(skateboard);
+			skateboard.animation.play('brrr');
+		}
 		add(boyfriendGroup);
 
 		switch(curStage)
@@ -1036,6 +1133,15 @@ class PlayState extends MusicBeatState
 		startCharacterPos(boyfriend);
 		boyfriendGroup.add(boyfriend);
 		startCharacterLua(boyfriend.curCharacter);
+
+		if(curStage == 'darkroom'|| curStage == 'sodark'){
+			if(SONG.song != 'Sussus-Toogus') gf.alpha = 0;
+			if(curStage == 'sodark'){
+				dad.alpha = 0.5;
+				var mictospeak:BGSprite = new BGSprite('stagesong4/wow', 350, 650, 1, 1);
+				add(mictospeak);
+			}
+		}
 
 		var camPos:FlxPoint = new FlxPoint(girlfriendCameraOffset[0], girlfriendCameraOffset[1]);
 		if(gf != null)
@@ -2222,6 +2328,10 @@ class PlayState extends MusicBeatState
 				{
 					dad.dance();
 				}
+				if (curStage == 'mountain')
+				{
+					if(tmr.loopsLeft % hirook.danceEveryNumBeats == 0 && hirook.animation.curAnim != null && !hirook.animation.curAnim.name.startsWith('sing') && !hirook.stunned) hirook.dance();
+				} //hahalol
 
 				var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
 				introAssets.set('default', ['ready', 'set', 'go']);
@@ -3008,6 +3118,48 @@ class PlayState extends MusicBeatState
 			iconP1.swapOldIcon();
 		}*/
 
+		if(curStage == 'running'){
+			if(stageinrun[0].x == -300){
+				stageinrun[1].x = 2669;
+				FlxTween.tween(stageinrun[0], {x: -3269}, 4);
+				FlxTween.tween(stageinrun[1], {x: -300}, 4);
+			}
+			if(stageinrun[1].x == -300) {
+				stageinrun[0].x = 2669;
+				FlxTween.tween(stageinrun[1], {x: -3269}, 4);
+				FlxTween.tween(stageinrun[0], {x: -300}, 4);
+			}
+			if(stageinrun[2].x == -300){
+				stageinrun[3].x = 2545;
+				FlxTween.tween(stageinrun[2], {x: -3145}, 4);
+				FlxTween.tween(stageinrun[3], {x: -300}, 4);
+			}
+			if(stageinrun[3].x == -300) {
+				stageinrun[2].x = 2545;
+				FlxTween.tween(stageinrun[3], {x: -3145}, 4);
+				FlxTween.tween(stageinrun[2], {x: -300}, 4);
+			}
+			if(stageinrun[4].x == -300){
+				stageinrun[5].x = 2935;
+				FlxTween.tween(stageinrun[4], {x: -3535}, 4);
+				FlxTween.tween(stageinrun[5], {x: -300}, 4);
+			}
+			if(stageinrun[5].x == -300) {
+				stageinrun[4].x = 2935;
+				FlxTween.tween(stageinrun[5], {x: -3535}, 4);
+				FlxTween.tween(stageinrun[4], {x: -300}, 4);
+			}
+			if(stageinrun[6].x == -200){
+				stageinrun[7].x = 2510;
+				FlxTween.tween(stageinrun[6], {x: -2910}, 4);
+				FlxTween.tween(stageinrun[7], {x: -200}, 4);
+			}
+			if(stageinrun[7].x == -200) {
+				stageinrun[6].x = 2510;
+				FlxTween.tween(stageinrun[7], {x: -2910}, 4);
+				FlxTween.tween(stageinrun[6], {x: -200}, 4);
+			}
+		}
 		updatecam(elapsed);
 		if(focusfornotecombo != focusshit && focusshit != 'none'){
 			var loop:Int = 1;
@@ -3022,6 +3174,7 @@ class PlayState extends MusicBeatState
 					numbernotecomboSpritelol.x = boyfriend.x+ boyfriend.width - notecomboSpritelol.width + (loop * 100) + 200; 
 					numbernotecomboSpritelol.x -= 90 * (seperatedNoteCombo.length - 1);
 					numbernotecomboSpritelol.y = (boyfriend.y + boyfriend.height) / 4 + 112.5 - (loop * 25);
+					if(curStage == 'darkroom' || curStage == 'running') numbernotecomboSpritelol.y += 250;
 					numbernotecomboSpritelol.animation.addByPrefix('appear', i + '_appear', 24, false);
 					numbernotecomboSpritelol.animation.addByPrefix('disappear', i + '_disappear', 24, false);
 					add(numbernotecomboSpritelol);
@@ -3040,6 +3193,7 @@ class PlayState extends MusicBeatState
 				coolcombo = 0;
 				notecomboSpritelol.x = boyfriend.x + boyfriend.width- notecomboSpritelol.width;
 				notecomboSpritelol.y = (boyfriend.y + boyfriend.height) / 4;
+				if(curStage == 'darkroom' || curStage == 'running') notecomboSpritelol.y += 250;
 				notecomboSpritelol.alpha = 1;
 				FlxG.sound.play(Paths.sound('noteComboSound'));
 				notecomboSpritelol.animation.play('appear');
@@ -3857,7 +4011,7 @@ class PlayState extends MusicBeatState
 					if(Math.isNaN(camZoom)) camZoom = 0.015;
 					if(Math.isNaN(hudZoom)) hudZoom = 0.03;
 
-					FlxG.camera.zoom += camZoom;
+					camGame.zoom += camZoom;
 					camHUD.zoom += hudZoom;
 				}
 
@@ -4066,6 +4220,7 @@ class PlayState extends MusicBeatState
 			case 'Note Combo':
 				notecomboSpritelol.x = boyfriend.x + boyfriend.width- notecomboSpritelol.width;
 				notecomboSpritelol.y = (boyfriend.y + boyfriend.height) / 4;
+				if(curStage == 'darkroom' || curStage == 'running') notecomboSpritelol.y += 250;
 				notecomboSpritelol.alpha = 1;
 				FlxG.sound.play(Paths.sound('noteComboSound'));
 				notecomboSpritelol.animation.play('appear');
@@ -4078,6 +4233,7 @@ class PlayState extends MusicBeatState
 					numbernotecomboSpritelol.x = boyfriend.x + boyfriend.width - notecomboSpritelol.width + (loop * 100) + 200;
 					numbernotecomboSpritelol.x -= 90 * (seperatedNoteCombo.length - 1);
 					numbernotecomboSpritelol.y = (boyfriend.y + boyfriend.height) / 4 + 112.5 - (loop * 25);
+					if(curStage == 'darkroom' || curStage == 'running') numbernotecomboSpritelol.y += 250;
 					numbernotecomboSpritelol.visible = !ClientPrefs.hideHud;
 					numbernotecomboSpritelol.updateHitbox();
 					numbernotecomboSpritelol.animation.addByPrefix('appear', i + '_appear', 24, false);
@@ -5583,11 +5739,11 @@ class PlayState extends MusicBeatState
 	{
 		super.beatHit();
 
-		if(curBeat % 1 == 0 && curBeat % 2 != 0) {
+		if(curBeat % 2 == 0 && curBeat % 4 != 0) {
 			wiggleShit.waveAmplitude = 0.035;
 			wiggleShit.waveFrequency = 7.5;
 		}
-		if(curBeat % 2 == 0) {
+		if(curBeat % 4 == 0) {
 			wiggleShit.waveAmplitude = -0.035;
 			wiggleShit.waveFrequency = -7.5;
 		}
@@ -5648,6 +5804,26 @@ class PlayState extends MusicBeatState
 		if (curBeat % dad.danceEveryNumBeats == 0 && dad.animation.curAnim != null && !dad.animation.curAnim.name.startsWith('sing') && !dad.stunned)
 		{
 			dad.dance();
+		}
+		if (curStage == 'mountain')
+		{
+			if (curBeat % hirook.danceEveryNumBeats == 0 && hirook.animation.curAnim != null && !hirook.animation.curAnim.name.startsWith('sing') && !hirook.stunned && curStage == 'mountain')
+			{
+				hirook.dance();
+			}
+			if (curBeat % hironotok.danceEveryNumBeats == 0 && hironotok.animation.curAnim != null && !hironotok.animation.curAnim.name.startsWith('sing') && !hironotok.stunned && curStage == 'mountain')
+			{
+				hironotok.dance();
+			}
+			if(curBeat == 92) {
+				camGame.flash(FlxColor.WHITE, 0.4);
+				defaultCamZoom = 0.85;
+			}
+			if(curBeat == 96) {
+				defaultCamZoom = 0.65;
+				hirook.alpha = 0.00001;
+				hironotok.alpha = 1;
+			}
 		}
 		switch (curStage)
 		{
