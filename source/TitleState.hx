@@ -82,6 +82,8 @@ class TitleState extends MusicBeatState
 	var mustUpdate:Bool = false;
 
 	var titleJSON:TitleData;
+	
+	var stopplz:Bool = false;
 
 	public static var updateVersion:String = '';
 
