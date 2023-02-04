@@ -1,0 +1,34 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				-132,
+				450
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "Symbol 14 instance",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/lottoandsoji",
+	"position": [
+		0,
+		350
+	],
+	"healthicon": "bf",
+	"flip_x": false,
+	"healthbar_colors": [
+		49,
+		176,
+		209
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 1
+}

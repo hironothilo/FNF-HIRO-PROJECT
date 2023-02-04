@@ -23,10 +23,12 @@ class Alphabet extends FlxSpriteGroup
 	public var forceX:Float = Math.NEGATIVE_INFINITY;
 	public var targetY:Float = 0;
 	public var yMult:Float = 120;
-	public var xAdd:Float = 0;
+	public var xAdd:Float = 550;
 	public var yAdd:Float = 0;
 	public var isMenuItem:Bool = false;
 	public var textSize:Float = 1.0;
+
+	public var center:Bool = false;
 
 	public var text:String = "";
 
@@ -76,7 +78,7 @@ class Alphabet extends FlxSpriteGroup
 	public function changeText(newText:String, newTypingSpeed:Float = -1)
 	{
 		for (i in 0...lettersArray.length) {
-			var letter = lettersArray[0];
+			var letter:AlphaCharacter = lettersArray[0];
 			letter.destroy();
 			remove(letter);
 			lettersArray.remove(letter);
@@ -115,7 +117,7 @@ class Alphabet extends FlxSpriteGroup
 	public function addText()
 	{
 		doSplitWords();
-
+		var number:Int = 0;
 		var xPos:Float = 0;
 		for (character in splitWords)
 		{
@@ -146,7 +148,8 @@ class Alphabet extends FlxSpriteGroup
 				consecutiveSpaces = 0;
 
 				// var letter:AlphaCharacter = new AlphaCharacter(30 * loopNum, 0, textSize);
-				var letter:AlphaCharacter = new AlphaCharacter(xPos, 0, textSize);
+				var letter:AlphaCharacter = new AlphaCharacter(xPos, 0, textSize, number);
+				number++;
 
 				if (isBold)
 				{
@@ -238,6 +241,7 @@ class Alphabet extends FlxSpriteGroup
 	var LONG_TEXT_ADD:Float = -24; //text is over 2 rows long, make it go up a bit
 	public function timerCheck(?tmr:FlxTimer = null) {
 		var autoBreak:Bool = false;
+		var number = 0;
 		if ((loopNum <= splitWords.length - 2 && splitWords[loopNum] == "\\" && splitWords[loopNum+1] == "n") ||
 			((autoBreak = true) && xPos >= FlxG.width * 0.65 && splitWords[loopNum] == ' ' ))
 		{
@@ -287,7 +291,8 @@ class Alphabet extends FlxSpriteGroup
 				consecutiveSpaces = 0;
 
 				// var letter:AlphaCharacter = new AlphaCharacter(30 * loopNum, 0, textSize);
-				var letter:AlphaCharacter = new AlphaCharacter(xPos, 55 * yMulti, textSize);
+				var letter:AlphaCharacter = new AlphaCharacter(xPos, 55 * yMulti, textSize, number);
+				number++;
 				letter.row = curRow;
 				if (isBold)
 				{
@@ -343,6 +348,8 @@ class Alphabet extends FlxSpriteGroup
 		}
 	}
 
+	public var moving:Int = -1;
+	public var distanceletter:Int = 40;
 	override function update(elapsed:Float)
 	{
 		if (isMenuItem)
@@ -354,7 +361,7 @@ class Alphabet extends FlxSpriteGroup
 			if(forceX != Math.NEGATIVE_INFINITY) {
 				x = forceX;
 			} else {
-				x = FlxMath.lerp(x, (targetY * 20) + 90 + xAdd, lerpVal);
+				if(!center) x = FlxMath.lerp(x, (Math.abs(targetY) * distanceletter * moving) + 90 + xAdd, lerpVal);
 			}
 		}
 
@@ -382,11 +389,16 @@ class AlphaCharacter extends FlxSprite
 
 	private var textSize:Float = 1;
 
-	public function new(x:Float, y:Float, textSize:Float)
+	var elapsedTotal:Float = 0;
+	var prevY:Float = 0;
+	var number:Int = 0;
+
+	public function new(x:Float, y:Float, textSize:Float, number:Int)
 	{
 		super(x, y);
 		var tex = Paths.getSparrowAtlas('alphabet');
 		frames = tex;
+		this.number = number;
 
 		setGraphicSize(Std.int(width * textSize));
 		updateHitbox();
@@ -512,5 +524,20 @@ class AlphaCharacter extends FlxSprite
 				//x -= 35 - (90 * (1.0 - textSize));
 				y -= 16;
 		}
+	}
+
+	override public function update(elapsed:Float) {
+		super.update(elapsed);
+
+		if (elapsed > 0) displacementFormula();
+	}
+
+	public function displacementFormula() {
+		elapsedTotal += FlxG.elapsed;
+		var elapsedAverage:Float = (1 / FlxG.drawFramerate);
+		var formula:Float = Math.sin(Math.PI * (elapsedTotal + ((number * elapsedAverage) * 24))) * ((FlxG.elapsed / (1 / 120)) / 16);
+		prevY += y;
+		y = prevY + formula;
+		prevY -= y + formula;
 	}
 }

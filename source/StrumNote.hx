@@ -14,7 +14,9 @@ class StrumNote extends FlxSprite
 	public var direction:Float = 90;//plan on doing scroll directions soon -bb
 	public var downScroll:Bool = false;//plan on doing scroll directions soon -bb
 	public var sustainReduce:Bool = true;
-	public var changecolor:Bool = false;
+	public var changecolor:Bool = true;
+
+	public var tweenfinish:Bool = false;
 	
 	private var player:Int;
 	
@@ -34,28 +36,22 @@ class StrumNote extends FlxSprite
 		this.player = player;
 		this.noteData = leData;
 		super(x, y);
-
-		//dammwtf = changecolor;
+		alpha = 0;
 
 		var skin:String = 'NOTE_assets';
+		if(ClientPrefs.noteskinlol == 'Default') skin = 'NOTE_assets';
+		if(ClientPrefs.noteskinlol == 'Quant') skin = 'NOTE_assets_QUANT';
 		switch(char)
 		{
 			/*case 'bf':
-				skin = 'noteskin/NOTE_assets';
-				doAntialiasing = true; //same as before
-				colorSwap.hue = ClientPrefs.arrowHSV[noteData % 4][0] / 360;
-				colorSwap.saturation = ClientPrefs.arrowHSV[noteData % 4][1] / 100;
-				colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;*/
+				skin = 'NOTE_assets';
+				changecolor = true;*/
 			default:
 				if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1){
 					skin = PlayState.SONG.arrowSkin;
 				}
-					/*colorSwap.hue = 0;
-					colorSwap.saturation = 0;
-					colorSwap.brightness = 0;*/
-				
+				//changecolor = false;
 		}
-		//if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
 		texture = skin; //Load texture and anims
 
 		scrollFactor.set();
@@ -74,7 +70,7 @@ class StrumNote extends FlxSprite
 			loadGraphic(Paths.image('pixelUI/' + texture), true, Math.floor(width), Math.floor(height));
 
 			antialiasing = false;
-			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
+			setGraphicSize(Std.int(width * (PlayState.daPixelZoom - 0.6)));
 
 			animation.add('green', [6]);
 			animation.add('red', [7]);
@@ -109,7 +105,7 @@ class StrumNote extends FlxSprite
 			animation.addByPrefix('red', 'arrowRIGHT');
 
 			antialiasing = ClientPrefs.globalAntialiasing;
-			setGraphicSize(Std.int(width * 0.7));
+			setGraphicSize(Std.int(width * 0.65));
 
 			switch (Math.abs(noteData))
 			{
@@ -156,6 +152,16 @@ class StrumNote extends FlxSprite
 			}
 		}
 
+		var alphashit:Float = 0.8;
+		if(tweenfinish && animation.curAnim.name != 'confirm'){
+			alphashit = 0.8;
+			if(ClientPrefs.middleScroll && player < 1) alphashit *= 0.35;
+			if(!ClientPrefs.opponentStrums && player < 1) {
+				alphashit *= 0;
+			}
+			alpha = alphashit;
+		}
+
 		//if(animation.curAnim != null){ //my bad i was upset
 		if(animation.curAnim.name == 'confirm' && !PlayState.isPixelStage) {
 			centerOrigin();
@@ -165,22 +171,41 @@ class StrumNote extends FlxSprite
 		super.update(elapsed);
 	}
 
-	public function playAnim(anim:String, ?force:Bool = false) {
+	public function playAnim(anim:String, ?force:Bool = false, noteQuantshit:Int = 0) {
 		animation.play(anim, force);
 		centerOffsets();
 		centerOrigin();
+
+		var alphashit:Float = 0.8;
+
+		if(tweenfinish){
+			if(anim == 'confirm') alphashit = 1;
+			else alphashit = 0.8;
+			if(ClientPrefs.middleScroll && player < 1) alphashit *= 0.35;
+			if(!ClientPrefs.opponentStrums && player < 1) {
+				alphashit *= 0;
+			}
+			alpha = alphashit;
+		}
+
 		if(animation.curAnim == null || animation.curAnim.name == 'static') {
 			colorSwap.hue = 0;
 			colorSwap.saturation = 0;
 			colorSwap.brightness = 0;
 		} else {
-			//if(changecolor){
-				colorSwap.hue = ClientPrefs.arrowHSV[noteData % 4][0] / 360;
-				colorSwap.saturation = ClientPrefs.arrowHSV[noteData % 4][1] / 100;
-				colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;
-			//}
-			if(animation.curAnim.name == 'confirm' && !PlayState.isPixelStage) {
-				centerOrigin();
+			if(changecolor){
+				if(ClientPrefs.noteskinlol == 'Default'){
+					colorSwap.hue = ClientPrefs.arrowHSV[noteData % 4][0] / 360;
+					colorSwap.saturation = ClientPrefs.arrowHSV[noteData % 4][1] / 100;
+					colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;
+				}
+				if(ClientPrefs.noteskinlol == 'Quant' && animation.curAnim.name != 'pressed'){
+					colorSwap.hue = ClientPrefs.arrowQUANTHSV[noteQuantshit % 10][0] / 360;
+					colorSwap.saturation = ClientPrefs.arrowQUANTHSV[noteQuantshit % 10][1] / 100;
+					colorSwap.brightness = ClientPrefs.arrowQUANTHSV[noteQuantshit % 10][2] / 100;
+				}
+			if(animation.curAnim.name == 'confirm' && !PlayState.isPixelStage) centerOrigin();
+
 			}
 		}
 	}

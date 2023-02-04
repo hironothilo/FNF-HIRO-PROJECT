@@ -55,6 +55,7 @@ class MasterEditorMenu extends MusicBeatState
 		{
 			var leText:Alphabet = new Alphabet(0, (70 * i) + 30, options[i], true, false);
 			leText.isMenuItem = true;
+			leText.xAdd = 0;
 			leText.targetY = i;
 			grpTexts.add(leText);
 		}
