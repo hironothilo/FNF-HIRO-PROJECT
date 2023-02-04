@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="tada.png">
+	<!-- Created with Adobe Animate version 20.0.3.25487 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Symbol 88 instance 10000" x="0" y="440" width="241" height="439" frameX="-195" frameY="0" frameWidth="625" frameHeight="1305"/>
+	<SubTexture name="Symbol 88 instance 10001" x="0" y="0" width="368" height="440" frameX="-132" frameY="-720" frameWidth="625" frameHeight="1305"/>
+	<SubTexture name="Symbol 88 instance 10002" x="368" y="208" width="512" height="212" frameX="-69" frameY="-1011" frameWidth="625" frameHeight="1305"/>
+	<SubTexture name="Symbol 88 instance 10003" x="241" y="785" width="500" height="160" frameX="-30" frameY="-1099" frameWidth="625" frameHeight="1305"/>
+	<SubTexture name="Symbol 88 instance 10004" x="241" y="606" width="514" height="179" frameX="-37" frameY="-1083" frameWidth="625" frameHeight="1305"/>
+	<SubTexture name="Symbol 88 instance 10005" x="368" y="420" width="563" height="186" frameX="-11" frameY="-1092" frameWidth="625" frameHeight="1305"/>
+	<SubTexture name="Symbol 88 instance 10006" x="368" y="0" width="625" height="208" frameX="0" frameY="-1097" frameWidth="625" frameHeight="1305"/>
+	<SubTexture name="Symbol 88 instance 10007" x="0" y="0" width="0" height="0" frameX="712" frameY="-510" frameWidth="625" frameHeight="1305"/>
+	<SubTexture name="Symbol 88 instance 10008" x="0" y="0" width="0" height="0" frameX="712" frameY="-510" frameWidth="625" frameHeight="1305"/>
+	<SubTexture name="Symbol 88 instance 10009" x="0" y="0" width="0" height="0" frameX="712" frameY="-510" frameWidth="625" frameHeight="1305"/>
+	<SubTexture name="Symbol 88 instance 10010" x="0" y="0" width="0" height="0" frameX="712" frameY="-510" frameWidth="625" frameHeight="1305"/>
+	<SubTexture name="Symbol 88 instance 10011" x="0" y="0" width="0" height="0" frameX="712" frameY="-510" frameWidth="625" frameHeight="1305"/>
+	<SubTexture name="Symbol 88 instance 10012" x="0" y="0" width="0" height="0" frameX="712" frameY="-510" frameWidth="625" frameHeight="1305"/>
+	<SubTexture name="Symbol 88 instance 10013" x="0" y="0" width="0" height="0" frameX="712" frameY="-510" frameWidth="625" frameHeight="1305"/>
+	<SubTexture name="Symbol 88 instance 10014" x="0" y="0" width="0" height="0" frameX="712" frameY="-510" frameWidth="625" frameHeight="1305"/>
+	<SubTexture name="Symbol 88 instance 10015" x="0" y="0" width="0" height="0" frameX="712" frameY="-510" frameWidth="625" frameHeight="1305"/>
+</TextureAtlas>

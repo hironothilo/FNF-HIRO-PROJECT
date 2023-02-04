@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "PEAKIDLE",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				19,
+				6
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "PEAKDOWN",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				3,
+				118
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "PEAKUP",
+			"indices": []
+		},
+		{
+			"offsets": [
+				-28,
+				21
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "PEAKLEFT"
+		},
+		{
+			"offsets": [
+				103,
+				31
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "PEAKRIGHT"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/PEAK",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "icon-peak",
+	"flip_x": false,
+	"healthbar_colors": [
+		56,
+		65,
+		142
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 1
+}

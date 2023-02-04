@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "HIROSCAREDIDLE",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				3,
+				-91
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "HIROSCAREDDOWN",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-25,
+				51
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "HIROSCAREDUP",
+			"indices": []
+		},
+		{
+			"offsets": [
+				-14,
+				-26
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "HIROSCAREDLEFT"
+		},
+		{
+			"offsets": [
+				160,
+				-12
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "HIROSCAREDRIGHT"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/HIROSCARED",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "icon-hiroscared",
+	"flip_x": false,
+	"healthbar_colors": [
+		216,
+		105,
+		42
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 1
+}

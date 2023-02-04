@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "HIROIDLE"
+		},
+		{
+			"offsets": [
+				85,
+				-27
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "HIROLEFT"
+		},
+		{
+			"offsets": [
+				-60,
+				-13
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "HIRORIGHT"
+		},
+		{
+			"offsets": [
+				-21,
+				-90
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "HIRODOWN"
+		},
+		{
+			"offsets": [
+				15,
+				52
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "HIROUP"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/HIRONORMAL",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "icon-hiro",
+	"flip_x": false,
+	"healthbar_colors": [
+		216,
+		105,
+		42
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 1
+}

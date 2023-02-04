@@ -1,0 +1,34 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				-132,
+				450
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "FUKHIROIDLE"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/HIRONOTOK",
+	"position": [
+		0,
+		350
+	],
+	"healthicon": "bf",
+	"flip_x": false,
+	"healthbar_colors": [
+		49,
+		176,
+		209
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 1
+}

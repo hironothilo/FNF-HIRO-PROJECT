@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "BOSSIDLE"
+		},
+		{
+			"offsets": [
+				111,
+				-27
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "BOSSLEFT"
+		},
+		{
+			"offsets": [
+				-70,
+				-10
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "BOSSRIGHT"
+		},
+		{
+			"offsets": [
+				-6,
+				-137
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "BOSSDOWN"
+		},
+		{
+			"offsets": [
+				27,
+				45
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "BOSSUP"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/BOSS",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "icon-boss",
+	"flip_x": false,
+	"healthbar_colors": [
+		76,
+		105,
+		42
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 1
+}

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="HIROGFOK.png">
+	<!-- Created with Adobe Animate version 20.0.3.25487 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="HIROIDLE0000" x="1075" y="0" width="552" height="502" frameX="0" frameY="-29" frameWidth="552" frameHeight="531"/>
+	<SubTexture name="HIROIDLE0001" x="1075" y="0" width="552" height="502" frameX="0" frameY="-29" frameWidth="552" frameHeight="531"/>
+	<SubTexture name="HIROIDLE0002" x="0" y="0" width="545" height="517" frameX="-4" frameY="-13" frameWidth="552" frameHeight="531"/>
+	<SubTexture name="HIROIDLE0003" x="0" y="0" width="545" height="517" frameX="-4" frameY="-13" frameWidth="552" frameHeight="531"/>
+	<SubTexture name="HIROIDLE0004" x="545" y="0" width="530" height="530" frameX="-11" frameY="0" frameWidth="552" frameHeight="531"/>
+	<SubTexture name="HIROIDLE0005" x="545" y="0" width="530" height="530" frameX="-11" frameY="0" frameWidth="552" frameHeight="531"/>
+	<SubTexture name="HIROIDLE0006" x="545" y="0" width="530" height="530" frameX="-11" frameY="0" frameWidth="552" frameHeight="531"/>
+	<SubTexture name="HIROIDLE0007" x="545" y="0" width="530" height="530" frameX="-11" frameY="0" frameWidth="552" frameHeight="531"/>
+	<SubTexture name="HIROIDLE0008" x="545" y="0" width="530" height="530" frameX="-11" frameY="0" frameWidth="552" frameHeight="531"/>
+	<SubTexture name="HIROIDLE0009" x="545" y="0" width="530" height="530" frameX="-11" frameY="0" frameWidth="552" frameHeight="531"/>
+	<SubTexture name="HIROIDLE0010" x="545" y="0" width="530" height="530" frameX="-11" frameY="0" frameWidth="552" frameHeight="531"/>
+</TextureAtlas>

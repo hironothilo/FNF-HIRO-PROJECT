@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="PEAK2.png">
+	<!-- Created with Adobe Animate version 20.0.3.25487 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="PEAK2DOWN0000" x="2267" y="0" width="743" height="716" frameX="0" frameY="-10" frameWidth="743" frameHeight="726"/>
+	<SubTexture name="PEAK2DOWN0001" x="2267" y="0" width="743" height="716" frameX="0" frameY="-10" frameWidth="743" frameHeight="726"/>
+	<SubTexture name="PEAK2DOWN0002" x="0" y="838" width="743" height="726"/>
+	<SubTexture name="PEAK2DOWN0003" x="0" y="838" width="743" height="726"/>
+	<SubTexture name="PEAK2DOWN0004" x="0" y="838" width="743" height="726"/>
+	<SubTexture name="PEAK2DOWN0005" x="0" y="838" width="743" height="726"/>
+	<SubTexture name="PEAK2DOWN0006" x="0" y="838" width="743" height="726"/>
+	<SubTexture name="PEAK2DOWN0007" x="0" y="838" width="743" height="726"/>
+	<SubTexture name="PEAK2DOWN0008" x="0" y="838" width="743" height="726"/>
+	<SubTexture name="PEAK2DOWN0009" x="0" y="838" width="743" height="726"/>
+	<SubTexture name="PEAK2DOWN0010" x="0" y="838" width="743" height="726"/>
+	<SubTexture name="PEAK2DOWN0011" x="0" y="838" width="743" height="726"/>
+	<SubTexture name="PEAK2IDLE0000" x="0" y="1564" width="738" height="708" frameX="0" frameY="-15" frameWidth="738" frameHeight="724"/>
+	<SubTexture name="PEAK2IDLE0001" x="0" y="1564" width="738" height="708" frameX="0" frameY="-15" frameWidth="738" frameHeight="724"/>
+	<SubTexture name="PEAK2IDLE0002" x="2245" y="1467" width="738" height="717" frameX="0" frameY="-7" frameWidth="738" frameHeight="724"/>
+	<SubTexture name="PEAK2IDLE0003" x="2245" y="1467" width="738" height="717" frameX="0" frameY="-7" frameWidth="738" frameHeight="724"/>
+	<SubTexture name="PEAK2IDLE0004" x="2245" y="744" width="738" height="723" frameX="0" frameY="0" frameWidth="738" frameHeight="724"/>
+	<SubTexture name="PEAK2IDLE0005" x="2245" y="744" width="738" height="723" frameX="0" frameY="0" frameWidth="738" frameHeight="724"/>
+	<SubTexture name="PEAK2IDLE0006" x="2245" y="744" width="738" height="723" frameX="0" frameY="0" frameWidth="738" frameHeight="724"/>
+	<SubTexture name="PEAK2IDLE0007" x="2245" y="744" width="738" height="723" frameX="0" frameY="0" frameWidth="738" frameHeight="724"/>
+	<SubTexture name="PEAK2IDLE0008" x="2245" y="744" width="738" height="723" frameX="0" frameY="0" frameWidth="738" frameHeight="724"/>
+	<SubTexture name="PEAK2IDLE0009" x="2245" y="744" width="738" height="723" frameX="0" frameY="0" frameWidth="738" frameHeight="724"/>
+	<SubTexture name="PEAK2IDLE0010" x="2245" y="744" width="738" height="723" frameX="0" frameY="0" frameWidth="738" frameHeight="724"/>
+	<SubTexture name="PEAK2IDLE0011" x="2245" y="744" width="738" height="723" frameX="0" frameY="0" frameWidth="738" frameHeight="724"/>
+	<SubTexture name="PEAK2LEFT0000" x="1474" y="0" width="793" height="744" frameX="0" frameY="0" frameWidth="794" frameHeight="744"/>
+	<SubTexture name="PEAK2LEFT0001" x="1474" y="0" width="793" height="744" frameX="0" frameY="0" frameWidth="794" frameHeight="744"/>
+	<SubTexture name="PEAK2LEFT0002" x="1474" y="744" width="771" height="741" frameX="-23" frameY="-3" frameWidth="794" frameHeight="744"/>
+	<SubTexture name="PEAK2LEFT0003" x="1474" y="744" width="771" height="741" frameX="-23" frameY="-3" frameWidth="794" frameHeight="744"/>
+	<SubTexture name="PEAK2LEFT0004" x="1474" y="744" width="771" height="741" frameX="-23" frameY="-3" frameWidth="794" frameHeight="744"/>
+	<SubTexture name="PEAK2LEFT0005" x="1474" y="744" width="771" height="741" frameX="-23" frameY="-3" frameWidth="794" frameHeight="744"/>
+	<SubTexture name="PEAK2LEFT0006" x="1474" y="744" width="771" height="741" frameX="-23" frameY="-3" frameWidth="794" frameHeight="744"/>
+	<SubTexture name="PEAK2LEFT0007" x="1474" y="744" width="771" height="741" frameX="-23" frameY="-3" frameWidth="794" frameHeight="744"/>
+	<SubTexture name="PEAK2LEFT0008" x="1474" y="744" width="771" height="741" frameX="-23" frameY="-3" frameWidth="794" frameHeight="744"/>
+	<SubTexture name="PEAK2LEFT0009" x="1474" y="744" width="771" height="741" frameX="-23" frameY="-3" frameWidth="794" frameHeight="744"/>
+	<SubTexture name="PEAK2LEFT0010" x="1474" y="744" width="771" height="741" frameX="-23" frameY="-3" frameWidth="794" frameHeight="744"/>
+	<SubTexture name="PEAK2LEFT0011" x="1474" y="744" width="771" height="741" frameX="-23" frameY="-3" frameWidth="794" frameHeight="744"/>
+	<SubTexture name="PEAK2RIGHT0000" x="1441" y="1485" width="686" height="745" frameX="-38" frameY="-8" frameWidth="724" frameHeight="753"/>
+	<SubTexture name="PEAK2RIGHT0001" x="1441" y="1485" width="686" height="745" frameX="-38" frameY="-8" frameWidth="724" frameHeight="753"/>
+	<SubTexture name="PEAK2RIGHT0002" x="743" y="1485" width="698" height="753" frameX="0" frameY="0" frameWidth="724" frameHeight="753"/>
+	<SubTexture name="PEAK2RIGHT0003" x="743" y="1485" width="698" height="753" frameX="0" frameY="0" frameWidth="724" frameHeight="753"/>
+	<SubTexture name="PEAK2RIGHT0004" x="743" y="1485" width="698" height="753" frameX="0" frameY="0" frameWidth="724" frameHeight="753"/>
+	<SubTexture name="PEAK2RIGHT0005" x="743" y="1485" width="698" height="753" frameX="0" frameY="0" frameWidth="724" frameHeight="753"/>
+	<SubTexture name="PEAK2RIGHT0006" x="743" y="1485" width="698" height="753" frameX="0" frameY="0" frameWidth="724" frameHeight="753"/>
+	<SubTexture name="PEAK2RIGHT0007" x="743" y="1485" width="698" height="753" frameX="0" frameY="0" frameWidth="724" frameHeight="753"/>
+	<SubTexture name="PEAK2RIGHT0008" x="743" y="1485" width="698" height="753" frameX="0" frameY="0" frameWidth="724" frameHeight="753"/>
+	<SubTexture name="PEAK2RIGHT0009" x="743" y="1485" width="698" height="753" frameX="0" frameY="0" frameWidth="724" frameHeight="753"/>
+	<SubTexture name="PEAK2RIGHT0010" x="743" y="1485" width="698" height="753" frameX="0" frameY="0" frameWidth="724" frameHeight="753"/>
+	<SubTexture name="PEAK2RIGHT0011" x="743" y="1485" width="698" height="753" frameX="0" frameY="0" frameWidth="724" frameHeight="753"/>
+	<SubTexture name="PEAK2UP0000" x="0" y="0" width="737" height="838"/>
+	<SubTexture name="PEAK2UP0001" x="0" y="0" width="737" height="838"/>
+	<SubTexture name="PEAK2UP0002" x="737" y="0" width="737" height="818" frameX="0" frameY="-20" frameWidth="737" frameHeight="838"/>
+	<SubTexture name="PEAK2UP0003" x="737" y="0" width="737" height="818" frameX="0" frameY="-20" frameWidth="737" frameHeight="838"/>
+	<SubTexture name="PEAK2UP0004" x="737" y="0" width="737" height="818" frameX="0" frameY="-20" frameWidth="737" frameHeight="838"/>
+	<SubTexture name="PEAK2UP0005" x="737" y="0" width="737" height="818" frameX="0" frameY="-20" frameWidth="737" frameHeight="838"/>
+	<SubTexture name="PEAK2UP0006" x="737" y="0" width="737" height="818" frameX="0" frameY="-20" frameWidth="737" frameHeight="838"/>
+	<SubTexture name="PEAK2UP0007" x="737" y="0" width="737" height="818" frameX="0" frameY="-20" frameWidth="737" frameHeight="838"/>
+	<SubTexture name="PEAK2UP0008" x="737" y="0" width="737" height="818" frameX="0" frameY="-20" frameWidth="737" frameHeight="838"/>
+	<SubTexture name="PEAK2UP0009" x="737" y="0" width="737" height="818" frameX="0" frameY="-20" frameWidth="737" frameHeight="838"/>
+	<SubTexture name="PEAK2UP0010" x="737" y="0" width="737" height="818" frameX="0" frameY="-20" frameWidth="737" frameHeight="838"/>
+	<SubTexture name="PEAK2UP0011" x="737" y="0" width="737" height="818" frameX="0" frameY="-20" frameWidth="737" frameHeight="838"/>
+</TextureAtlas>

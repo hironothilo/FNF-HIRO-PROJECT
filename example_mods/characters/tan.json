@@ -1,73 +1,73 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
-				15,
-				190
+				0,
+				0
 			],
+			"indices": [],
+			"fps": 24,
 			"anim": "idle",
-			"fps": 24,
-			"name": "POLICE IDLE",
-			"indices": []
+			"loop": false,
+			"name": "POLICE IDLE"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				24,
-				141
+				0,
+				6
 			],
-			"anim": "singDOWN",
+			"indices": [],
 			"fps": 24,
-			"name": "POLICE DOWN",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				80,
-				198
-			],
 			"anim": "singLEFT",
-			"fps": 24,
-			"name": "POLICE LEFT",
-			"indices": []
+			"loop": false,
+			"name": "POLICE LEFT"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				46,
-				215
+				0,
+				22
 			],
+			"indices": [],
+			"fps": 24,
 			"anim": "singUP",
-			"fps": 24,
-			"name": "POLICE UP",
-			"indices": []
+			"loop": false,
+			"name": "POLICE UP"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				15,
-				165
+				1,
+				-27
 			],
-			"anim": "singRIGHT",
+			"indices": [],
 			"fps": 24,
-			"name": "POLICE RIGHT",
-			"indices": []
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "POLICE RIGHT"
+		},
+		{
+			"offsets": [
+				2,
+				-54
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "POLICE DOWN"
 		}
 	],
 	"no_antialiasing": false,
-	"image": "characters/policetan",
+	"image": "characters/TAN",
 	"position": [
 		0,
-		350
+		0
 	],
-	"healthicon": "bf",
+	"healthicon": "icon-tan",
 	"flip_x": false,
 	"healthbar_colors": [
-		49,
-		176,
-		209
+		76,
+		65,
+		22
 	],
 	"camera_position": [
 		0,
