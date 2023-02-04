@@ -5097,8 +5097,9 @@ class PlayState extends MusicBeatState
 			{
 				gf.playAnim('sad');
 			}
-			combo = 0;
-			coolcombo = 0;
+
+			if (combo != 0) combo = 0;
+			if (coolcombo != 0) coolcombo = 0;
 
 			if(!practiceMode) songScore -= 10;
 			if(!endingSong) {
