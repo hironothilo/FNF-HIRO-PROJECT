@@ -168,8 +168,41 @@ class Note extends FlxSprite
 					noMissAnimation = true;
 				case 'GF Sing':
 					gfNote = true;
+				case 'TrashNote_11':
+					reloadNote('notetrash/note11');
+				case 'TrashNote_12':
+					reloadNote('notetrash/note12');
+				case 'TrashNote_13':
+					reloadNote('notetrash/note13');
+				case 'TrashNote_21':
+					reloadNote('notetrash/note21');
+				case 'TrashNote_22':
+					reloadNote('notetrash/note22');
+				case 'TrashNote_23':
+					reloadNote('notetrash/note23');
+				case 'TrashNote_31':
+					reloadNote('notetrash/note31');
+				case 'TrashNote_32':
+					reloadNote('notetrash/note32');
+				case 'TrashNote_33':
+					reloadNote('notetrash/note33');
+				case 'TrashNote_41':
+					reloadNote('notetrash/note41');
+				case 'TrashNote_42':
+					reloadNote('notetrash/note42');
+				case 'TrashNote_43':
+					reloadNote('notetrash/note43');
+				case 'TrashNote_5':
+					reloadNote('notetrash/note5');
+					hitCausesMiss = true;
+					ignoreNote = true;
 				default:
 					hasNoteType = false;
+			}
+			if(value.startsWith('TrashNote')){
+				colorSwap.hue = 0;
+				colorSwap.saturation = 0;
+				colorSwap.brightness = 0;
 			}
 			noteType = value;
 		}
@@ -388,6 +421,12 @@ class Note extends FlxSprite
 
 		var arraySkin:Array<String> = skin.split('/');
 		arraySkin[arraySkin.length-1] = prefix + arraySkin[arraySkin.length-1] + suffix;
+		switch (Std.string(arraySkin[0]))
+		{
+			case 'HURTNOTE_assets_QUANT' :
+				arraySkin = ['HURTNOTE_assets'];
+		}
+		if(Std.string(arraySkin[0]).startsWith('notetrash')) arraySkin = [prefix];
 
 		var lastScaleY:Float = scale.y;
 		var blahblah:String = arraySkin.join('/');
@@ -458,7 +497,8 @@ class Note extends FlxSprite
 			animation.addByPrefix('bluehold', 'blue hold piece');
 		}
 
-		setGraphicSize(Std.int(width * 0.65));
+		if(noteType.startsWith('TrashNote')) setGraphicSize(Std.int(width * 0.825));
+		else setGraphicSize(Std.int(width * 0.65));
 		updateHitbox();
 	}
 

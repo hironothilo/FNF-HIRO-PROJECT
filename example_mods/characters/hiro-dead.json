@@ -1,0 +1,56 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				35,
+				11
+			],
+			"anim": "firstDeath",
+			"fps": 24,
+			"name": "Symbol 550",
+			"indices": []
+		},
+		{
+			"loop": true,
+			"offsets": [
+				37,
+				10
+			],
+			"anim": "deathLoop",
+			"fps": 24,
+			"name": "Symbol 55 copy",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				38,
+				11
+			],
+			"anim": "deathConfirm",
+			"fps": 24,
+			"name": "Symbol 55 copy",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/HIRODEAD",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "HIRO",
+	"flip_x": true,
+	"healthbar_colors": [
+		209,
+		116,
+		49
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 1
+}

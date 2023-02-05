@@ -79,8 +79,12 @@ class PlayState extends MusicBeatState
 
 	var misspop:Int = 0;
 
+	public var trash:Array<Int> = [0,0,0,0];
+
 	var hirook:Character = null;
 	var hironotok:Character = null;
+
+	var wowbin:Array<FlxSprite> = [];
 
 	var stageinrun:Array<BGSprite> = [];
 	var skateboard:FlxSprite;
@@ -897,7 +901,7 @@ class PlayState extends MusicBeatState
 				if(!ClientPrefs.lowQuality) foregroundSprites.add(new BGSprite('tank3', 1300+holyuck, 1200+holyuck2, 3.5, 2.5, ['fg']));
 
 			case 'sodark' :
-				
+				GameOverSubstate.characterName = 'peak-dead';
 			case 'darkroom' :
 				var wall:BGSprite = new BGSprite('stagesong1/wal', -80, -20, 0.9, 0.9);
 				add(wall);
@@ -905,6 +909,7 @@ class PlayState extends MusicBeatState
 				add(irontehe);
 				var pic:BGSprite = new BGSprite('stagesong1/grouppic', 1325, 200, 0.9, 0.9);
 				add(pic);
+				if(SONG.song == 'Finale' || SONG.song == 'Safety-Lullaby') GameOverSubstate.characterName = 'hiro-dead';
 			case 'mountain':
 				var sky:FlxSprite = FlxGradient.createGradientFlxSprite(Math.floor(FlxG.width*2.5), Math.floor(FlxG.height*2.5), [0xFF99FFFF	, 0xFFA3E3E3]);
 				sky.scrollFactor.set();
@@ -941,7 +946,7 @@ class PlayState extends MusicBeatState
 				add(tower);
 				tower.scale.set(1.25, 1.25);
 				stageinrun.push(tower);
-				var tower2:BGSprite = new BGSprite('stagesong3/bigone', tower.width + 650, 400,  1, 1);
+				var tower2:BGSprite = new BGSprite('stagesong3/bigone', tower.width + 1000, 400,  1, 1);
 				add(tower2);
 				tower2.scale.set(1.25, 1.25);
 				stageinrun.push(tower2);
@@ -950,25 +955,25 @@ class PlayState extends MusicBeatState
 				add(grass);
 				grass.scale.set(1.75, 1.35);
 				stageinrun.push(grass);
-				var grass2:BGSprite = new BGSprite('stagesong3/grass', grass.width + 400, 1050,  1, 1);
+				var grass2:BGSprite = new BGSprite('stagesong3/grass', grass.width + 1250, 1050,  1, 1);
 				add(grass2);
 				grass2.scale.set(1.75, 1.35);
 				stageinrun.push(grass2);
 
 				var wall:BGSprite = new BGSprite('stagesong3/wall', -300, 850,  1, 1);
 				add(wall);
-				wall.scale.set(1.6, 1.25);
+				wall.scale.set(1.75, 1.25);
 				stageinrun.push(wall);
-				var wall2:BGSprite = new BGSprite('stagesong3/wall', wall.width+800, 850,  1, 1);
+				var wall2:BGSprite = new BGSprite('stagesong3/wall', wall.width+1200, 850,  1, 1);
 				add(wall2);
-				wall2.scale.set(1.6, 1.25);
+				wall2.scale.set(1.75, 1.25);
 				stageinrun.push(wall2);
 
 				var road:BGSprite = new BGSprite('stagesong3/road', -200, 1400, 1, 1);
 				road.scale.set(1.75, 1.75);
 				add(road);
 				stageinrun.push(road);
-				var road2:BGSprite = new BGSprite('stagesong3/road', road.width + 400, 1400, 1, 1);
+				var road2:BGSprite = new BGSprite('stagesong3/road', road.width + 1300, 1400, 1, 1);
 				road2.scale.set(1.75, 1.75);
 				add(road2);
 				stageinrun.push(road2);
@@ -2909,6 +2914,14 @@ class PlayState extends MusicBeatState
 	public var skipArrowStartTween:Bool = false; //for lua
 	private function generateStaticArrows(player:Int):Void
 	{
+		if(SONG.song == 'Burning' || SONG.song == 'Danger' || SONG.song == 'Finale' || SONG.song == 'Safety-Lullaby' || SONG.song == 'Sussus-Toogus'){
+			var blackone:FlxSprite = new FlxSprite().makeGraphic(430, 800, FlxColor.BLACK);
+			blackone.x = 722.5;
+			blackone.alpha = 0;
+			blackone.cameras = [camHUD];
+			add(blackone);
+			FlxTween.tween(blackone, {alpha: 0.3}, 1, {ease: FlxEase.circOut, startDelay: 0.4});
+		}
 		for (i in 0...4)
 		{
 			// FlxG.log.add(i);
@@ -2926,6 +2939,24 @@ class PlayState extends MusicBeatState
 				else if(ClientPrefs.middleScroll) targetAlpha = 0.35;
 			}
 
+			if(SONG.song == 'Burning' || SONG.song == 'Danger' || SONG.song == 'Finale' || SONG.song == 'Safety-Lullaby' || SONG.song == 'Sussus-Toogus')
+			{
+				var bin:FlxSprite = new FlxSprite().loadGraphic(Paths.image('binshit'));
+				bin.frames = Paths.getSparrowAtlas('binshit');
+				bin.animation.addByPrefix('wowwow', 'bin'+ i, 24, false);
+				bin.animation.play('wowwow');
+				bin.setGraphicSize(Std.int(bin.width * 0.65));
+				bin.x = ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X + (FlxG.width / 2) + 13 + (bin.width*0.65) * i + (1-i) * 5;
+				bin.y = strumLine.y - 90;
+				bin.y -= 10;
+				bin.antialiasing = ClientPrefs.globalAntialiasing;
+				bin.alpha = 0;
+				bin.cameras = [camHUD];
+				add(bin);
+				wowbin.push(bin);
+				if(SONG.song != 'Burning') FlxTween.tween(bin, {y: bin.y + 10, alpha: 1}, 1, {ease: FlxEase.circOut, startDelay: 0.2 + (0.2 * i)});
+				if(SONG.song == 'Burning' && i == 2) FlxTween.tween(bin, {y: bin.y + 10, alpha: 1}, 1, {ease: FlxEase.circOut, startDelay: 0.6});
+			}
 			var babyArrow:StrumNote = new StrumNote(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, strumLine.y, i, player, char);
 			if(player < 1 && !ClientPrefs.middleScroll){
 				babyArrow.x = ((FlxG.width / 4)) - (babyArrow.width * 2.5);
@@ -3120,43 +3151,43 @@ class PlayState extends MusicBeatState
 
 		if(curStage == 'running'){
 			if(stageinrun[0].x == -300){
-				stageinrun[1].x = 2669;
-				FlxTween.tween(stageinrun[0], {x: -3269}, 4);
+				stageinrun[1].x = 3019;
+				FlxTween.tween(stageinrun[0], {x: -3619}, 4);
 				FlxTween.tween(stageinrun[1], {x: -300}, 4);
 			}
 			if(stageinrun[1].x == -300) {
-				stageinrun[0].x = 2669;
-				FlxTween.tween(stageinrun[1], {x: -3269}, 4);
+				stageinrun[0].x = 3019;
+				FlxTween.tween(stageinrun[1], {x: -3619}, 4);
 				FlxTween.tween(stageinrun[0], {x: -300}, 4);
 			}
 			if(stageinrun[2].x == -300){
-				stageinrun[3].x = 2545;
-				FlxTween.tween(stageinrun[2], {x: -3145}, 4);
+				stageinrun[3].x = 3395;
+				FlxTween.tween(stageinrun[2], {x: -3995}, 4);
 				FlxTween.tween(stageinrun[3], {x: -300}, 4);
 			}
 			if(stageinrun[3].x == -300) {
-				stageinrun[2].x = 2545;
-				FlxTween.tween(stageinrun[3], {x: -3145}, 4);
+				stageinrun[2].x = 3395;
+				FlxTween.tween(stageinrun[3], {x: -3995}, 4);
 				FlxTween.tween(stageinrun[2], {x: -300}, 4);
 			}
 			if(stageinrun[4].x == -300){
-				stageinrun[5].x = 2935;
-				FlxTween.tween(stageinrun[4], {x: -3535}, 4);
+				stageinrun[5].x = 3335;
+				FlxTween.tween(stageinrun[4], {x: -3935}, 4);
 				FlxTween.tween(stageinrun[5], {x: -300}, 4);
 			}
 			if(stageinrun[5].x == -300) {
-				stageinrun[4].x = 2935;
-				FlxTween.tween(stageinrun[5], {x: -3535}, 4);
+				stageinrun[4].x = 3335;
+				FlxTween.tween(stageinrun[5], {x: -3935}, 4);
 				FlxTween.tween(stageinrun[4], {x: -300}, 4);
 			}
 			if(stageinrun[6].x == -200){
-				stageinrun[7].x = 2510;
-				FlxTween.tween(stageinrun[6], {x: -2910}, 4);
+				stageinrun[7].x = 3410;
+				FlxTween.tween(stageinrun[6], {x: -3810}, 4);
 				FlxTween.tween(stageinrun[7], {x: -200}, 4);
 			}
 			if(stageinrun[7].x == -200) {
-				stageinrun[6].x = 2510;
-				FlxTween.tween(stageinrun[7], {x: -2910}, 4);
+				stageinrun[6].x = 3410;
+				FlxTween.tween(stageinrun[7], {x: -3810}, 4);
 				FlxTween.tween(stageinrun[6], {x: -200}, 4);
 			}
 		}
@@ -3676,6 +3707,18 @@ class PlayState extends MusicBeatState
 				var parent = daNote.parent;
 				if (Conductor.songPosition > noteKillOffset + daNote.strumTime)
 				{
+					if(daNote.noteType.startsWith('TrashNote_1') && Std.int(Math.abs(daNote.noteData)) != 0){
+						daNote.ignoreNote = true;
+					}
+					if(daNote.noteType.startsWith('TrashNote_2') && Std.int(Math.abs(daNote.noteData)) != 1){
+						daNote.ignoreNote = true;
+					}
+					if(daNote.noteType.startsWith('TrashNote_3') && Std.int(Math.abs(daNote.noteData)) != 2){
+						daNote.ignoreNote = true;
+					}
+					if(daNote.noteType.startsWith('TrashNote_4') && Std.int(Math.abs(daNote.noteData)) != 3){
+						daNote.ignoreNote = true;
+					}
 					if (daNote.mustPress && !cpuControlled && !daNote.ignoreNote && !endingSong && (daNote.tooLate || !daNote.wasGoodHit)) {
 						if(daNote.isSustainNote) {
 							for (daNote in parent.tail){
@@ -5350,6 +5393,22 @@ class PlayState extends MusicBeatState
 	{
 		if (!note.wasGoodHit)
 		{
+			if(note.noteType.startsWith('TrashNote_1')){
+				if(Std.int(Math.abs(note.noteData)) == 0) trash[0]++;
+				else note.hitCausesMiss = true;
+			}
+			if(note.noteType.startsWith('TrashNote_2')){
+				if(Std.int(Math.abs(note.noteData)) == 1) trash[1]++;
+				else note.hitCausesMiss = true;
+			}
+			if(note.noteType.startsWith('TrashNote_3')){
+				if(Std.int(Math.abs(note.noteData)) == 2) trash[2]++;
+				else note.hitCausesMiss = true;
+			}
+			if(note.noteType.startsWith('TrashNote_4')){
+				if(Std.int(Math.abs(note.noteData)) == 3) trash[3]++;
+				else note.hitCausesMiss = true;
+			}
 			if(cpuControlled && (note.ignoreNote || note.hitCausesMiss)) return;
 
 			if (ClientPrefs.hitsoundVolume > 0 && !note.hitsoundDisabled)

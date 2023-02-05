@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="binshit.png">
+	<!-- Created with Adobe Animate version 20.0.3.25487 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="bin00000" x="167" y="0" width="167" height="245"/>
+	<SubTexture name="bin10000" x="0" y="0" width="167" height="249"/>
+	<SubTexture name="bin20000" x="167" y="245" width="167" height="245"/>
+	<SubTexture name="bin30000" x="0" y="249" width="167" height="243"/>
+</TextureAtlas>

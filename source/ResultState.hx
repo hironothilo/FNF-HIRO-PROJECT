@@ -39,6 +39,9 @@ class ResultState extends MusicBeatState
     var shitnum:Int = 0;
     var numscoregroup:FlxGroup = new FlxGroup();
 
+    var wowbin:Array<FlxSprite> = [];
+    var numbertrash:Array<Int> = [];
+
     public var cam:FlxCamera;
 
     var rankingpicturre:FlxSprite;
@@ -96,6 +99,8 @@ class ResultState extends MusicBeatState
         bg2.x = bg1.width;
         bg2.updateHitbox();
         add(bg2);
+
+        numbertrash = PlayState.instance.trash;
 
         flash = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.WHITE);
         flash.alpha = 0;
@@ -466,6 +471,32 @@ class ResultState extends MusicBeatState
         FlxTween.tween(pressenter, {alpha: 1}, 0.25, {startDelay: 0.25});
         add(pressenter);
         pressenter.cameras = [cam];
+
+        for (i in 0...4){
+            var bin:FlxSprite = new FlxSprite().loadGraphic(Paths.image('binshit'));
+		    bin.frames = Paths.getSparrowAtlas('binshit');
+		    bin.animation.addByPrefix('wowwow', 'bin'+ i, 24, false);
+		    bin.animation.play('wowwow');
+		    bin.setGraphicSize(Std.int(bin.width * 0.5));
+		    bin.x = FlxG.width/2 + (bin.width * 0.5 * i) + 100;
+		    bin.y = 20;
+		    bin.y -= 10;
+		    bin.antialiasing = ClientPrefs.globalAntialiasing;
+		    bin.alpha = 0;
+		    add(bin);
+		    wowbin.push(bin);
+            FlxTween.tween(bin, {y: bin.y + 10, alpha: 1}, 1, {ease: FlxEase.circOut, startDelay: 0.2 + (0.2 * i)});
+        }
+
+        for (i in 0...numbertrash.length){
+            var textwow:FlxText = new FlxText(0, 0, 0, Std.string(numbertrash[i]), 40);
+            textwow.setFormat(Paths.font("phantommuff.ttf"), 40, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+            textwow.x = (wowbin[i].width * 0.5 + wowbin[i].x) - textwow.width / 2;
+            textwow.y = (wowbin[i].height + wowbin[i].y) / 2;
+            textwow.alpha = 0;
+            add(textwow);
+            FlxTween.tween(textwow, {alpha: 1}, 0.25, {startDelay: 0.25 * i});
+        }
 
         var placement:String = Std.string(accuracynumbertest / 100);
 

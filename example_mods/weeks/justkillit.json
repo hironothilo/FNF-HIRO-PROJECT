@@ -1,77 +1,77 @@
 {
-	"songs": [
-		[
-			"Sussus-Toogus",
-			"dad",
-			[
-				146,
-				113,
-				253
-			]
-		],
-		[
-			"Burning",
-			"dad",
-			[
-				146,
-				113,
-				253
-			]
-		],
-		[
-			"Danger",
-			"dad",
-			[
-				146,
-				113,
-				253
-			]
-		],
-		[
-			"Dissension",
-			"dad",
-			[
-				146,
-				113,
-				253
-			]
-		],
-		[
-			"Safety-Lullaby",
-			"dad",
-			[
-				146,
-				113,
-				253
-			]
-		],
-		[
-			"Finale",
-			"dad",
-			[
-				146,
-				113,
-				253
-			]
-		]
-	],
-	"hiddenUntilUnlocked": false,
+	"storyName": "woww",
+	"difficulties": "normal",
 	"hideFreeplay": false,
 	"weekBackground": "stage",
-	"difficulties": "normal",
-	"weekCharacters": [
-		"dad",
-		"bf",
-		"gf"
-	],
-	"storyName": "Your New Week",
-	"weekName": "Custom Week",
+	"weekBefore": "tutorial",
 	"freeplayColor": [
 		146,
 		113,
 		253
 	],
+	"startUnlocked": true,
 	"hideStoryMode": false,
-	"weekBefore": "tutorial",
-	"startUnlocked": true
+	"songs": [
+		[
+			"Sussus-Toogus",
+			"hiro",
+			[
+				146,
+				100,
+				20
+			]
+		],
+		[
+			"Burning",
+			"boss",
+			[
+				76,
+				153,
+				93
+			]
+		],
+		[
+			"Danger",
+			"tan",
+			[
+				86,
+				53,
+				20
+			]
+		],
+		[
+			"Dissension",
+			"peak2",
+			[
+				26,
+				0,
+				153
+			]
+		],
+		[
+			"Safety-Lullaby",
+			"h1r0",
+			[
+				146,
+				80,
+				55
+			]
+		],
+		[
+			"Finale",
+			"h1r0",
+			[
+				146,
+				80,
+				55
+			]
+		]
+	],
+	"weekCharacters": [
+		"dad",
+		"bf",
+		"gf"
+	],
+	"hiddenUntilUnlocked": false,
+	"weekName": "Custom Week"
 }

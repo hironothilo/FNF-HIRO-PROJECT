@@ -96,8 +96,13 @@ class GameOverSubstate extends MusicBeatSubstate
 		add(restartbutton);
 
 		boyfriend = new Boyfriend(x, y, characterName);
-		boyfriend.x += 180;
+		boyfriend.x += 60;
 		boyfriend.y += 320;
+		if(characterName == 'hiro-dead') boyfriend.y -= 80;
+		if(characterName == 'peak-dead') {
+			boyfriend.y -= 380;
+			boyfriend.x -= 270;
+		}
 		add(boyfriend);
 
 		timebarGameOver = new FlxBar(0, 0, LEFT_TO_RIGHT, Math.round(FlxG.width / 2), 15, this,

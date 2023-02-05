@@ -81,6 +81,18 @@ class CreditsState extends MusicBeatState
 		#end
 
 		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
+			['Project Team'],
+			['Hiro not hilo',		'hiro',		'Game DEV (EVERYTHING IN THIS GAME)',							'https://www.youtube.com/@hironothilo6327',					'FF8C00'],
+			['Bozapng',				'boss',		'Makeing website like among us',								'https://crusaveearth.bosszxchan.repl.co/pages/team.html',	'8FBC8F'],
+			['Soji rikuta',			'soji',		'Writing project documents',									'https://www.youtube.com/channel/UCWzBFdgN59Nnziwpb8hhX8g',	'4169E1'],
+			['Lotto',				'lotto',	'Also Writing project documents',							'https://www.instagram.com/l0tt02302/',						'9932CC'],
+			['peak',				'peak',		'Damm too much Writing project documents',					'https://www.instagram.com/peakkrit/',						'6A5ACD'],
+			[''],
+			['Special Thanks'],
+			['FNF Hypnos Lullaby 2.0',		'idk',		'beelze sprite and cool songs',							'https://www.youtube.com/watch?v=4fPBkyMghTs&t=877s',		'DCDCDC'],
+			['FNF IMPOSTER',				'idk',		'cool song also',										'https://vsimpostor.com/',									'DCDCDC'],
+			['FNF SONIC.exe',				'idk',		'i love "burning" song',								'https://www.youtube.com/watch?v=7Rnl8RS2Cek',				'DCDCDC'],
+			[''],
 			['Psych Engine Team'],
 			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',								'https://twitter.com/Shadow_Mario_',	'444444'],
 			['RiverOaken',			'river',			'Main Artist/Animator of Psych Engine',							'https://twitter.com/RiverOaken',		'B42F71'],

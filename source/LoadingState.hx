@@ -54,27 +54,6 @@ class LoadingState extends MusicBeatState
 		var bg:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, 0xffcaff4d);
 		add(bg);
 
-
-		funkay = new FlxSprite(0, 0).loadGraphic(Paths.getPath('images/funkay.png', IMAGE));
-		funkay.setGraphicSize(0, FlxG.height);
-		funkay.updateHitbox();
-		funkay.antialiasing = ClientPrefs.globalAntialiasing;
-		add(funkay);
-		funkay.scrollFactor.set();
-		funkay.screenCenter();
-
-		main_Checker = new FlxBackdrop(Paths.image('Main_Checker'), 0.2, 0, true, true);
-		main_Checker.velocity.set(-100, -100);
-		main_Checker.updateHitbox();
-		main_Checker.screenCenter(X);
-		main_Checker.antialiasing = ClientPrefs.globalAntialiasing;
-		add(main_Checker);
-
-		loadBar = new FlxSprite(0, FlxG.height - 20).makeGraphic(FlxG.width, 10, 0xffff16d2);
-		loadBar.screenCenter(X);
-		loadBar.antialiasing = ClientPrefs.globalAntialiasing;
-		add(loadBar);
-
 		if(PlayState.SONG != null) textlol = PlayState.SONG.player2;
 		else textlol = 'dad';
 
@@ -86,15 +65,58 @@ class LoadingState extends MusicBeatState
 		bfshit.screenCenter(Y);
 		bfshit.antialiasing = ClientPrefs.globalAntialiasing;
 		bfshit.x = FlxG.width - bfshit.width - 50;
-		add(bfshit);
 
 		chashit = new Character(0,0, textlol);
 		chashit.updateHitbox();
 		chashit.screenCenter(Y);
 		chashit.antialiasing = ClientPrefs.globalAntialiasing;
 		chashit.x = 50;
+
+		var filestring:String = '';
+
+		switch (PlayState.SONG.song)
+		{
+			case 'Dissension':
+				bfshit.alpha = 0;
+				chashit.alpha = 0;
+				filestring = 'funkay';
+			case 'Sussus-Toogus' | 'Danger' :
+				filestring = 'loading1';
+				bfshit.alpha = 0;
+				chashit.alpha = 0;
+			case 'Burning' :
+				filestring = 'loading2';
+				bfshit.alpha = 0;
+				chashit.alpha = 0;
+			case 'Finale' | 'Safety-Lullaby' :
+				filestring = 'loading3';
+				bfshit.alpha = 0;
+				chashit.alpha = 0;
+			default :
+				filestring = 'funkay';
+		}
+		funkay = new FlxSprite(0, 0).loadGraphic(Paths.getPath('images/${filestring}.png', IMAGE));
+		funkay.setGraphicSize(Std.int(funkay.width * 0.675));
+		funkay.updateHitbox();
+		funkay.antialiasing = ClientPrefs.globalAntialiasing;
+		add(funkay);
+		funkay.scrollFactor.set();
+		funkay.screenCenter();
+
+		/*main_Checker = new FlxBackdrop(Paths.image('Main_Checker'), 0.2, 0, true, true);
+		main_Checker.velocity.set(-100, -100);
+		main_Checker.updateHitbox();
+		main_Checker.screenCenter(X);
+		main_Checker.antialiasing = ClientPrefs.globalAntialiasing;
+		add(main_Checker);*/
+
+		loadBar = new FlxSprite(0, FlxG.height - 20).makeGraphic(FlxG.width, 10, 0xffff16d2);
+		loadBar.screenCenter(X);
+		loadBar.antialiasing = ClientPrefs.globalAntialiasing;
+		add(loadBar);
+
+		add(bfshit);	
 		add(chashit);
-		
 		initSongsManifest().onComplete
 		(
 			function (lib)
@@ -149,8 +171,8 @@ class LoadingState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
-		funkay.setGraphicSize(Std.int(0.88 * FlxG.width + 0.9 * (funkay.width - 0.88 * FlxG.width)));
-		funkay.updateHitbox();
+		/*funkay.setGraphicSize(Std.int(0.88 * FlxG.width + 0.9 * (funkay.width - 0.88 * FlxG.width)));
+		funkay.updateHitbox();*/
 
 		if(chashit.animation.finished) {
 			chashit.dance();
@@ -162,8 +184,8 @@ class LoadingState extends MusicBeatState
 		}
 		if(controls.ACCEPT)
 		{
-			funkay.setGraphicSize(Std.int(funkay.width + 60));
-			funkay.updateHitbox();
+			/*funkay.setGraphicSize(Std.int(funkay.width + 60));
+			funkay.updateHitbox();*/
 		}
 
 		if(callbacks != null) {
