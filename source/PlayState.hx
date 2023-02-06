@@ -5192,7 +5192,8 @@ class PlayState extends MusicBeatState
 			notes.forEachAlive(function(daNote:Note)
 			{
 				// hold note functions
-				if (daNote.isSustainNote && controlHoldArray[daNote.noteData] && daNote.canBeHit
+				if (daNote.isSustainNote && (daNote.parent == null
+					|| daNote.parent.wasGoodHit) && controlHoldArray[daNote.noteData] && daNote.canBeHit
 				&& daNote.mustPress && !daNote.tooLate && !daNote.wasGoodHit) {
 					goodNoteHit(daNote);
 				}
@@ -5237,8 +5238,6 @@ class PlayState extends MusicBeatState
 				note.destroy();
 			}
 		});
-		combo = 0;
-		coolcombo = 0;
 		
 		if(instakillOnMiss)
 		{
@@ -5246,14 +5245,19 @@ class PlayState extends MusicBeatState
 			doDeathCheck(true);
 		}
 
-		if((!daNote.isSustainNote || daNote.isSustainNote) && daNote.nextNote.isSustainNote) daNote.nextNote.countmiss = false;
-		else if (daNote.nextNote != null) daNote.nextNote.countmiss = true;
+		if((!daNote.isSustainNote && daNote.nextNote.isSustainNote) && !daNote.hitCausesMiss) daNote.nextNote.countmiss = false;
+		else if (daNote.nextNote != null || daNote.hitCausesMiss) daNote.nextNote.countmiss = true;
 		//else if(daNote.nextNote != null) daNote.nextNote.countmiss = true;
 
 		if(daNote.countmiss) {
-			songMisses += 1;
-			misspop += 1;
-			songScore -= 10;
+			if (combo != 0) combo = 0;
+
+			if (coolcombo != 0) coolcombo = 0;
+
+			if(!practiceMode) songScore -= 10;
+
+			songMisses++;
+			misspop++;
 			totalPlayed++;
 			RecalculateRating(true);
 			health -= daNote.missHealth * healthLoss;
@@ -5292,8 +5296,9 @@ class PlayState extends MusicBeatState
 			{
 				gf.playAnim('sad');
 			}
-			combo = 0;
-			coolcombo = 0;
+
+			if (combo != 0) combo = 0;
+			if (coolcombo != 0) coolcombo = 0;
 
 			if(!practiceMode) songScore -= 10;
 			if(!endingSong) {
