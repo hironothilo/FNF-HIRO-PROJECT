@@ -5245,20 +5245,16 @@ class PlayState extends MusicBeatState
 			doDeathCheck(true);
 		}
 
-		if(daNote.nextNote != null) {
+		if(daNote.nextNote != null){
 			if((!daNote.isSustainNote && daNote.nextNote.isSustainNote) && !daNote.hitCausesMiss) daNote.nextNote.countmiss = false;
 			else if (daNote.hitCausesMiss) daNote.nextNote.countmiss = true;
 		}
 		//else if(daNote.nextNote != null) daNote.nextNote.countmiss = true;
 
 		if(daNote.countmiss) {
-			combo = 0;
-			coolcombo = 0;
-
-			if(!practiceMode) songScore -= 10;
-
-			songMisses++;
-			misspop++;
+			songMisses += 1;
+			misspop += 1;
+			songScore -= 10;
 			totalPlayed++;
 			RecalculateRating(true);
 			health -= daNote.missHealth * healthLoss;
@@ -5297,8 +5293,8 @@ class PlayState extends MusicBeatState
 			{
 				gf.playAnim('sad');
 			}
-			if (combo != 0) combo = 0;
-			if (coolcombo != 0) coolcombo = 0;
+			combo = 0;
+			coolcombo = 0;
 
 			if(!practiceMode) songScore -= 10;
 			if(!endingSong) {
