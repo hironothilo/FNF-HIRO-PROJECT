@@ -4708,7 +4708,7 @@ class PlayState extends MusicBeatState
 		rating.acceleration.y = 550;
 		rating.velocity.y -= FlxG.random.int(140, 175);
 		rating.velocity.x -= FlxG.random.int(0, 10);
-		if(SONG.song == 'Milf' || SONG.song == 'satin-panties' || SONG.song == 'high') rating.velocity.x -= FlxG.random.int(125, 150);
+		if(SONG.song == 'Milf' || SONG.song == 'Satin-Panties' || SONG.song == 'High') rating.velocity.x -= FlxG.random.int(125, 150);
 		rating.visible = (!ClientPrefs.hideHud && showRating);
 		rating.x += ClientPrefs.comboOffset[0];
 		rating.y -= ClientPrefs.comboOffset[1];
@@ -4724,7 +4724,7 @@ class PlayState extends MusicBeatState
 		comboSpr.y -= ClientPrefs.comboOffset[1];
 		comboSpr.y += 60;
 		comboSpr.velocity.x -= FlxG.random.int(1, 10);
-		if(SONG.song == 'Milf' || SONG.song == 'satin-panties' || SONG.song == 'high') comboSpr.velocity.x -= FlxG.random.int(125, 150);
+		if(SONG.song == 'Milf' || SONG.song == 'Satin-Panties' || SONG.song == 'High') comboSpr.velocity.x -= FlxG.random.int(125, 150);
 
 		//insert(members.indexOf(strumLineNotes), rating);
 		numscoregroup.add(rating);
@@ -4886,7 +4886,7 @@ class PlayState extends MusicBeatState
 			numScore.velocity.y -= FlxG.random.int(140, 160);
 			numScore.velocity.x = FlxG.random.float(-5, 5);
 			numScore.visible = !ClientPrefs.hideHud;
-			if(SONG.song == 'Milf' || SONG.song == 'satin-panties' || SONG.song == 'high') numScore.velocity.x -= FlxG.random.int(125, 150);
+			if(SONG.song == 'Milf' || SONG.song == 'Satin-Panties' || SONG.song == 'High') numScore.velocity.x -= FlxG.random.int(125, 150);
 
 			//if (combo >= 10 || combo == 0)
 			//if(showComboNum)
@@ -5246,8 +5246,8 @@ class PlayState extends MusicBeatState
 		}
 
 		if(daNote.nextNote != null){
-			if((!daNote.isSustainNote && daNote.nextNote.isSustainNote) && !daNote.hitCausesMiss) daNote.nextNote.countmiss = false;
-			else if (daNote.hitCausesMiss) daNote.nextNote.countmiss = true;
+			if((!daNote.isSustainNote || daNote.isSustainNote) && daNote.nextNote.isSustainNote) daNote.nextNote.countmiss = false;
+			else daNote.nextNote.countmiss = true;
 		}
 		//else if(daNote.nextNote != null) daNote.nextNote.countmiss = true;
 
@@ -5265,6 +5265,9 @@ class PlayState extends MusicBeatState
 				char = gf;
 			}
 
+			combo = 0;
+			coolcombo = 0;
+			
 			popupmiss();
 			if(char != null && !daNote.noMissAnimation && char.hasMissAnimations)
 			{

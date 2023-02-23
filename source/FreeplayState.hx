@@ -498,6 +498,7 @@ class FreeplayState extends MusicBeatState
 
 			for (item in grpSongs.members)
 			{
+				item.enter = true;
 				if (item.targetY != 0)
 				{
 					FlxTween.tween(item, {alpha: 0}, 0.3);
@@ -505,7 +506,7 @@ class FreeplayState extends MusicBeatState
 				if (item.targetY == 0)
 				{
 					item.alpha = 1;
-					item.color = 0x0055FF00;
+					//item.color = 0x0055FF00;
 					item.center = true;
 					FlxTween.tween(item, {x : FlxG.width / 2 - (item.width + 150) / 2}, 1.25);
 					FlxFlicker.flicker(item, 1.5, 0.05, false);
@@ -659,10 +660,8 @@ class FreeplayState extends MusicBeatState
 
 			item.color = 0x00FFFFFF;
 
-			//FlxTween.tween(item, {alpha: 0.6 / Math.abs(item.targetY)}, 0.1);
-			//FlxTween.tween(item.scale, {x: (0.8 - (Math.abs(item.targetY) * 0.1)), y: (0.8 - (Math.abs(item.targetY) * 0.1))}, 0.1);
-			if(Math.abs(item.targetY) == 1) FlxTween.tween(item, {alpha: 0.6}, 0.1);
-			if(Math.abs(item.targetY) == 2) FlxTween.tween(item, {alpha: 0.45}, 0.1);
+			/*if(Math.abs(item.targetY) == 1) FlxTween.tween(item, {alpha: 0.6}, 0.1);
+			if(Math.abs(item.targetY) == 2) FlxTween.tween(item, {alpha: 0.45}, 0.1);*/
 			if (item.targetY == 0)
 			{
 				item.alpha = 1;

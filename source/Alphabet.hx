@@ -19,6 +19,8 @@ class Alphabet extends FlxSpriteGroup
 	public var delay:Float = 0.05;
 	public var paused:Bool = false;
 
+	public var enter:Bool = false;
+
 	// for menu shit
 	public var forceX:Float = Math.NEGATIVE_INFINITY;
 	public var targetY:Float = 0;
@@ -363,6 +365,11 @@ class Alphabet extends FlxSpriteGroup
 			} else {
 				if(!center) x = FlxMath.lerp(x, (Math.abs(targetY) * distanceletter * moving) + 90 + xAdd, lerpVal);
 			}
+			if(!enter){
+				if(Math.abs(targetY) == 1) alpha = 0.6;
+				if(Math.abs(targetY) == 2) alpha = 0.45;
+			}
+			if(center) color = 0x0055FF00;
 		}
 
 		super.update(elapsed);
