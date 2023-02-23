@@ -2434,6 +2434,8 @@ class PlayState extends MusicBeatState
 						});
 						FlxG.sound.play(Paths.sound('introGo' + introSoundsSuffix), 0.6);
 					case 4:
+						iconP1.scale.set(1.3, 1.3);
+						iconP2.scale.set(1.3, 1.3);
 				}
 
 				notes.forEachAlive(function(note:Note) {
