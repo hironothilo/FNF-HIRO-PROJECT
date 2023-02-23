@@ -82,6 +82,8 @@ class TitleState extends MusicBeatState
 	var mustUpdate:Bool = false;
 
 	var titleJSON:TitleData;
+	
+	var stopplz:Bool = false;
 
 	public static var updateVersion:String = '';
 
@@ -451,6 +453,19 @@ class TitleState extends MusicBeatState
 			titleText.scale.set(mult, mult);
 		}
 
+		#if !html5
+		if (FlxG.keys.justPressed.ESCAPE && initialized && !pressedEnter && !stopplz) // THANK YOU BeastlyGhost idk i write correct
+		{
+			stopplz = true;
+			FlxG.sound.play(Paths.sound("cancelMenu"), 0.8);
+			FlxG.sound.music.fadeOut(0.3);
+			FlxG.camera.fade(FlxColor.BLACK, 0.5, false, function()
+			{
+				Sys.exit(0);
+			}, false);
+		}
+		#end
+
 		#if mobile
 		for (touch in FlxG.touches.list)
 		{
@@ -497,10 +512,11 @@ class TitleState extends MusicBeatState
 			
 			if(pressedEnter)
 			{
-				titleText.color = FlxColor.WHITE;
-				titleText.alpha = 1;
-				
-				if(titleText != null) titleText.animation.play('press');
+				if(titleText != null) {
+					titleText.color = FlxColor.WHITE;
+					titleText.alpha = 1;
+					titleText.animation.play('press');
+				};
 
 				FlxG.camera.flash(ClientPrefs.flashing ? FlxColor.WHITE : 0x4CFFFFFF, 1);
 				FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
