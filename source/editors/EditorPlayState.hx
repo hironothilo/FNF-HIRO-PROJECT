@@ -654,7 +654,7 @@ class EditorPlayState extends MusicBeatState
 				// hold note functions
 				if (daNote.isSustainNote && (daNote.parent == null
 					|| daNote.parent.wasGoodHit) && controlHoldArray[daNote.noteData] && daNote.canBeHit
-					&& daNote.mustPress && !daNote.tooLate && !daNote.wasGoodHit && !daNote.blockHit) {
+					&& daNote.mustPress && !daNote.tooLate && !daNote.wasGoodHit) {
 					goodNoteHit(daNote);
 				}
 			});
@@ -734,11 +734,11 @@ class EditorPlayState extends MusicBeatState
 	function noteMiss(daNote:Note):Void
 	{
 		if(daNote.nextNote != null){
-			if ((!daNote.isSustainNote && daNote.nextNote.isSustainNote) && !daNote.hitCausesMiss) daNote.nextNote.countMiss = false; // Null Object Reference Fixed!
-			else if (daNote.hitCausesMiss) daNote.nextNote.countMiss = true;
+			if ((!daNote.isSustainNote && daNote.nextNote.isSustainNote) && !daNote.hitCausesMiss) daNote.nextNote.countmiss = false; // Null Object Reference Fixed!
+			else if (daNote.hitCausesMiss) daNote.nextNote.countmiss = true;
 		}
 
-		if(daNote.countMiss){
+		if(daNote.countmiss){
 			if (combo != 0) combo = 0;
 			songMisses++;
 			vocals.volume = 0;
