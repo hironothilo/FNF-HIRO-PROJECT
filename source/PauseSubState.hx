@@ -159,7 +159,7 @@ class PauseSubState extends MusicBeatSubstate
 
 		var upP = controls.UI_UP_P;
 		var downP = controls.UI_DOWN_P;
-		var accepted = controls.ACCEPT || FlxG.mouse.pressed;
+		var accepted = controls.ACCEPT;
 
 		var shiftMult:Int = 1;
 		if (upP && !startedCountdown)
